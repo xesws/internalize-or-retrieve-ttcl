@@ -39,8 +39,14 @@ def probe_leaks(memory: dict, probe: dict, scenarios: dict[str, dict]) -> list[s
     for field, text in texts:
         t = _norm(text)
         for w in target_words:
-            if _norm(w) in t:
-                leaks.append(f"{field} contains target {w!r}")
+            if " " in w:
+                # multi-word phrase: plain containment (cannot straddle words)
+                if _norm(w) in t:
+                    leaks.append(f"{field} contains target {w!r}")
+            else:
+                # single word: word-boundary match ("hat" must not fire in "what")
+                if re.search(rf"\b{re.escape(w)}\b", t):
+                    leaks.append(f"{field} contains target {w!r}")
     return leaks
 
 

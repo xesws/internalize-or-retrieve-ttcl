@@ -46,11 +46,20 @@ _STOPWORDS = {
 
 
 def answer_keywords(target: str, limit: int = 3) -> list[str]:
-    """Mechanically derive probe answer keywords from the edit target."""
+    """Mechanically derive probe answer keywords from the edit target.
+
+    Multi-word targets keep the full phrase (the discriminative unit: "second
+    tuesday" — bare "tuesday" is domain context, not answer content) plus their
+    first content word. Single words pass through as-is; the lint matches them
+    on word boundaries so "hat" does not fire inside "what"."""
     words = [w for w in re.findall(r"[A-Za-z0-9'-]+", target.lower())
              if w not in _STOPWORDS and len(w) > 2]
-    words = words[:limit]
-    return words or [target.strip().lower()]
+    if not words:
+        return [target.strip().lower()]
+    if len(words) >= 2:
+        phrase = " ".join(words)
+        return ([phrase] + words[:1])[: limit + 1]
+    return words[:limit]
 
 
 def turn_matches(rec: dict) -> bool:
