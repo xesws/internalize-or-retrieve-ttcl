@@ -40,10 +40,23 @@ def generate_answer(model, tok, question: str, rag_hits: list[dict]) -> dict:
         {"text": h["text"], "type": "fact"} for h in rag_hits])
     rendered = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     enc = tok(rendered, return_tensors="pt").to("cuda")
+    # PORT FIX (read path): the prototype sets adapter.query_span over the
+    # user-turn tokens at chat decode so the retrieval key excludes the fixed
+    # scaffold rows (same extraction as the write-side chat keys). Legacy
+    # last-60%-of-whole-prompt pooling mixes scaffold into the key and, with a
+    # grown codebook, matches a wrong slot on every query.
+    adapter = model_host.edit_module() if model_host.edit_active() else None
+    if adapter is not None:
+        span = keying.query_span_in_rendered(tok, rendered, question)
+        adapter.query_span = span
     t0 = time.time()
-    with torch.no_grad():
-        out = model.generate(**enc, max_new_tokens=MAX_NEW_TOKENS, do_sample=False,
-                             pad_token_id=tok.eos_token_id)
+    try:
+        with torch.no_grad():
+            out = model.generate(**enc, max_new_tokens=MAX_NEW_TOKENS, do_sample=False,
+                                 pad_token_id=tok.eos_token_id)
+    finally:
+        if adapter is not None:
+            adapter.query_span = None
     gen_ids = out[0][enc["input_ids"].shape[1]:]
     n_gen = int(gen_ids.shape[0])
     text = tok.decode(gen_ids, skip_special_tokens=True)
