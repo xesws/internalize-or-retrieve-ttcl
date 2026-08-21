@@ -11,30 +11,30 @@
       "gen_scenario_v1.md": "df45a63eb5de7d37",
       "gen_rebind_v1.md": "f3d8172d1ff6545c"
     },
-    "git_sha": "a8d85b4fcc241cc48e0bbf3ace3e87d19a8b54fd"
+    "git_sha": "f8c245a08fc3414a8fc96e342d55daa9d361de52"
   },
   "splits": {
     "dev": {
       "path": "/Users/tangyiq/dev/internalize-or-retrieve-ttcl/data/workloads/dev_v1.json",
       "users": 2,
       "memories": {
-        "belief": 22,
-        "fact": 66,
-        "transient": 15,
-        "total": 103
+        "belief": 24,
+        "fact": 64,
+        "transient": 16,
+        "total": 104
       },
       "probes": {
-        "qa_immediate": 103,
-        "qa_delayed": 103,
-        "qa_paraphrase": 103,
-        "free_scenario": 20,
-        "supersede_old": 12,
+        "qa_immediate": 104,
+        "qa_delayed": 104,
+        "qa_paraphrase": 104,
+        "free_scenario": 19,
+        "supersede_old": 11,
         "supersede_new": 11,
         "near_miss": 10,
-        "total": 362
+        "total": 363
       },
       "lint": {
-        "probes": 362,
+        "probes": 363,
         "violations": 0,
         "rate": 0.0
       },
@@ -44,23 +44,23 @@
       "path": "/Users/tangyiq/dev/internalize-or-retrieve-ttcl/data/workloads/test_v1.json",
       "users": 4,
       "memories": {
-        "belief": 54,
-        "fact": 128,
-        "transient": 29,
-        "total": 211
+        "belief": 53,
+        "fact": 127,
+        "transient": 30,
+        "total": 210
       },
       "probes": {
-        "qa_immediate": 211,
-        "qa_delayed": 211,
-        "qa_paraphrase": 211,
-        "free_scenario": 47,
+        "qa_immediate": 210,
+        "qa_delayed": 210,
+        "qa_paraphrase": 210,
+        "free_scenario": 46,
         "supersede_old": 23,
         "supersede_new": 23,
         "near_miss": 18,
-        "total": 744
+        "total": 740
       },
       "lint": {
-        "probes": 744,
+        "probes": 740,
         "violations": 0,
         "rate": 0.0
       },
