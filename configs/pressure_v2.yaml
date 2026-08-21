@@ -1,0 +1,9 @@
+# P2 pressure parameters v2 (initial values; R1 allows ONE dev recalibration
+# round — any change is versioned and disclosed in the G2 report).
+pressure:
+  rag_top_k: 3                # cap on retrieved hits per query
+  store_budget_ratio: 0.7     # live entries capped at 0.7 * routed-to-RAG count
+                              # -> oldest-first eviction (S1's persistence failure)
+  distractor_pool: same_split_other_users_facts
+  # S2-side pressure is structural: edit count growth + supersede frequency
+  # come from the workload itself (N=20 incl. 1 chain).

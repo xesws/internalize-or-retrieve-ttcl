@@ -1,0 +1,28 @@
+{
+ "prompt": "prompts/router_v1.md",
+ "prompt_hash": "95f94d352646abe6",
+ "model": "glm-5.3",
+ "hidden_label_agreement": "17/20",
+ "routing": {
+  "u01-m000": "fact",
+  "u01-m002": "transient",
+  "u01-m003": "belief",
+  "u01-m004": "belief",
+  "u01-m005": "fact",
+  "u01-m006": "belief",
+  "u01-m007": "fact",
+  "u01-m009": "belief",
+  "u01-m010": "belief",
+  "u01-m014": "belief",
+  "u01-m017": "belief",
+  "u01-m019": "belief",
+  "u01-m023": "fact",
+  "u01-m024": "transient",
+  "u01-m031": "fact",
+  "u01-m037": "belief",
+  "u01-m043": "belief",
+  "u01-m045": "fact",
+  "u01-m046": "belief",
+  "u01-m053": "fact"
+ }
+}
