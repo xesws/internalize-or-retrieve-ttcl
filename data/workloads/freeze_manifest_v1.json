@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "version": "v1",
+    "generator_model": "glm-5.3",
+    "prompt_version": "v1",
+    "prompt_hashes": {
+      "gen_persona_v1.md": "80e0add023a61066",
+      "gen_sessions_v1.md": "4b7250a0d22d5c22",
+      "gen_memory_v1.md": "c42d00bcb299eb0a",
+      "gen_supersede_nearmiss_v1.md": "195af3460f5536e3",
+      "gen_scenario_v1.md": "df45a63eb5de7d37",
+      "gen_rebind_v1.md": "f3d8172d1ff6545c"
+    },
+    "git_sha": "a8d85b4fcc241cc48e0bbf3ace3e87d19a8b54fd"
+  },
+  "splits": {
+    "dev": {
+      "path": "/Users/tangyiq/dev/internalize-or-retrieve-ttcl/data/workloads/dev_v1.json",
+      "users": 2,
+      "memories": {
+        "belief": 22,
+        "fact": 66,
+        "transient": 15,
+        "total": 103
+      },
+      "probes": {
+        "qa_immediate": 103,
+        "qa_delayed": 103,
+        "qa_paraphrase": 103,
+        "free_scenario": 20,
+        "supersede_old": 12,
+        "supersede_new": 11,
+        "near_miss": 10,
+        "total": 362
+      },
+      "lint": {
+        "probes": 362,
+        "violations": 0,
+        "rate": 0.0
+      },
+      "turn_mismatches": 0
+    },
+    "test": {
+      "path": "/Users/tangyiq/dev/internalize-or-retrieve-ttcl/data/workloads/test_v1.json",
+      "users": 4,
+      "memories": {
+        "belief": 54,
+        "fact": 128,
+        "transient": 29,
+        "total": 211
+      },
+      "probes": {
+        "qa_immediate": 211,
+        "qa_delayed": 211,
+        "qa_paraphrase": 211,
+        "free_scenario": 47,
+        "supersede_old": 23,
+        "supersede_new": 23,
+        "near_miss": 18,
+        "total": 744
+      },
+      "lint": {
+        "probes": 744,
+        "violations": 0,
+        "rate": 0.0
+      },
+      "turn_mismatches": 0
+    }
+  }
+}
