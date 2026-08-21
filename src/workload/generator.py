@@ -48,6 +48,17 @@ def answer_keywords(target: str, limit: int = 3) -> list[str]:
     return words or [target.strip().lower()]
 
 
+def turn_matches(rec: dict) -> bool:
+    """turn_text must carry the canonical's content (keyword overlap); used by
+    the generator's rebind step and by the freeze gate."""
+    def _kw(text: str) -> list[str]:
+        return [w for w in re.findall(r"[A-Za-z0-9'-]+", text.lower())
+                if w not in _STOPWORDS and len(w) > 2]
+    kws = set(_kw(rec["canonical"])) | set(_kw(rec.get("edit_target", "")))
+    t = re.sub(r"\s+", " ", rec["turn_text"].lower())
+    return any(k in t for k in kws)
+
+
 class WorkloadGenerator:
     def __init__(
         self,
@@ -453,10 +464,37 @@ class WorkloadGenerator:
                         "answer_keywords": answer_keywords(rec_by_id[a_id]["edit_target"]),
                         "near_miss_of": m["id"]})
 
+        # --- consistency audit + rebind --------------------------------------------------
+        rebound = 0
+        cached_rebind = self._load_journal("rebind")
+        for rec in memories:
+            if turn_matches(rec):
+                continue
+            mid = rec["id"]
+            new_turn = None
+            if mid in cached_rebind:
+                new_turn = cached_rebind[mid].get("turn_text")
+            else:
+                prompt = (self._prompt("gen_rebind_v1.md")
+                          .replace("{canonical}", rec["canonical"]))
+                try:
+                    out = self._call(prompt, f"rebind_{mid}", temperature=0.7)
+                    new_turn = out.get("turn_text")
+                    self._save("rebind", mid, {"turn_text": new_turn})
+                except Exception as e:  # noqa: BLE001
+                    self._save("rebind_errors", mid, str(e))
+            if new_turn and len(new_turn) >= 8:
+                rec["turn_text"] = new_turn
+                rec["rebound"] = True
+                rebound += 1
+        still_mismatched = [r["id"] for r in memories if not turn_matches(r)]
+
         return {
             "user_id": self.user_id,
             "n_sessions": self.n_sessions,
             "memories": memories,
             "scenarios": scenarios,
             "_errors": errors,
+            "_rebound": rebound,
+            "_turn_mismatches": still_mismatched,
         }

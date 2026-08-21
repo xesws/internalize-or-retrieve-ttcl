@@ -97,7 +97,7 @@ def test_freeze_prompt_hashes_stable():
     h1 = prompt_hashes()
     assert set(h1) == {
         "gen_persona_v1.md", "gen_sessions_v1.md", "gen_memory_v1.md",
-        "gen_supersede_nearmiss_v1.md", "gen_scenario_v1.md"}
+        "gen_supersede_nearmiss_v1.md", "gen_scenario_v1.md", "gen_rebind_v1.md"}
     assert prompt_hashes() == h1
 
 
