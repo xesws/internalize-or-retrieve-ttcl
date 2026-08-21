@@ -99,6 +99,22 @@ def p_eos_at_gold_boundary(tok, hf_model, device, stem: str, target: str) -> flo
     return F.softmax(logits[0, -2].float(), dim=-1)[eos].item()
 
 
+def chat_boundary_p_eos(tok, hf_model, device, question: str, answer: str) -> float:
+    """p(eot) at the end of a natural chat answer on the UNEDITED base — the
+    deployment-relevant reference magnitude for check (a): Llama's eos is
+    <|eot_id|>, which only fires after chat turns, so a raw-text natural fact
+    is not a valid stop reference."""
+    prefix = tok.apply_chat_template(
+        [{"role": "user", "content": question}],
+        tokenize=False, add_generation_prompt=True)
+    ids = tok(prefix + answer, return_tensors=None)["input_ids"]
+    ids = ids + [tok.eos_token_id]
+    t = torch.tensor([ids], device=device)
+    with torch.no_grad():
+        logits = hf_model(input_ids=t).logits
+    return F.softmax(logits[0, -2].float(), dim=-1)[tok.eos_token_id].item()
+
+
 def main() -> int:
     import yaml
 
@@ -125,7 +141,7 @@ def main() -> int:
     for item in ITEMS:
         base_p_eos[item["id"]] = p_eos_at_gold_boundary(tok, model, device, item["stem"], item["target"])
     natural_p_eos = {
-        it["id"]: p_eos_at_gold_boundary(tok, model, device, it["stem"], it["target"])
+        it["id"]: chat_boundary_p_eos(tok, model, device, it["stem"] + "?", it["target"].strip())
         for it in NATURAL_ITEMS
     }
     natural_ref = statistics.median(natural_p_eos.values())
