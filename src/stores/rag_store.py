@@ -31,13 +31,20 @@ class RagStore:
         self.evicted: list[str] = []
 
     # --- writes ---------------------------------------------------------------
-    def add(self, entry_id: str, text: str) -> None:
-        self.entries.append({"id": entry_id, "text": text, "order": self._order})
+    def add(self, entry_id: str, text: str, *, pin: bool = False) -> None:
+        """pin=True marks a permanent entry (distractors): retrieval
+        competition, but never budget-evicted — eviction pressure must hit the
+        REAL memories or the S1 persistence failure cannot manifest."""
+        self.entries.append({"id": entry_id, "text": text, "order": self._order,
+                             "pin": pin})
         self._order += 1
         if self.budget is not None:
-            while len(self.entries) > self.budget:
-                gone = self.entries.pop(0)  # oldest-first eviction
+            real = [e for e in self.entries if not e["pin"]]
+            while len(real) > self.budget:
+                idx = next(i for i, e in enumerate(self.entries) if not e["pin"])
+                gone = self.entries.pop(idx)  # oldest unpinned eviction
                 self.evicted.append(gone["id"])
+                real.pop(0)
 
     def supersede(self, old_id: str, new_id: str, new_text: str) -> None:
         """Lifecycle replace: drop the old entry, insert the new one."""
@@ -46,7 +53,7 @@ class RagStore:
 
     def seed_distractors(self, docs: list[dict[str, str]]) -> None:
         for d in docs:
-            self.add(d["id"], d["text"])
+            self.add(d["id"], d["text"], pin=True)
 
     # --- reads ----------------------------------------------------------------
     def _bm25_scores(self, query: str) -> list[tuple[float, dict]]:

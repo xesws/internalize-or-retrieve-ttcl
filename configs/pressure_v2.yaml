@@ -1,9 +1,14 @@
-# P2 pressure parameters v2 (initial values; R1 allows ONE dev recalibration
-# round — any change is versioned and disclosed in the G2 report).
+# P2 pressure parameters v2.1 (recalibration round 1 — the ONE round G2 allows;
+# disclosed in the G2 report). v2 bug: the budget counted distractors, and
+# distractors were seeded oldest, so eviction consumed distractors only and
+# never pressured real memories (criterion 2 was untestable). v2.1: budget
+# applies to REAL routed entries only; distractors are pinned competition.
 pressure:
   rag_top_k: 3                # cap on retrieved hits per query
-  store_budget_ratio: 0.7     # live entries capped at 0.7 * routed-to-RAG count
-                              # -> oldest-first eviction (S1's persistence failure)
+  store_budget_ratio: 0.7     # live REAL entries capped at 0.7 * routed-to-RAG
+                              # count -> oldest-first eviction (S1 persistence
+                              # failure)
   distractor_pool: same_split_other_users_facts
+  distractor_pin: true        # retrieval competition, never evicted
   # S2-side pressure is structural: edit count growth + supersede frequency
   # come from the workload itself (N=20 incl. 1 chain).

@@ -21,7 +21,14 @@ def load_items(root: Path) -> dict[str, list[dict]]:
         f = d / "items.jsonl"
         if not f.exists():
             continue
-        arms[d.name.replace("p2_", "")] = [json.loads(l) for l in f.read_text().splitlines() if l.strip()]
+        rows = [json.loads(l) for l in f.read_text().splitlines() if l.strip()]
+        name = d.name.replace("p2_", "")
+        # BASE reference rows live inside p2_S1's journal — split them out so
+        # they never pollute S1's own aggregates
+        arms[name] = [r for r in rows if r.get("arm") == name]
+        base = [r for r in rows if r.get("arm") == "BASE"]
+        if base:
+            arms.setdefault("BASE", []).extend(base)
     return arms
 
 

@@ -113,9 +113,11 @@ def run_arm(arm: str, sel: dict, dev_doc: dict, router: dict, cfg: dict,
                    for u in dev_doc["users"] if u["user_id"] not in sel_users
                    for m in u["memories"] if m["type"] == "fact"]
     pres = cfg["pressure"]
+    # budget applies to REAL routed entries only (recalibration round 1,
+    # disclosed in the G2 report: pinning distractors, else eviction eats the
+    # distractors and never pressures the memories — criterion 2 untestable)
     store = RagStore(top_k=pres["rag_top_k"],
-                     budget=int(round(pres["store_budget_ratio"]
-                                      * (n_rag_expected + len(distractors)))))
+                     budget=int(round(pres["store_budget_ratio"] * n_rag_expected)))
     store.seed_distractors(distractors)
 
     # --- replay -------------------------------------------------------------------
