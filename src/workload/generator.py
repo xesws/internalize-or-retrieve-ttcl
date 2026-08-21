@@ -443,12 +443,15 @@ class WorkloadGenerator:
                         "kind": "supersede_old", "text": pair["probe_old"],
                         "answer_keywords": answer_keywords(old_rec["edit_target"])})
             if m.get("near_miss_twin_of") and m["id"] in rec_by_id:
-                pair = pairs.get(f"nearmiss:{m['id']}", {})
+                # near-miss pair probe is keyed by memory A's id (the subject
+                # being asked); m is memory B carrying the twin link
+                pair = pairs.get(f"nearmiss:{m['near_miss_twin_of']}", {})
                 if pair.get("probe"):
-                    rec_by_id[m["id"]]["probes"].append({
+                    a_id = m["near_miss_twin_of"]
+                    rec_by_id[a_id]["probes"].append({
                         "kind": "near_miss", "text": pair["probe"],
-                        "answer_keywords": answer_keywords(rec_by_id[m["id"]]["edit_target"]),
-                        "near_miss_of": m["near_miss_twin_of"]})
+                        "answer_keywords": answer_keywords(rec_by_id[a_id]["edit_target"]),
+                        "near_miss_of": m["id"]})
 
         return {
             "user_id": self.user_id,
