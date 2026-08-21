@@ -74,7 +74,10 @@ class WorkloadGenerator:
         self.user_id = f"u{user_index:02d}"
         self.rng = random.Random(seed + user_index)
         self.run_dir = Path(run_dir)
-        self.journal = self.run_dir / f"journal_{self.user_id}"
+        # Journal namespaced by n_sessions: plan_memories shuffles pool items
+        # with an rng whose consumption depends on n_sessions, so journals from
+        # a different session count MUST NOT be reused (canonical<->id drift).
+        self.journal = self.run_dir / f"journal_{self.user_id}_s{n_sessions}"
         self.journal.mkdir(parents=True, exist_ok=True)
         self.n_sessions = n_sessions
         self.per_session = per_session
