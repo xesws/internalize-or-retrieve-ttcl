@@ -74,17 +74,11 @@ SCENARIO_SCHEMA: dict[str, Any] = {
     },
 }
 
-USER_SCHEMA: dict[str, Any] = {
-    "type": "object",
-    "required": ["user_id", "n_sessions", "memories", "scenarios"],
-    "properties": {
-        "user_id": {"type": "string"},
-        "n_sessions": {"type": "integer", "minimum": 1},
-        "memories": {"type": "array", "items": MEMORY_SCHEMA},
-        "scenarios": {"type": "array", "items": SCENARIO_SCHEMA},
-    },
-}
-
+# NOTE: the workload-level schema deliberately does NOT embed MEMORY_SCHEMA.
+# MEMORY_SCHEMA's internal `$ref: "#/$defs/probe"` resolves against its own
+# root; embedding it under WORKLOAD_SCHEMA would repoint the reference at the
+# outer document (PointerToNowhere). Memories/scenarios are validated
+# item-by-item via validate_memory / validate_scenario instead.
 WORKLOAD_SCHEMA: dict[str, Any] = {
     "type": "object",
     "required": ["version", "split", "users"],
@@ -93,7 +87,19 @@ WORKLOAD_SCHEMA: dict[str, Any] = {
         "split": {"enum": ["dev", "test"]},
         "generator_model": {"type": "string"},
         "prompt_version": {"type": "string"},
-        "users": {"type": "array", "items": USER_SCHEMA},
+        "users": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["user_id", "n_sessions", "memories", "scenarios"],
+                "properties": {
+                    "user_id": {"type": "string"},
+                    "n_sessions": {"type": "integer", "minimum": 1},
+                    "memories": {"type": "array"},
+                    "scenarios": {"type": "array"},
+                },
+            },
+        },
     },
 }
 
