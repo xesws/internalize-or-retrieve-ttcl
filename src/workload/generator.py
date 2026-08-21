@@ -43,8 +43,9 @@ _STOPWORDS = {
 def answer_keywords(target: str, limit: int = 3) -> list[str]:
     """Mechanically derive probe answer keywords from the edit target."""
     words = [w for w in re.findall(r"[A-Za-z0-9'-]+", target.lower())
-             if w not in _STOPWORDS and len(w) > 1]
-    return words[:limit] or [target.strip().lower()]
+             if w not in _STOPWORDS and len(w) > 2]
+    words = words[:limit]
+    return words or [target.strip().lower()]
 
 
 class WorkloadGenerator:
@@ -194,7 +195,8 @@ class WorkloadGenerator:
         nearmiss_ids: dict[str, str] = {}    # a canonical -> a mem id
         for s in sessions:
             for statement, forced_type, extra in slots[s]:
-                mtype = forced_type if forced_type != "belief_or_fact" else type_of.get(statement, "fact")
+                mtype = (type_of.get(statement, "fact")
+                         if forced_type in (None, "belief_or_fact") else forced_type)
                 mem = add(statement, mtype, s)
                 if "supersede_pair" in extra:
                     old, new = extra["supersede_pair"]
@@ -240,6 +242,10 @@ class WorkloadGenerator:
                           f"- [{m['id']}] {m['canonical']}" for m in assigned)))
             try:
                 recs = self._call(prompt, f"session_{s}")
+                got = {r.get("id") for r in recs}
+                want = {m["id"] for m in assigned}
+                if got != want:
+                    raise ValueError(f"incomplete session records: missing={sorted(want - got)} extra={sorted(got - want)}")
                 self._save("sessions", str(s), recs)
             except Exception as e:  # noqa: BLE001 — journal the failure, surface at end
                 self._save("session_errors", str(s), str(e))
@@ -370,7 +376,7 @@ class WorkloadGenerator:
             f = fields.get(m["id"])
             turn = None
             for rec in sessions.get(m["session_idx"], []):
-                if rec.get("canonical") == m["canonical"]:
+                if rec.get("id") == m["id"]:
                     turn = rec.get("turn_text")
                     break
             if f is None:

@@ -20,6 +20,7 @@ HARD RULES:
 - NONE of the questions or key_prompts may contain edit_target or its content words (target-free discipline).
 - Every question must be answerable by edit_target.
 - Never use the phrases "you told me", "as I said", "my memory", "earlier".
+- SELF-CHECK before answering: scan each question for any word of edit_target (including plurals and close variants, e.g. target " tea" forbids "teas"); if any appears, REWORD that question. Output only the final, clean version.
 
 JSON shape:
 {{"edit_stem": "...", "edit_target": " ...", "key_prompts": ["...", "..."],

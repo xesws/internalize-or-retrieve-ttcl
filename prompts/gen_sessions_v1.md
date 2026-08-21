@@ -14,7 +14,7 @@ Task: write {n_turns} natural user turns (single speaker, short messages as if t
 
 Each embedded statement must sound like something a person would actually say (not a database row). Add 1-2 neutral filler turns that carry NO memory content.
 
-JSON shape — one entry per EMBEDDED memory (skip fillers):
-[{"turn_idx": 0, "turn_text": "...", "canonical": "<canonical statement from pool, verbatim>", "confidence": 0.95},
+JSON shape — EXACTLY ONE entry per assigned memory id above (same ids, verbatim; no extras, no omissions):
+[{"id": "u01-m003", "turn_idx": 0, "turn_text": "..."},
  ...]
 turn_idx = index of the turn (0-based) in the session where the statement appears.

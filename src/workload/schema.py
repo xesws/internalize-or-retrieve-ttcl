@@ -22,7 +22,7 @@ MEMORY_SCHEMA: dict[str, Any] = {
     "$defs": {
         "probe": {
             "type": "object",
-            "required": ["kind", "text", "answer_keywords"],
+            "required": ["kind", "answer_keywords"],
             "properties": {
                 "kind": {"enum": list(PROBE_KINDS)},
                 "text": {"type": "string", "minLength": 4},

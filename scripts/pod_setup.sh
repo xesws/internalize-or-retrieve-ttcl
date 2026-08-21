@@ -12,10 +12,13 @@ if [ -z "${HF_TOKEN:-}" ]; then
 fi
 
 echo "== pip deps =="
-python3 -m pip install --quiet --upgrade pip
+# RunPod system Python is PEP 668 managed; container context makes the
+# override safe (no OS packages depend on this interpreter's site-packages).
+PIPFLAGS="--break-system-packages"
+python3 -m pip install --quiet --upgrade pip $PIPFLAGS
 # torch ships with the RunPod image; only install if missing
-python3 -c "import torch" 2>/dev/null || python3 -m pip install --quiet torch
-python3 -m pip install --quiet -e ".[gpu,dev]" "huggingface_hub[cli]"
+python3 -c "import torch" 2>/dev/null || python3 -m pip install --quiet $PIPFLAGS torch
+python3 -m pip install --quiet $PIPFLAGS -e ".[gpu,dev]" "huggingface_hub[cli]"
 
 echo "== HF login (HF_TOKEN only) =="
 huggingface-cli login --token "$HF_TOKEN" 2>/dev/null \
