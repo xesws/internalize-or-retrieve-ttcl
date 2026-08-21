@@ -37,6 +37,11 @@ _THEMES = [
 _STOPWORDS = {
     "the", "a", "an", "of", "to", "in", "on", "for", "and", "or", "is", "are",
     "my", "me", "i", "you", "your", "it", "its", "at", "by", "with", "from",
+    # pronouns/possessives are never discriminative answer content — leaving
+    # them in both fakes lint leaks ("her" in "her aunt's cabin") and pollutes
+    # keyword-recall scoring
+    "her", "his", "their", "theirs", "hers", "yours", "she", "he", "they",
+    "them", "him", "was", "were", "be", "been", "have", "has", "had",
 }
 
 
