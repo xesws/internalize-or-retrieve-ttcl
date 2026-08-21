@@ -1,6 +1,7 @@
 # TTCL Proposal Report — Online Memory Placement for Test-Time Continual Learning Agents
 
-版本 v1.0 · 2026-08-21 · 目标 venue: NeurIPS 2026 TTCL Workshop (general research track, 4–9 页正文, ddl Aug 29 AoE, non-archival, 双盲)
+版本 v1.1 · 2026-08-21 · 目标 venue: NeurIPS 2026 TTCL Workshop (general research track, 4–9 页正文, ddl Aug 29 AoE, non-archival, 双盲)
+变更记录: v1.1 (2026-08-21, JQ 裁决) — §5.2 工作负载播种句修正: persona 与记忆池改为 GEN 模型自生成虚构用户 (原 PersonaChat/MSC/LOCOMO 素材播种), 三者降为多 session 结构与类型学参照引用; 论文如实披露自生成来源。其余章节未动。
 
 ---
 
@@ -76,7 +77,7 @@ claim 是 policy claim, 所以测试集的第一目标是让两个极端策略�
 
 ### 5.2 工作负载构建
 
-单位是合成用户的 session 流: 每用户 20–40 session, 60–100 条记忆候选, 隐藏类型标签仅生成器可见。素材播种自公开数据再由 LLM 改写成自然对话轮: belief ← PersonaChat persona 语句; 多 session 结构 ← LOCOMO/MSC 形态; fact/schedule ← 模板; transient ← 闲聊语料。每条记忆在生成时自动配套 probe: 即时 QA、延迟 QA (隔 k session)、paraphrase、自由写作场景 (每场景捆 2–3 条记忆, 场景文本不得含目标词)、supersede 后续 (更新后探老值与新值)、near-miss 孪生 (同表面不同归属, 测 collision 与 locality)。全局健康检查: 固定 MMLU 子集 + unrelated 池, 每 N 条编辑跑一次。压力机制: 对 all-RAG —— distractor 文档库、top-k 上限、store 预算触发旧条目 eviction; 对 all-edit —— 编辑数增长 (locality 漂移、collision 率)、supersede 频度 (staleness 与重编辑代价)。
+单位是合成用户的 session 流: 每用户 20–40 session, 60–100 条记忆候选, 隐藏类型标签仅生成器可见。persona 与记忆池由生成器 LLM 自生成虚构用户 (论文如实披露; 类型判定规则与占比冻结于仓库 workload spec), 多 session 结构与类型学参照 PersonaChat / MSC / LOCOMO 的设计 (引用, 不作素材播种源); fact/schedule 与 transient 由生成器按 §5.2 类型规则构造, supersede 对与 near-miss 孪生成对生成。每条记忆在生成时自动配套 probe: 即时 QA、延迟 QA (隔 k session)、paraphrase、自由写作场景 (每场景捆 2–3 条记忆, 场景文本不得含目标词, 流末求值)、supersede 后续 (更新后探老值与新值)、near-miss 孪生 (同表面不同归属, 测 collision 与 locality)。全局健康检查: 固定 MMLU 子集 + unrelated 池, 每 N 条编辑跑一次。压力机制: 对 all-RAG —— distractor 文档库、top-k 上限、store 预算触发旧条目 eviction; 对 all-edit —— 编辑数增长 (locality 漂移、collision 率)、supersede 频度 (staleness 与重编辑代价)。
 
 ### 5.3 对照臂与成功判据
 

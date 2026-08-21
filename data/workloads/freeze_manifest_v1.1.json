@@ -1,0 +1,52 @@
+{
+ "meta": {
+  "version": "v1.1",
+  "change": "temporal audit fix: free_scenario probes on superseded memories now expect the chain-final value keywords (15 probes: dev 3, test 12); answer_keywords derivation switched to edge-trimmed full-phrase semantics"
+ },
+ "splits": {
+  "dev": {
+   "users": 2,
+   "memories": {
+    "belief": 24,
+    "fact": 64,
+    "transient": 16,
+    "total": 104
+   },
+   "probes": {
+    "qa_immediate": 104,
+    "qa_delayed": 104,
+    "qa_paraphrase": 104,
+    "free_scenario": 19,
+    "supersede_old": 11,
+    "supersede_new": 11,
+    "near_miss": 10,
+    "total": 363
+   },
+   "lint_violations": 0,
+   "turn_mismatches": 0,
+   "schema_errors": 0
+  },
+  "test": {
+   "users": 4,
+   "memories": {
+    "belief": 53,
+    "fact": 127,
+    "transient": 30,
+    "total": 210
+   },
+   "probes": {
+    "qa_immediate": 210,
+    "qa_delayed": 210,
+    "qa_paraphrase": 210,
+    "free_scenario": 46,
+    "supersede_old": 23,
+    "supersede_new": 23,
+    "near_miss": 18,
+    "total": 740
+   },
+   "lint_violations": 0,
+   "turn_mismatches": 0,
+   "schema_errors": 0
+  }
+ }
+}

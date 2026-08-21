@@ -1,6 +1,11 @@
 # Stage Report P1 v1.0 — 工作负载与 Probe 套件 (G1)
 
-日期 2026-08-21 · 汇报人: coding agent · 状态: **G1 机器验收全过, 等待 JQ 抽查 10 条**
+日期 2026-08-21 · 汇报人: coding agent · 状态: **G1 有条件关闭 → 条件已达成 (2026-08-21 JQ 抽查 8/10 通过, 两项前置完成后视为关闭, 无需再等)**
+
+> **v1.1 增补 (2026-08-21 晚, G1 收口)**: 按 JQ 抽查结论完成两项前置。
+> **前置一 (计分语义矩阵)**: `configs/scoring_v1.yaml` 冻结 per-type × per-kind 口径——transient 不进 recall 综合; transient × qa_delayed 反转计分 (断言陈旧瞬时状态 = freshness 失败); transient × qa_immediate/qa_paraphrase 因各臂 v0 服务路径均无会话缓冲而剔除综合分、单独报告; supersede_new/old 归 freshness; near_miss 归 locality (keyword_exclusive 打分)。G2 判据 ③ 的综合分只经 `src/evalx/scorecard.py` 按此矩阵计算, 配 6 项 CPU 单测。
+> **前置二 (时间一致性审计)**: `scripts/audit_scenario_temporal.py` 全量审计 free_scenario × supersede 链, 发现 **15 处违例** (dev 3 / test 12)——捆住被取代旧值记忆的场景探针仍期望旧值 keywords, 而场景约定流末求值、当时值应为链终新值。修复仅改 15 条探针的 answer_keywords (机械推导、无 LLM 调用、场景文本未动), 工作负载升 **v1.1** 重冻结 (`{dev,test}_v1.1.json` + `freeze_manifest_v1.1.json` + `data/workloads/CHANGELOG.md`), 全部冻结门重验通过 (schema 0 / lint 0 / turn 0)。审计明细存 `data/workloads/temporal_audit_v1.1.json`。附带修正: answer_keywords 派生改为"边缘修剪整短语"语义 (内部停用词保留, "Coffee by Design" 可匹配; 边缘代词仍去除)。
+> 三项裁决落档: proposal §5.2 播种句改写 (头部升 v1.1); 分类规则与 belief 23% 冻结、P2 N=20 分层 (belief ≥ 6) 写入 `docs/workload_spec_v1.0.md`; DeepSeek 口径不变。两条小项: `docs/adjudication_log_v1.0.md` 开档 (首批 2 条词面误报); probe 视角分布实测 (第二人称 572 / 第一 216 / 第三 121 / 中性 129) 冻结为约定写入 workload spec §4。**G1 就此关闭。**
 
 ## 结论
 

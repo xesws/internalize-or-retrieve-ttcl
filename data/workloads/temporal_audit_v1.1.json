@@ -1,0 +1,338 @@
+{
+ "splits": {
+  "dev": {
+   "scenarios": 9,
+   "violations": 3,
+   "details": [
+    {
+     "user": "u01",
+     "scenario": "u01-sc000",
+     "memory": "u01-m000",
+     "chain_new": "u01-m012",
+     "old_keywords": [
+      "tandem coffee",
+      "tandem"
+     ],
+     "expected_now": [
+      "coffee by design",
+      "coffee"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u01-sc000",
+      "answer_keywords": [
+       "coffee by design",
+       "coffee"
+      ]
+     }
+    },
+    {
+     "user": "u01",
+     "scenario": "u01-sc002",
+     "memory": "u01-m006",
+     "chain_new": "u01-m018",
+     "old_keywords": [
+      "running eastern trail",
+      "running"
+     ],
+     "expected_now": [
+      "swimming at riverton pool",
+      "swimming"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u01-sc002",
+      "answer_keywords": [
+       "swimming at riverton pool",
+       "swimming"
+      ]
+     }
+    },
+    {
+     "user": "u02",
+     "scenario": "u02-sc002",
+     "memory": "u02-m008",
+     "chain_new": "u02-m023",
+     "old_keywords": [
+      "county animal shelter",
+      "county"
+     ],
+     "expected_now": [
+      "friday mornings",
+      "friday"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u02-sc002",
+      "answer_keywords": [
+       "friday mornings",
+       "friday"
+      ]
+     }
+    }
+   ],
+   "fixed_probes": 3,
+   "out_path": "data/workloads/dev_v1.1.json"
+  },
+  "test": {
+   "scenarios": 18,
+   "violations": 12,
+   "details": [
+    {
+     "user": "u03",
+     "scenario": "u03-sc002",
+     "memory": "u03-m006",
+     "chain_new": "u03-m017",
+     "old_keywords": [
+      "libreria croce",
+      "libreria"
+     ],
+     "expected_now": [
+      "porta palazzo stall",
+      "porta"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u03-sc002",
+      "answer_keywords": [
+       "porta palazzo stall",
+       "porta"
+      ]
+     }
+    },
+    {
+     "user": "u03",
+     "scenario": "u03-sc004",
+     "memory": "u03-m009",
+     "chain_new": "u03-m025",
+     "old_keywords": [
+      "first thursday",
+      "first"
+     ],
+     "expected_now": [
+      "second thursday",
+      "second"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u03-sc004",
+      "answer_keywords": [
+       "second thursday",
+       "second"
+      ]
+     }
+    },
+    {
+     "user": "u03",
+     "scenario": "u03-sc004",
+     "memory": "u03-m010",
+     "chain_new": "u03-m028",
+     "old_keywords": [
+      "tuesdays"
+     ],
+     "expected_now": [
+      "wednesdays"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u03-sc004",
+      "answer_keywords": [
+       "wednesdays"
+      ]
+     }
+    },
+    {
+     "user": "u03",
+     "scenario": "u03-sc004",
+     "memory": "u03-m011",
+     "chain_new": "u03-m029",
+     "old_keywords": [
+      "genoa"
+     ],
+     "expected_now": [
+      "bologna"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u03-sc004",
+      "answer_keywords": [
+       "bologna"
+      ]
+     }
+    },
+    {
+     "user": "u04",
+     "scenario": "u04-sc001",
+     "memory": "u04-m004",
+     "chain_new": "u04-m026",
+     "old_keywords": [
+      "marisol vane",
+      "marisol"
+     ],
+     "expected_now": [
+      "priya chowdhury",
+      "priya"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u04-sc001",
+      "answer_keywords": [
+       "priya chowdhury",
+       "priya"
+      ]
+     }
+    },
+    {
+     "user": "u04",
+     "scenario": "u04-sc003",
+     "memory": "u04-m009",
+     "chain_new": "u04-m033",
+     "old_keywords": [
+      "250"
+     ],
+     "expected_now": [
+      "400 pounds",
+      "400"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u04-sc003",
+      "answer_keywords": [
+       "400 pounds",
+       "400"
+      ]
+     }
+    },
+    {
+     "user": "u05",
+     "scenario": "u05-sc000",
+     "memory": "u05-m000",
+     "chain_new": "u05-m020",
+     "old_keywords": [
+      "riverside practice",
+      "riverside"
+     ],
+     "expected_now": [
+      "montpellier health centre",
+      "montpellier"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u05-sc000",
+      "answer_keywords": [
+       "montpellier health centre",
+       "montpellier"
+      ]
+     }
+    },
+    {
+     "user": "u05",
+     "scenario": "u05-sc001",
+     "memory": "u05-m004",
+     "chain_new": "u05-m023",
+     "old_keywords": [
+      "earl grey",
+      "earl"
+     ],
+     "expected_now": [
+      "loose-leaf oolong",
+      "loose-leaf"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u05-sc001",
+      "answer_keywords": [
+       "loose-leaf oolong",
+       "loose-leaf"
+      ]
+     }
+    },
+    {
+     "user": "u05",
+     "scenario": "u05-sc003",
+     "memory": "u05-m011",
+     "chain_new": "u05-m030",
+     "old_keywords": [
+      "fern-whorl-42"
+     ],
+     "expected_now": [
+      "moss-lantern-88"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u05-sc003",
+      "answer_keywords": [
+       "moss-lantern-88"
+      ]
+     }
+    },
+    {
+     "user": "u05",
+     "scenario": "u05-sc003",
+     "memory": "u05-m012",
+     "chain_new": "u05-m035",
+     "old_keywords": [
+      "cold-press paper",
+      "cold-press"
+     ],
+     "expected_now": [
+      "arches hot-press",
+      "arches"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u05-sc003",
+      "answer_keywords": [
+       "arches hot-press",
+       "arches"
+      ]
+     }
+    },
+    {
+     "user": "u06",
+     "scenario": "u06-sc000",
+     "memory": "u06-m002",
+     "chain_new": "u06-m020",
+     "old_keywords": [
+      "17-34-08"
+     ],
+     "expected_now": [
+      "25-40-19"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u06-sc000",
+      "answer_keywords": [
+       "25-40-19"
+      ]
+     }
+    },
+    {
+     "user": "u06",
+     "scenario": "u06-sc003",
+     "memory": "u06-m013",
+     "chain_new": "u06-m038",
+     "old_keywords": [
+      "blue kettle",
+      "blue"
+     ],
+     "expected_now": [
+      "copper fern",
+      "copper"
+     ],
+     "probe": {
+      "kind": "free_scenario",
+      "scenario_id": "u06-sc003",
+      "answer_keywords": [
+       "copper fern",
+       "copper"
+      ]
+     }
+    }
+   ],
+   "fixed_probes": 12,
+   "out_path": "data/workloads/test_v1.1.json"
+  }
+ },
+ "total_violations": 15
+}

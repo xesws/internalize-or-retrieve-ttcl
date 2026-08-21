@@ -48,18 +48,28 @@ _STOPWORDS = {
 def answer_keywords(target: str, limit: int = 3) -> list[str]:
     """Mechanically derive probe answer keywords from the edit target.
 
-    Multi-word targets keep the full phrase (the discriminative unit: "second
-    tuesday" — bare "tuesday" is domain context, not answer content) plus their
-    first content word. Single words pass through as-is; the lint matches them
-    on word boundaries so "hat" does not fire inside "what"."""
-    words = [w for w in re.findall(r"[A-Za-z0-9'-]+", target.lower())
-             if w not in _STOPWORDS and len(w) > 2]
-    if not words:
+    Multi-word targets keep the full phrase with only LEADING/TRAILING
+    stopwords trimmed (interior words stay, so " Coffee by Design" -> "coffee
+    by design" still matches natural answers; edge-trimming removes "her"
+    from " her aunt's cabin"). The first content word rides along as a
+    secondary single-word keyword. The lint matches words on boundaries, so
+    "hat" never fires inside "what"."""
+    words = [w for w in re.findall(r"[A-Za-z0-9'-]+", target.lower())]
+    content = [w for w in words if w not in _STOPWORDS and len(w) > 2]
+    if not content:
         return [target.strip().lower()]
-    if len(words) >= 2:
-        phrase = " ".join(words)
-        return ([phrase] + words[:1])[: limit + 1]
-    return words[:limit]
+    # trim stopwords only at the edges of the original token span
+    lo, hi = 0, len(words)
+    while lo < hi and (words[lo] in _STOPWORDS or len(words[lo]) <= 2):
+        lo += 1
+    while hi > lo and (words[hi - 1] in _STOPWORDS or len(words[hi - 1]) <= 2):
+        hi -= 1
+    kws = []
+    if hi - lo >= 2:
+        kws.append(" ".join(words[lo:hi]))
+    first_content = next(w for w in words if w not in _STOPWORDS and len(w) > 2)
+    kws.append(first_content)
+    return kws[: limit + 1]
 
 
 def turn_matches(rec: dict) -> bool:

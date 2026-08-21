@@ -1,0 +1,68 @@
+# Scoring semantics matrix v1 (frozen; JQ ruling 2026-08-21).
+#
+# Single source of truth for how each (memory_type x probe_kind) cell scores.
+# Read by src/evalx/scorecard.py; the G2 composite (criterion ③) is computed
+# ONLY through this matrix. Change = new version + changelog, never in place.
+#
+# Cell fields:
+#   axis: recall | freshness | locality | session_scoped | na
+#   in_composite: contributes to the G2 composite (equal-weight mean of the
+#     recall / freshness / locality axis scores; cost + attribution reported
+#     separately, never composited — proposal §5.4).
+#   scoring: keyword_hit        -> 1 if any answer keyword appears in the
+#                                   reply (word-boundary), else 0
+#            keyword_assert     -> REVERSE: 1 if NO keyword appears (a stale
+#                                   assertion is the failure), else 0
+#            keyword_exclusive  -> 1 if own keywords hit AND twin keywords do
+#                                   not; 0.5 if both; 0 if only twin / neither
+#   note: rationale.
+#
+# Conventions (also docs/workload_spec_v1.0.md):
+#   - free_scenario probes evaluate at END OF STREAM.
+#   - qa_immediate / qa_paraphrase evaluate in the write session;
+#     qa_delayed after `after_sessions`.
+#   - Transients never enter the recall composite (JQ ruling).
+
+matrix:
+  belief:
+    qa_immediate:  {axis: recall,   in_composite: true,  scoring: keyword_hit}
+    qa_delayed:    {axis: recall,   in_composite: true,  scoring: keyword_hit}
+    qa_paraphrase: {axis: recall,   in_composite: true,  scoring: keyword_hit}
+    free_scenario: {axis: recall,   in_composite: true,  scoring: keyword_hit}
+    supersede_new: {axis: freshness, in_composite: true, scoring: keyword_hit}
+    supersede_old: {axis: freshness, in_composite: true, scoring: keyword_hit}
+    near_miss:     {axis: locality, in_composite: true,  scoring: keyword_exclusive}
+
+  fact:
+    qa_immediate:  {axis: recall,   in_composite: true,  scoring: keyword_hit}
+    qa_delayed:    {axis: recall,   in_composite: true,  scoring: keyword_hit}
+    qa_paraphrase: {axis: recall,   in_composite: true,  scoring: keyword_hit}
+    free_scenario: {axis: recall,   in_composite: true,  scoring: keyword_hit}
+    supersede_new: {axis: freshness, in_composite: true, scoring: keyword_hit,
+                   note: "new-value correctness; old-value residual on these probes is reported separately"}
+    supersede_old: {axis: freshness, in_composite: true, scoring: keyword_hit,
+                   note: "explicit 'used to be' question — old-value accessibility is a capability, not a failure"}
+    near_miss:     {axis: locality, in_composite: true,  scoring: keyword_exclusive}
+
+  transient:
+    qa_immediate:  {axis: session_scoped, in_composite: false, scoring: keyword_hit,
+                   note: "no arm's v0 serving path has a session buffer — excluded from every composite, reported per arm"}
+    qa_delayed:    {axis: freshness, in_composite: true, scoring: keyword_assert,
+                   note: "REVERSE: confidently asserting a stale transient state is the failure (JQ ruling)"}
+    qa_paraphrase: {axis: session_scoped, in_composite: false, scoring: keyword_hit,
+                   note: "same session-scoped semantics as qa_immediate (asked near write time)"}
+    free_scenario: {axis: na, in_composite: false, scoring: keyword_hit,
+                   note: "generator bundles only durable (belief/fact) memories into scenarios"}
+    supersede_new: {axis: na, in_composite: false, scoring: keyword_hit,
+                   note: "supersede pairs are constructed over belief/fact only"}
+    supersede_old: {axis: na, in_composite: false, scoring: keyword_hit,
+                   note: "supersede pairs are constructed over belief/fact only"}
+    near_miss:     {axis: na, in_composite: false, scoring: keyword_hit,
+                   note: "near-miss pairs are constructed over belief/fact only"}
+
+composite:
+  # G2 criterion ③ composite: equal-weight mean over the axes that have at
+  # least one in_composite cell evaluated for the arm.
+  axes: [recall, freshness, locality]
+  axis_weights: {recall: 1.0, freshness: 1.0, locality: 1.0}
+  reported_only: [cost, attribution, session_scoped]

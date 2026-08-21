@@ -1,0 +1,5064 @@
+{
+ "version": "v1.1",
+ "generator_model": "glm-5.3",
+ "prompt_version": "v1",
+ "prompt_hashes": {
+  "gen_persona_v1.md": "80e0add023a61066",
+  "gen_sessions_v1.md": "4b7250a0d22d5c22",
+  "gen_memory_v1.md": "c42d00bcb299eb0a",
+  "gen_supersede_nearmiss_v1.md": "195af3460f5536e3",
+  "gen_scenario_v1.md": "df45a63eb5de7d37",
+  "gen_rebind_v1.md": "f3d8172d1ff6545c"
+ },
+ "git_sha": "f8c245a08fc3414a8fc96e342d55daa9d361de52",
+ "split": "dev",
+ "users": [
+  {
+   "user_id": "u01",
+   "n_sessions": 24,
+   "memories": [
+    {
+     "id": "u01-m000",
+     "user_id": "u01",
+     "session_idx": 0,
+     "turn_text": "First up: when you're setting reminders for my appointments, can you factor in a stop at Tandem Coffee on A Street? It's my favorite café and I like to sit there for ten minutes before heading anywhere stressful.",
+     "type": "fact",
+     "canonical": "Favorite café is Tandem Coffee on A Street.",
+     "subject": "Favorite café is Tandem Coffee on A Street.",
+     "edit_stem": "When it comes to local cafés, the user's favorite spot is",
+     "edit_target": " Tandem Coffee",
+     "key_prompts": [
+      "What is my favorite café?",
+      "Which café is my go-to spot?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So, which café around here is your favorite?",
+       "answer_keywords": [
+        "tandem coffee",
+        "tandem"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Where do you like to settle in with a warm drink when you're out and about?",
+       "answer_keywords": [
+        "tandem coffee",
+        "tandem"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where's that favorite little spot of yours for a drink and some downtime?",
+       "answer_keywords": [
+        "tandem coffee",
+        "tandem"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc000",
+       "answer_keywords": [
+        "coffee by design",
+        "coffee"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "Which café was my favorite before I switched neighborhoods?",
+       "answer_keywords": [
+        "tandem coffee",
+        "tandem"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m001",
+     "user_id": "u01",
+     "session_idx": 0,
+     "turn_text": "Also, I've had this dull headache all afternoon — definitely too much screen time. Can you set a nudge to step away from the monitor every hour or so?",
+     "type": "transient",
+     "canonical": "Has a dull headache from too much screen time.",
+     "subject": "Has a dull headache from too much screen time.",
+     "edit_stem": "Because of too much screen time, the user is currently experiencing",
+     "edit_target": " a dull headache",
+     "key_prompts": [
+      "What is my current physical complaint?",
+      "What symptom am I dealing with right now?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What's been bothering the user physically today?",
+       "answer_keywords": [
+        "dull headache",
+        "dull"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "After all those long hours at the computer, what has Dana been experiencing?",
+       "answer_keywords": [
+        "dull headache",
+        "dull"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what exactly is the user suffering from at the moment?",
+       "answer_keywords": [
+        "dull headache",
+        "dull"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m002",
+     "user_id": "u01",
+     "session_idx": 0,
+     "turn_text": "On a brighter note, the weekend trip to my aunt's cabin is almost here and I'm genuinely excited about it. A couple of days offline is exactly what I need right now.",
+     "type": "transient",
+     "canonical": "Excited about the upcoming weekend trip to her aunt's cabin.",
+     "subject": "Excited about the upcoming weekend trip to her aunt's cabin.",
+     "edit_stem": "Regarding the upcoming weekend, the user is excited about her getaway to",
+     "edit_target": " her aunt's cabin",
+     "key_prompts": [
+      "Where am I going this weekend?",
+      "Which place am I excited to visit soon?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where are you headed for the weekend?",
+       "answer_keywords": [
+        "aunt's cabin",
+        "aunt's"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "So where's that exciting weekend getaway of yours, again?",
+       "answer_keywords": [
+        "aunt's cabin",
+        "aunt's"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where's the weekend trip taking you, anyway?",
+       "answer_keywords": [
+        "aunt's cabin",
+        "aunt's"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m003",
+     "user_id": "u01",
+     "session_idx": 0,
+     "turn_text": "Last thing: for anything you schedule for me, assume I'd rather walk or cycle than drive — that's my default whenever it's doable.",
+     "type": "belief",
+     "canonical": "Prefers walking or cycling over driving whenever possible.",
+     "subject": "Prefers walking or cycling over driving whenever possible.",
+     "edit_stem": "When it comes to getting around town, the user prefers",
+     "edit_target": " walking or cycling",
+     "key_prompts": [
+      "How do I usually get from place to place?",
+      "Which way of traveling do I prefer for short trips?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So how do you usually get around town?",
+       "answer_keywords": [
+        "walking cycling",
+        "walking"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When you need to run an errand nearby, how do you tend to travel?",
+       "answer_keywords": [
+        "walking cycling",
+        "walking"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's your usual way of getting places?",
+       "answer_keywords": [
+        "walking cycling",
+        "walking"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc000",
+       "answer_keywords": [
+        "walking cycling",
+        "walking"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m004",
+     "user_id": "u01",
+     "session_idx": 1,
+     "turn_text": "A friend just asked if I'd help with a moving thing this Sunday — I'm going to say no. Sundays are my quiet, no-obligation days, and honestly I decline pretty much anything anyone tries to schedule on them.",
+     "type": "belief",
+     "canonical": "Protects her Sundays as quiet, obligation-free days and declines most invitations on them.",
+     "subject": "Protects her Sundays as quiet, obligation-free days and decl",
+     "edit_stem": "The day of the week the user keeps quiet and free of all obligations is",
+     "edit_target": " Sundays",
+     "key_prompts": [
+      "Which day of the week do I keep completely free of plans?",
+      "Which day do I usually turn down invitations?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So which day of the week is your quiet, commitment-free day?",
+       "answer_keywords": [
+        "sundays"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What day do you typically set aside to avoid plans and invites?",
+       "answer_keywords": [
+        "sundays"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Which day is your no-plans, do-nothing day?",
+       "answer_keywords": [
+        "sundays"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc001",
+       "answer_keywords": [
+        "sundays"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m005",
+     "user_id": "u01",
+     "session_idx": 1,
+     "turn_text": "Also, small admin thing — when you're sorting out my bill reminders, use my checking account. It's at Casco Credit Union, the one ending in 5582. That's the main one everything runs through.",
+     "type": "fact",
+     "canonical": "Checking account is at Casco Credit Union, ending in 5582.",
+     "subject": "Checking account is at Casco Credit Union, ending in 5582.",
+     "edit_stem": "The user's checking account, ending in 5582, is held at",
+     "edit_target": " Casco Credit Union",
+     "key_prompts": [
+      "Where do I keep my checking account?",
+      "Which financial institution holds my checking account?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So where does the user do her everyday banking?",
+       "answer_keywords": [
+        "casco credit union",
+        "casco"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which financial institution is the user's checking account with?",
+       "answer_keywords": [
+        "casco credit union",
+        "casco"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where does the user keep her checking account these days?",
+       "answer_keywords": [
+        "casco credit union",
+        "casco"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc001",
+       "answer_keywords": [
+        "casco credit union",
+        "casco"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m006",
+     "user_id": "u01",
+     "session_idx": 2,
+     "turn_text": "If I'm going to be out anyway, I want to fold in some exercise — I'm happiest running on the Eastern Trail, so let's see if I can tack a few miles onto the route before lunch.",
+     "type": "fact",
+     "canonical": "Preferred exercise is running on the Eastern Trail.",
+     "subject": "Preferred exercise is running on the Eastern Trail.",
+     "edit_stem": "When it comes to staying in shape, the user's preferred exercise is",
+     "edit_target": " running the Eastern Trail",
+     "key_prompts": [
+      "What is my favorite form of exercise?",
+      "How do I like to stay active?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So, what's my go-to workout these days?",
+       "answer_keywords": [
+        "running eastern trail",
+        "running"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "How do I usually get my exercise?",
+       "answer_keywords": [
+        "running eastern trail",
+        "running"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What do I do to keep myself in shape?",
+       "answer_keywords": [
+        "running eastern trail",
+        "running"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc002",
+       "answer_keywords": [
+        "swimming at riverton pool",
+        "swimming"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "Before the knee injury, what activity did I used to list as my favorite way to exercise?",
+       "answer_keywords": [
+        "running eastern trail",
+        "running"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m007",
+     "user_id": "u01",
+     "session_idx": 2,
+     "turn_text": "Also, add a note to the file: my spare apartment key lives with my neighbor Ruth, so if I ever lock myself out mid-errand, she's my rescue plan.",
+     "type": "fact",
+     "canonical": "Keeps a spare apartment key with neighbor Ruth.",
+     "subject": "Keeps a spare apartment key with neighbor Ruth.",
+     "edit_stem": "In case she ever gets locked out, the user keeps a spare apartment key with",
+     "edit_target": " neighbor Ruth",
+     "key_prompts": [
+      "Who is holding my spare apartment key?",
+      "If I get locked out, who has my spare key?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Just to be clear, if you ever get locked out, who's got your backup key?",
+       "answer_keywords": [
+        "neighbor ruth",
+        "neighbor"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you lost your main key, who could let you back into your apartment?",
+       "answer_keywords": [
+        "neighbor ruth",
+        "neighbor"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Who's the person you'd call if you found yourself stuck outside your place?",
+       "answer_keywords": [
+        "neighbor ruth",
+        "neighbor"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc002",
+       "answer_keywords": [
+        "neighbor ruth",
+        "neighbor"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "Where is the spare key to the apartment kept?",
+       "answer_keywords": [
+        "neighbor ruth",
+        "neighbor"
+       ],
+       "near_miss_of": "u01-m023"
+      }
+     ]
+    },
+    {
+     "id": "u01-m008",
+     "user_id": "u01",
+     "session_idx": 2,
+     "turn_text": "And can you save my home wifi password somewhere I can actually find it? It's harbor-lantern-42 — I blank on it every single time someone asks.",
+     "type": "fact",
+     "canonical": "Home wifi password is harbor-lantern-42.",
+     "subject": "Home wifi password is harbor-lantern-42.",
+     "edit_stem": "The user's home wifi password is",
+     "edit_target": " harbor-lantern-42",
+     "key_prompts": [
+      "What is my home wifi password?",
+      "Which login do I use to connect to my apartment's wireless network?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What's the wifi password for my apartment?",
+       "answer_keywords": [
+        "harbor-lantern-42"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "How do I sign in to my wireless network at home?",
+       "answer_keywords": [
+        "harbor-lantern-42"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What do I type in to get online at my place?",
+       "answer_keywords": [
+        "harbor-lantern-42"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc003",
+       "answer_keywords": [
+        "harbor-lantern-42"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m009",
+     "user_id": "u01",
+     "session_idx": 3,
+     "turn_text": "Can we talk money for a second? I track all my personal finances in one spreadsheet, and I sit down with it every Sunday evening — so if anything is due before then, I need to know now, not after.",
+     "type": "belief",
+     "canonical": "Tracks her personal finances in a spreadsheet every Sunday evening.",
+     "subject": "Tracks her personal finances in a spreadsheet every Sunday e",
+     "edit_stem": "For keeping tabs on her personal finances, the user logs everything in",
+     "edit_target": " a spreadsheet",
+     "key_prompts": [
+      "What do I use to keep my personal finances in order?",
+      "Which tool do I rely on for managing my money?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So what's your setup for staying on top of your finances?",
+       "answer_keywords": [
+        "spreadsheet"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which tool has become your go-to for keeping your money organized?",
+       "answer_keywords": [
+        "spreadsheet"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where does the user keep her personal financial records?",
+       "answer_keywords": [
+        "spreadsheet"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc003",
+       "answer_keywords": [
+        "spreadsheet"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m010",
+     "user_id": "u01",
+     "session_idx": 3,
+     "turn_text": "While we're scheduling things, please keep my mornings clear. Early morning is honestly the best time for me to do focused editing, so I'd rather push money admin to the afternoon or evening.",
+     "type": "belief",
+     "canonical": "Believes early morning is the best time to do focused editing work.",
+     "subject": "Believes early morning is the best time to do focused editin",
+     "edit_stem": "Regarding focused editing work, the user believes the ideal time of day is",
+     "edit_target": " early morning",
+     "key_prompts": [
+      "Which part of the day do I consider best for focused editing work?",
+      "When do I think I do my best editing?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Out of curiosity, when during the day do you feel most able to concentrate on your editing?",
+       "answer_keywords": [
+        "early morning",
+        "early"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you had a big manuscript to get through, what time of day would you block off for it?",
+       "answer_keywords": [
+        "early morning",
+        "early"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So when is your prime window for tackling edits?",
+       "answer_keywords": [
+        "early morning",
+        "early"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc004",
+       "answer_keywords": [
+        "early morning",
+        "early"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m011",
+     "user_id": "u01",
+     "session_idx": 3,
+     "turn_text": "Last thing, I promise. I send my invoices on the last Friday of each month, always with net-30 payment terms — can you nudge me the Thursday before so nothing slips?",
+     "type": "fact",
+     "canonical": "Sends invoices on the last Friday of each month with net-30 payment terms.",
+     "subject": "Sends invoices on the last Friday of each month with net-30 ",
+     "edit_stem": "When billing clients, the user applies net-30 payment terms and sends her invoices each month on",
+     "edit_target": " the last Friday",
+     "key_prompts": [
+      "What is my schedule each month for sending invoices?",
+      "Which day do I send my invoices to clients?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When do I send out my invoices for the month?",
+       "answer_keywords": [
+        "last friday",
+        "last"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which day of the month is my billing day?",
+       "answer_keywords": [
+        "last friday",
+        "last"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "When do I do my invoice run each month?",
+       "answer_keywords": [
+        "last friday",
+        "last"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u01-sc004",
+       "answer_keywords": [
+        "last friday",
+        "last"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m012",
+     "user_id": "u01",
+     "session_idx": 4,
+     "turn_text": "While we're at it, remind me to dig my punch card out of the junk drawer — Coffee by Design on Fore Street has been my favorite café since I switched neighborhoods, and the card keeps getting buried in all this clutter.",
+     "type": "fact",
+     "canonical": "Favorite café is Coffee by Design on Fore Street after switching neighborhoods.",
+     "subject": "Favorite café is Coffee by Design on Fore Street after switc",
+     "edit_stem": "Since switching neighborhoods, the user's favorite spot to grab a drink on Fore Street is",
+     "edit_target": " Coffee by Design",
+     "key_prompts": [
+      "What is my favorite spot to grab a drink these days?",
+      "Which place do I keep going back to on Fore Street?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u01-m000",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Which spot became your favorite after the neighborhood change?",
+       "answer_keywords": [
+        "coffee design",
+        "coffee"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Where do you like to unwind with a drink near Fore Street these days?",
+       "answer_keywords": [
+        "coffee design",
+        "coffee"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's that go-to hangout of yours now?",
+       "answer_keywords": [
+        "coffee design",
+        "coffee"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "What café do I currently consider my favorite?",
+       "answer_keywords": [
+        "coffee design",
+        "coffee"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m013",
+     "user_id": "u01",
+     "session_idx": 4,
+     "turn_text": "Honestly, I'm still feeling grateful after a long, good call with my sister last night, so I want to ride the momentum — remind me to tackle the hall closet this afternoon.",
+     "type": "transient",
+     "canonical": "Feeling grateful after a long, good call with her sister.",
+     "subject": "Feeling grateful after a long, good call with her sister.",
+     "edit_stem": "After the long, pleasant phone conversation with her sister, the user felt",
+     "edit_target": " grateful",
+     "key_prompts": [
+      "How did I feel after the long, good call with my sister?",
+      "What emotion did I experience after that phone conversation with my sister?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "How are you feeling after that call with your sister?",
+       "answer_keywords": [
+        "grateful"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "How did the phone conversation with your sister leave you feeling?",
+       "answer_keywords": [
+        "grateful"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "That chat with your sister — how did it make you feel?",
+       "answer_keywords": [
+        "grateful"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m014",
+     "user_id": "u01",
+     "session_idx": 5,
+     "turn_text": "Give me a second, I'm writing the plan into my Moleskine — I still do all my meal planning by hand and that's the notebook I swear by.",
+     "type": "fact",
+     "canonical": "Preferred notebook brand is Moleskine.",
+     "subject": "Preferred notebook brand is Moleskine.",
+     "edit_stem": "When it comes to notebooks for jotting down editing notes, the user's preferred brand is",
+     "edit_target": " Moleskine",
+     "key_prompts": [
+      "What is my go-to notebook brand?",
+      "Which notebook brand do I usually pick when shopping for supplies?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "I'm restocking my desk supplies for copyediting work — which notebook brand do I favor?",
+       "answer_keywords": [
+        "moleskine"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If I'm at the stationery shop picking out a new notebook, which maker do I always end up choosing?",
+       "answer_keywords": [
+        "moleskine"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So, for notebooks I write in — what name do I keep coming back to?",
+       "answer_keywords": [
+        "moleskine"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "Which notebook brand did I prefer before switching after the paper changed?",
+       "answer_keywords": [
+        "moleskine"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m015",
+     "user_id": "u01",
+     "session_idx": 5,
+     "turn_text": "Keep Tuesday dinner super simple. Book club meets the first Tuesday of every month, so I'll be out that evening — leftovers are fine.",
+     "type": "fact",
+     "canonical": "Book club meets the first Tuesday of each month.",
+     "subject": "Book club meets the first Tuesday of each month.",
+     "edit_stem": "Each month, the user's book club meets on the",
+     "edit_target": " first Tuesday",
+     "key_prompts": [
+      "Which day of the month does my book club gather?",
+      "When during the month does my book club get together?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So which day does your book club meet on?",
+       "answer_keywords": [
+        "first tuesday",
+        "first"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When is your book club's next get-together scheduled?",
+       "answer_keywords": [
+        "first tuesday",
+        "first"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What day of the month is book club night for you?",
+       "answer_keywords": [
+        "first tuesday",
+        "first"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "On which Tuesday of the month did the book club meet before the schedule was changed?",
+       "answer_keywords": [
+        "first tuesday",
+        "first"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m016",
+     "user_id": "u01",
+     "session_idx": 5,
+     "turn_text": "For the big stock-up trip I'll take the car. Oh, that reminds me — the inspection sticker expires at the end of April, so can you nudge me to get that handled soon?",
+     "type": "fact",
+     "canonical": "Car inspection sticker expires at the end of April.",
+     "subject": "Car inspection sticker expires at the end of April.",
+     "edit_stem": "The month when the user's car inspection sticker expires is",
+     "edit_target": " April",
+     "key_prompts": [
+      "In what month does my car inspection sticker expire?",
+      "Which month does my inspection sticker run out?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So when do I need to get my car inspected this year?",
+       "answer_keywords": [
+        "april"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What month does my inspection sticker become invalid?",
+       "answer_keywords": [
+        "april"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "By the way, what month is my car inspection due?",
+       "answer_keywords": [
+        "april"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m017",
+     "user_id": "u01",
+     "session_idx": 5,
+     "turn_text": "Also, I want to pick up a new cookbook this week. Check the independent bookstores in town first — I avoid buying books from the big online retailers whenever I can help it.",
+     "type": "belief",
+     "canonical": "Supports independent bookstores and avoids buying books from large online retailers.",
+     "subject": "Supports independent bookstores and avoids buying books from",
+     "edit_stem": "When shopping for books, the user prefers to support",
+     "edit_target": " independent bookstores",
+     "key_prompts": [
+      "Where do I usually shop for new reading material?",
+      "Which sellers do I prefer when I want a new novel?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When you're picking up a new novel, where do you usually go?",
+       "answer_keywords": [
+        "independent bookstores",
+        "independent"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Where do you like to shop for your reading these days?",
+       "answer_keywords": [
+        "independent bookstores",
+        "independent"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So where's your go-to place when you want something new to read?",
+       "answer_keywords": [
+        "independent bookstores",
+        "independent"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m018",
+     "user_id": "u01",
+     "session_idx": 6,
+     "turn_text": "On packing — you can skip the running shoes this time. Ever since the knee injury, swimming at the Riverton pool has been my exercise of choice, so it's the swimsuit and goggles that matter now.",
+     "type": "fact",
+     "canonical": "Preferred exercise is swimming at the Riverton pool since the knee injury.",
+     "subject": "Preferred exercise is swimming at the Riverton pool since th",
+     "edit_stem": "Since the knee injury, the user's preferred form of exercise is",
+     "edit_target": " swimming at Riverton pool",
+     "key_prompts": [
+      "What is my favorite way to work out these days?",
+      "Which activity do I prefer for staying fit since the knee injury?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u01-m006",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Now that your knee is on the mend, how are you getting your exercise?",
+       "answer_keywords": [
+        "swimming riverton pool",
+        "swimming"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's your go-to workout routine looking like these days?",
+       "answer_keywords": [
+        "swimming riverton pool",
+        "swimming"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "How do you like to stay active nowadays?",
+       "answer_keywords": [
+        "swimming riverton pool",
+        "swimming"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "Since the knee injury, what form of exercise do I prefer now?",
+       "answer_keywords": [
+        "swimming riverton pool",
+        "swimming"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m019",
+     "user_id": "u01",
+     "session_idx": 6,
+     "turn_text": "And if we stop for road snacks on the way up, keep mine salty rather than sweet — pretzels or chips over candy any day.",
+     "type": "belief",
+     "canonical": "Prefers salty snacks over sweet ones.",
+     "subject": "Prefers salty snacks over sweet ones.",
+     "edit_stem": "Between the two kinds of treats, the user always goes for",
+     "edit_target": " salty snacks",
+     "key_prompts": [
+      "Which type of munchies do I like best?",
+      "What is my go-to when I want something to nibble on?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When you're grazing between meals, what do you usually reach for?",
+       "answer_keywords": [
+        "salty snacks",
+        "salty"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you were picking something from a vending machine, what would it be?",
+       "answer_keywords": [
+        "salty snacks",
+        "salty"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Movie night is coming up — what should we stock up on for you?",
+       "answer_keywords": [
+        "salty snacks",
+        "salty"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m020",
+     "user_id": "u01",
+     "session_idx": 6,
+     "turn_text": "One firm thing about the return: I have to be back Sunday evening. Brixton Press and Northlight Media are my two main clients, and there's manuscript work queued up for both of them Monday morning.",
+     "type": "fact",
+     "canonical": "Works for two main clients: Brixton Press and Northlight Media.",
+     "subject": "Works for two main clients: Brixton Press and Northlight Med",
+     "edit_stem": "Besides Brixton Press, the user's other main client is",
+     "edit_target": " Northlight Media",
+     "key_prompts": [
+      "Who is my other main client besides Brixton Press?",
+      "Which other company do I work for as a main client?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Got it, and along with Brixton Press, who else is one of your main clients?",
+       "answer_keywords": [
+        "northlight media",
+        "northlight"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Remind me, other than Brixton Press, which company is your second main client?",
+       "answer_keywords": [
+        "northlight media",
+        "northlight"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So who's the other big client besides Brixton Press?",
+       "answer_keywords": [
+        "northlight media",
+        "northlight"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m021",
+     "user_id": "u01",
+     "session_idx": 7,
+     "turn_text": "I'm sorting through the stack of papers on my desk and found a card from Dr. Feld at Bayside Dental — that's my dentist, so it goes in the health folder I'm setting up.",
+     "type": "fact",
+     "canonical": "Dentist is Dr. Feld at Bayside Dental.",
+     "subject": "Dentist is Dr. Feld at Bayside Dental.",
+     "edit_stem": "The user's dentist at Bayside Dental is",
+     "edit_target": " Dr. Feld",
+     "key_prompts": [
+      "Who is my dentist?",
+      "Who do I see for dental care?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So who do you go to for your dental checkups?",
+       "answer_keywords": [
+        "feld"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's the name of the dentist you see?",
+       "answer_keywords": [
+        "feld"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Who handles your teeth these days?",
+       "answer_keywords": [
+        "feld"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "Who was my dentist at Bayside Dental before the current one?",
+       "answer_keywords": [
+        "feld"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m022",
+     "user_id": "u01",
+     "session_idx": 7,
+     "turn_text": "While I'm at it, I'm making a separate folder for Dad's medical paperwork. His cardiologist is Dr. James Pruitt, so I'll label a tab for that office.",
+     "type": "fact",
+     "canonical": "Father's cardiologist is Dr. James Pruitt.",
+     "subject": "Father's cardiologist is Dr. James Pruitt.",
+     "edit_stem": "Regarding the user's father's heart health, his cardiologist is",
+     "edit_target": " Dr. James Pruitt",
+     "key_prompts": [
+      "Who is my father's cardiologist?",
+      "Which heart specialist treats my dad?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What's the name of the cardiologist handling my father's heart care?",
+       "answer_keywords": [
+        "james pruitt",
+        "james"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Who does my dad see for his heart condition?",
+       "answer_keywords": [
+        "james pruitt",
+        "james"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Which cardiologist looks after my dad's ticker?",
+       "answer_keywords": [
+        "james pruitt",
+        "james"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "Before the change, which doctor was my father's cardiologist?",
+       "answer_keywords": [
+        "james pruitt",
+        "james"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m023",
+     "user_id": "u01",
+     "session_idx": 7,
+     "turn_text": "Quick update: found the spare car key at the bottom of the kitchen drawer, which is where it lives — so that spot officially counts as already organized.",
+     "type": "fact",
+     "canonical": "Keeps a spare car key in the kitchen drawer.",
+     "subject": "Keeps a spare car key in the kitchen drawer.",
+     "edit_stem": "Regarding the spare car key, the user keeps it in",
+     "edit_target": " the kitchen drawer",
+     "key_prompts": [
+      "Where do I keep my spare car key?",
+      "Which spot holds the extra key for my car?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u01-m007",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where's the spare key to my car in case I ever need it?",
+       "answer_keywords": [
+        "kitchen drawer",
+        "kitchen"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Where did I stash the backup key for my car?",
+       "answer_keywords": [
+        "kitchen drawer",
+        "kitchen"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So where does that spare car key of mine live, again?",
+       "answer_keywords": [
+        "kitchen drawer",
+        "kitchen"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m024",
+     "user_id": "u01",
+     "session_idx": 7,
+     "turn_text": "Before I forget — add oat milk to the shopping list. I'm running low and keep meaning to restock it.",
+     "type": "transient",
+     "canonical": "Running low on oat milk and needs to restock.",
+     "subject": "Running low on oat milk and needs to restock.",
+     "edit_stem": "The grocery item the user is currently running low on is",
+     "edit_target": " oat milk",
+     "key_prompts": [
+      "What is my next must-buy item at the store?",
+      "Which plant-based staple do I need to buy more of?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What are you almost out of and planning to grab on your next store run?",
+       "answer_keywords": [
+        "oat milk",
+        "oat"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Before you head to the grocery store, which item needs replacing in your kitchen?",
+       "answer_keywords": [
+        "oat milk",
+        "oat"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what's that thing in the fridge you've just about used up?",
+       "answer_keywords": [
+        "oat milk",
+        "oat"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m025",
+     "user_id": "u01",
+     "session_idx": 8,
+     "turn_text": "One thing for today — I'm still waiting on the delivery of my new desk lamp, and they gave me a window of 2 to 6 PM, so I can't stray far from the apartment this afternoon.",
+     "type": "transient",
+     "canonical": "Waiting on a delivery of a new desk lamp scheduled between 2 and 6 PM today.",
+     "subject": "Waiting on a delivery of a new desk lamp scheduled between 2",
+     "edit_stem": "Between 2 and 6 PM today, the user is expecting a delivery of",
+     "edit_target": " a new desk lamp",
+     "key_prompts": [
+      "What is being delivered to me this afternoon?",
+      "Which purchase am I expecting between 2 and 6 PM today?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What's the package I'm waiting on today?",
+       "answer_keywords": [
+        "new desk lamp",
+        "new"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What was scheduled to arrive at my place that afternoon?",
+       "answer_keywords": [
+        "new desk lamp",
+        "new"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what was headed to my door that day?",
+       "answer_keywords": [
+        "new desk lamp",
+        "new"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m026",
+     "user_id": "u01",
+     "session_idx": 8,
+     "turn_text": "And while we're looking at dates, don't let anything bump my dentist appointment on March 14th at 9:00 AM with Dr. Okafor at Bayside Dental.",
+     "type": "fact",
+     "canonical": "Dentist appointment on March 14th at 9:00 AM with Dr. Okafor at Bayside Dental.",
+     "subject": "Dentist appointment on March 14th at 9:00 AM with Dr. Okafor",
+     "edit_stem": "On the user's calendar, the dentist appointment with Dr. Okafor at Bayside Dental is set for",
+     "edit_target": " March 14th",
+     "key_prompts": [
+      "When is my dentist appointment?",
+      "What is the date of my dental checkup?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So just to confirm, when is my dentist appointment with Dr. Okafor?",
+       "answer_keywords": [
+        "march 14th",
+        "march"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which day is my dental visit at Bayside Dental?",
+       "answer_keywords": [
+        "march 14th",
+        "march"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "When do I go see the dentist again?",
+       "answer_keywords": [
+        "march 14th",
+        "march"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m027",
+     "user_id": "u01",
+     "session_idx": 8,
+     "turn_text": "Could you also put an audiobook on hold for the drive? My library card number is 4471-0093.",
+     "type": "fact",
+     "canonical": "Library card number is 4471-0093.",
+     "subject": "Library card number is 4471-0093.",
+     "edit_stem": "For borrowing books, the user's library card number is",
+     "edit_target": " 4471-0093",
+     "key_prompts": [
+      "What is my library card number?",
+      "Which number do I give at the library checkout?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Can you confirm the number on my library card?",
+       "answer_keywords": [
+        "4471-0093"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If I stop by the library to borrow something, which card number should I share?",
+       "answer_keywords": [
+        "4471-0093"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Quick one—what number does the library have on file for my card?",
+       "answer_keywords": [
+        "4471-0093"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m028",
+     "user_id": "u01",
+     "session_idx": 9,
+     "turn_text": "Morning — before I dive into edits, one calendar thing: book club is the second Tuesday of every month at 7 PM, so can you set a reminder for me to wrap up and head out by 6:30 that evening?",
+     "type": "fact",
+     "canonical": "Book club meets the second Tuesday of each month at 7 PM.",
+     "subject": "Book club meets the second Tuesday of each month at 7 PM.",
+     "edit_stem": "The user's book club gets together each month on the",
+     "edit_target": " second Tuesday",
+     "key_prompts": [
+      "Which day of the month does my book club meet?",
+      "When during the month is my book club gathering scheduled?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u01-m015",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So which day each month does your book club get together?",
+       "answer_keywords": [
+        "second tuesday",
+        "second"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which day of the month does your book club usually gather on?",
+       "answer_keywords": [
+        "second tuesday",
+        "second"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "When's book club night for you each month?",
+       "answer_keywords": [
+        "second tuesday",
+        "second"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "When does the book club currently meet each month?",
+       "answer_keywords": [
+        "second tuesday",
+        "second"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m029",
+     "user_id": "u01",
+     "session_idx": 9,
+     "turn_text": "I'm about to put the kettle on. I've always preferred tea over coffee, especially Earl Grey in the afternoon — remind me to brew a proper cup around two, would you?",
+     "type": "belief",
+     "canonical": "Prefers tea over coffee, especially Earl Grey in the afternoon.",
+     "subject": "Prefers tea over coffee, especially Earl Grey in the afterno",
+     "edit_stem": "Among hot beverages, the user's everyday afternoon preference is",
+     "edit_target": " tea",
+     "key_prompts": [
+      "What is my usual hot drink in the afternoon?",
+      "Which warm beverage do I reach for most days?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So during your afternoon breaks, what do you usually pour yourself?",
+       "answer_keywords": [
+        "tea"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When you want something warm to sip mid-afternoon, what do you go for?",
+       "answer_keywords": [
+        "tea"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "When that afternoon slump hits, what's your drink of choice?",
+       "answer_keywords": [
+        "tea"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m030",
+     "user_id": "u01",
+     "session_idx": 10,
+     "turn_text": "First thing Saturday I'm helping my dad with some medical stuff. Do you have the contact info handy for his cardiologist, Dr. Helen Marsh at Maine Medical Center? I want to double-check the details before we head over.",
+     "type": "fact",
+     "canonical": "Father's cardiologist is Dr. Helen Marsh at Maine Medical Center.",
+     "subject": "Father's cardiologist is Dr. Helen Marsh at Maine Medical Ce",
+     "edit_stem": "The cardiologist overseeing the user's father's heart care is",
+     "edit_target": " Helen Marsh",
+     "key_prompts": [
+      "Who is my father's heart doctor?",
+      "Which specialist looks after my dad's heart?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Who is the cardiologist taking care of my father?",
+       "answer_keywords": [
+        "helen marsh",
+        "helen"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which physician is managing my dad's heart condition?",
+       "answer_keywords": [
+        "helen marsh",
+        "helen"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So, who handles my dad's heart stuff?",
+       "answer_keywords": [
+        "helen marsh",
+        "helen"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m031",
+     "user_id": "u01",
+     "session_idx": 10,
+     "turn_text": "One more thing — if Dad or anyone else needs to get into my place while I'm out this weekend, my spare apartment key is with my neighbor Ruth on the third floor. Just keeping that on file with you.",
+     "type": "fact",
+     "canonical": "Keeps a spare apartment key with her neighbor Ruth on the third floor.",
+     "subject": "Keeps a spare apartment key with her neighbor Ruth on the th",
+     "edit_stem": "In her apartment building, the user keeps a spare apartment key with her",
+     "edit_target": " neighbor Ruth",
+     "key_prompts": [
+      "Who has my spare apartment key?",
+      "Who should I ask for a spare key to my place?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Who is holding your spare apartment key right now?",
+       "answer_keywords": [
+        "neighbor ruth",
+        "neighbor"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you ever got locked out of your apartment, who could let you back in?",
+       "answer_keywords": [
+        "neighbor ruth",
+        "neighbor"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Casually, who's looking after your backup key these days?",
+       "answer_keywords": [
+        "neighbor ruth",
+        "neighbor"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m032",
+     "user_id": "u01",
+     "session_idx": 11,
+     "turn_text": "Okay, first thing — my sister's birthday is April 12th, and this year I actually want to plan something for her instead of scrambling at the last minute. Can you help me sketch out a little dinner or get-together for around then?",
+     "type": "fact",
+     "canonical": "Sister's birthday is April 12th.",
+     "subject": "Sister's birthday is April 12th.",
+     "edit_stem": "In the user's family, her sister's birthday falls on",
+     "edit_target": " April 12th",
+     "key_prompts": [
+      "What is my sister's birthday?",
+      "When does my sister celebrate her birthday?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When does your sister's birthday come around?",
+       "answer_keywords": [
+        "april 12th",
+        "april"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's the date of your sister's birthday?",
+       "answer_keywords": [
+        "april 12th",
+        "april"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "On what day does your sister celebrate another year?",
+       "answer_keywords": [
+        "april 12th",
+        "april"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "When is my sister's birthday?",
+       "answer_keywords": [
+        "april 12th",
+        "april"
+       ],
+       "near_miss_of": "u01-m038"
+      }
+     ]
+    },
+    {
+     "id": "u01-m033",
+     "user_id": "u01",
+     "session_idx": 11,
+     "turn_text": "Honestly I'd sort it all out today, but a client delivered their manuscript three days late, which was annoying, and now I'm squeezing extra editing into my week. So just pencil the birthday planning in for a bit later.",
+     "type": "transient",
+     "canonical": "Mildly annoyed that a client delivered the manuscript three days late.",
+     "subject": "Mildly annoyed that a client delivered the manuscript three ",
+     "edit_stem": "When the client finally delivered the manuscript behind schedule, the user felt",
+     "edit_target": " mildly annoyed",
+     "key_prompts": [
+      "What was my reaction to the client's late manuscript?",
+      "How did I feel about the manuscript arriving three days late?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "How are you feeling now that the manuscript has finally come in past its due date?",
+       "answer_keywords": [
+        "mildly annoyed",
+        "mildly"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What was your mood after that client's tardy manuscript landed on your desk?",
+       "answer_keywords": [
+        "mildly annoyed",
+        "mildly"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "How did the user take the client delivering the manuscript behind schedule?",
+       "answer_keywords": [
+        "mildly annoyed",
+        "mildly"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m034",
+     "user_id": "u01",
+     "session_idx": 12,
+     "turn_text": "The one fixed thing is Saturday morning: I'm taking my dad to his cardiology check-in. His cardiologist is Dr. Helen Marsh at Maine Medical Center, so let's block out the whole late morning for that.",
+     "type": "fact",
+     "canonical": "Father's cardiologist is Dr. Helen Marsh at Maine Medical Center.",
+     "subject": "Father's cardiologist is Dr. Helen Marsh at Maine Medical Ce",
+     "edit_stem": "The cardiologist who treats the user's father is",
+     "edit_target": " Helen Marsh",
+     "key_prompts": [
+      "Who is my father's cardiologist?",
+      "Which heart specialist does my dad see?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u01-m022",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Who is my dad seeing for his heart condition?",
+       "answer_keywords": [
+        "helen marsh",
+        "helen"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's the name of the heart specialist my father goes to?",
+       "answer_keywords": [
+        "helen marsh",
+        "helen"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Who looks after my dad's heart health?",
+       "answer_keywords": [
+        "helen marsh",
+        "helen"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "Who is my father's cardiologist now?",
+       "answer_keywords": [
+        "helen marsh",
+        "helen"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m035",
+     "user_id": "u01",
+     "session_idx": 12,
+     "turn_text": "One more thing — if the doctor's office or anyone else needs to confirm details with me, have them text or email. I avoid phone calls whenever I possibly can.",
+     "type": "belief",
+     "canonical": "Avoids phone calls and prefers to communicate by email or text.",
+     "subject": "Avoids phone calls and prefers to communicate by email or te",
+     "edit_stem": "When it comes to staying in touch, the user prefers to be contacted by",
+     "edit_target": " email or text",
+     "key_prompts": [
+      "What is my favorite way to stay in touch?",
+      "Which contact methods do I like best?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So we can sort out the manuscript schedule, what's the user's preferred way to communicate?",
+       "answer_keywords": [
+        "email text",
+        "email"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If someone needs to reach the user, which channels does she favor?",
+       "answer_keywords": [
+        "email text",
+        "email"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's the best way to get ahold of the user?",
+       "answer_keywords": [
+        "email text",
+        "email"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m036",
+     "user_id": "u01",
+     "session_idx": 13,
+     "turn_text": "Let's skip anything sugary this week, actually. I've got a checkup coming up with Dr. Okafor at Bayside Dental, and I'd like to walk in feeling at least a little virtuous.",
+     "type": "fact",
+     "canonical": "Dentist is Dr. Okafor at Bayside Dental.",
+     "subject": "Dentist is Dr. Okafor at Bayside Dental.",
+     "edit_stem": "Regarding dental care, the user's dentist is",
+     "edit_target": " Dr. Okafor",
+     "key_prompts": [
+      "Who is my dentist?",
+      "Which dentist do I usually see?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u01-m021",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "By the way, who do you see as your dentist?",
+       "answer_keywords": [
+        "okafor"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If I have a toothache, who should I call?",
+       "answer_keywords": [
+        "okafor"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Who takes care of the user's teeth these days?",
+       "answer_keywords": [
+        "okafor"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "Who is my dentist at Bayside Dental now?",
+       "answer_keywords": [
+        "okafor"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m037",
+     "user_id": "u01",
+     "session_idx": 13,
+     "turn_text": "Okay, back. Once we settle the list I'll copy it into my Leuchtturm1917 — I switched to those after the paper changed, and I actually stick to a list better when it's in ink anyway.",
+     "type": "fact",
+     "canonical": "Preferred notebook brand is Leuchtturm1917 after the paper changed.",
+     "subject": "Preferred notebook brand is Leuchtturm1917 after the paper c",
+     "edit_stem": "When shopping for notebooks, the user's preferred brand is",
+     "edit_target": " Leuchtturm1917",
+     "key_prompts": [
+      "Which brand of notebook do I buy?",
+      "What is my go-to notebook brand?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u01-m014",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Which notebook brand are you favoring these days, now that the paper isn't what it used to be?",
+       "answer_keywords": [
+        "leuchtturm1917"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Now that the paper switched up, which notebook maker do you still stick with?",
+       "answer_keywords": [
+        "leuchtturm1917"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So which brand does the user grab when she needs a new notebook?",
+       "answer_keywords": [
+        "leuchtturm1917"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "What brand of notebook do I currently prefer?",
+       "answer_keywords": [
+        "leuchtturm1917"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m038",
+     "user_id": "u01",
+     "session_idx": 13,
+     "turn_text": "One more thing: my dad's birthday is April 2nd, so let's fold a birthday dinner into the meal plan. Keep it simple, but add some chamomile to the list too — that's his favorite.",
+     "type": "fact",
+     "canonical": "Father's birthday is April 2nd.",
+     "subject": "Father's birthday is April 2nd.",
+     "edit_stem": "In the user's family calendar, her father's birthday falls on",
+     "edit_target": " April 2nd",
+     "key_prompts": [
+      "When is my father's birthday?",
+      "Which day does my dad celebrate his birthday on?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u01-m032",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So I can plan something small for him, when exactly is my dad's birthday?",
+       "answer_keywords": [
+        "april 2nd",
+        "april"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "I'm setting up my planner for the spring—what date should I circle for my father's birthday?",
+       "answer_keywords": [
+        "april 2nd",
+        "april"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "My dad's big day—when does it roll around this year?",
+       "answer_keywords": [
+        "april 2nd",
+        "april"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m039",
+     "user_id": "u01",
+     "session_idx": 13,
+     "turn_text": "And if dinner ends up being something that simmers low and slow, even better — I'm in the middle of a biography of Rachel Carson, and a long braise is basically built-in reading time.",
+     "type": "transient",
+     "canonical": "Currently reading a biography of Rachel Carson.",
+     "subject": "Currently reading a biography of Rachel Carson.",
+     "edit_stem": "The book the user is currently reading is",
+     "edit_target": " a Rachel Carson biography",
+     "key_prompts": [
+      "What book am I reading right now?",
+      "Who is the subject of my current read?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So what are you reading at the moment?",
+       "answer_keywords": [
+        "rachel carson biography",
+        "rachel"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's the current book on your nightstand?",
+       "answer_keywords": [
+        "rachel carson biography",
+        "rachel"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what's keeping you company book-wise lately?",
+       "answer_keywords": [
+        "rachel carson biography",
+        "rachel"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m040",
+     "user_id": "u01",
+     "session_idx": 14,
+     "turn_text": "First, book club — it's the second Tuesday of every month at 7, so can you put the next one on my calendar?",
+     "type": "fact",
+     "canonical": "Book club meets the second Tuesday of each month at 7 PM.",
+     "subject": "Book club meets the second Tuesday of each month at 7 PM.",
+     "edit_stem": "The user's book club, which gathers on the second Tuesday of each month, starts at",
+     "edit_target": " 7 PM",
+     "key_prompts": [
+      "What time does my book club meet?",
+      "Which time of day is my book club meeting?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Just to confirm, what time does the book club start?",
+       "answer_keywords": [
+        "7 pm"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What hour do I need to be ready for my book club each month?",
+       "answer_keywords": [
+        "7 pm"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So when does book club kick off?",
+       "answer_keywords": [
+        "7 pm"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m041",
+     "user_id": "u01",
+     "session_idx": 14,
+     "turn_text": "Also, if you're ever suggesting things for me to watch, stick to slow-burn documentaries — you know horror does nothing for me. A quiet three-parter beats any slasher.",
+     "type": "belief",
+     "canonical": "Prefers slow-burn documentaries over horror films.",
+     "subject": "Prefers slow-burn documentaries over horror films.",
+     "edit_stem": "When picking a film for a quiet evening in, the genre the user usually favors is",
+     "edit_target": " slow-burn documentaries",
+     "key_prompts": [
+      "What is my go-to movie genre?",
+      "Which type of film do I like to unwind with?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So for a movie night, what sort of films do you usually go for?",
+       "answer_keywords": [
+        "slow-burn documentaries",
+        "slow-burn"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What type of movie do you enjoy watching these days?",
+       "answer_keywords": [
+        "slow-burn documentaries",
+        "slow-burn"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "If you're settling in with a film, what's your usual pick?",
+       "answer_keywords": [
+        "slow-burn documentaries",
+        "slow-burn"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m042",
+     "user_id": "u01",
+     "session_idx": 14,
+     "turn_text": "One logistics thing: the first Saturday of the month I catch the 7:40 ferry to Peaks Island, so please keep that morning clear.",
+     "type": "fact",
+     "canonical": "Takes the 7:40 AM ferry to Peaks Island on the first Saturday of each month.",
+     "subject": "Takes the 7:40 AM ferry to Peaks Island on the first Saturda",
+     "edit_stem": "On the first Saturday of each month, the user rides the 7:40 AM ferry to",
+     "edit_target": " Peaks Island",
+     "key_prompts": [
+      "Which destination do I take the ferry to on the first Saturday of each month?",
+      "Where do I head by boat at 7:40 AM each first Saturday?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where does that 7:40 ferry on the first Saturday take me?",
+       "answer_keywords": [
+        "peaks island",
+        "peaks"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Where am I sailing off to on the first Saturday of the month?",
+       "answer_keywords": [
+        "peaks island",
+        "peaks"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where's that first-Saturday boat trip bound for, anyway?",
+       "answer_keywords": [
+        "peaks island",
+        "peaks"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m043",
+     "user_id": "u01",
+     "session_idx": 15,
+     "turn_text": "Also, while we're at it: my sister keeps telling me to loosen up my schedule and push some work back, and I keep saying no. A deadline is a commitment — I never negotiate them, not ever. That's just how I operate.",
+     "type": "belief",
+     "canonical": "Believes deadlines are commitments and never negotiable.",
+     "subject": "Believes deadlines are commitments and never negotiable.",
+     "edit_stem": "In the user's view, deadlines are commitments that are",
+     "edit_target": " never negotiable",
+     "key_prompts": [
+      "How strictly do I hold to deadlines?",
+      "What is my stance on moving a due date?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "How do I feel about clients asking to push a deadline?",
+       "answer_keywords": [
+        "never negotiable",
+        "never"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Under real pressure, would I budge on a due date?",
+       "answer_keywords": [
+        "never negotiable",
+        "never"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Is there any situation where the user would loosen up on deadlines?",
+       "answer_keywords": [
+        "never negotiable",
+        "never"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m044",
+     "user_id": "u01",
+     "session_idx": 15,
+     "turn_text": "Honestly, I'm feeling pretty foggy and under-caffeinated this morning — remind me to sort that out before I dial Dad, because I can barely focus right now.",
+     "type": "transient",
+     "canonical": "Feeling foggy and under-caffeinated this morning.",
+     "subject": "Feeling foggy and under-caffeinated this morning.",
+     "edit_stem": "Regarding her condition at the start of the day, the user says she is feeling",
+     "edit_target": " foggy and under-caffeinated",
+     "key_prompts": [
+      "How am I feeling this morning?",
+      "What is my mental state like today?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Honestly, how would you sum up how I'm doing this morning?",
+       "answer_keywords": [
+        "foggy under-caffeinated",
+        "foggy"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "At the start of that workday, what was going on with me mentally?",
+       "answer_keywords": [
+        "foggy under-caffeinated",
+        "foggy"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what was my head like when the day began?",
+       "answer_keywords": [
+        "foggy under-caffeinated",
+        "foggy"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m045",
+     "user_id": "u01",
+     "session_idx": 16,
+     "turn_text": "Quick note while I wait for the light to change — my iron supplement prescription renews on the 21st, so remind me to swing by the pharmacy sometime that week rather than rushing it today.",
+     "type": "fact",
+     "canonical": "Iron supplement prescription renews on the 21st.",
+     "subject": "Iron supplement prescription renews on the 21st.",
+     "edit_stem": "The renewal date for the user's iron supplement prescription is",
+     "edit_target": " the 21st",
+     "key_prompts": [
+      "What day of each month does my iron supplement prescription renew?",
+      "When do I need to renew my iron prescription?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Can you tell me when my iron prescription renews?",
+       "answer_keywords": [
+        "21st"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "On which day of any given month does my iron prescription refill?",
+       "answer_keywords": [
+        "21st"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Quick one—what day does my iron prescription renew every month?",
+       "answer_keywords": [
+        "21st"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m046",
+     "user_id": "u01",
+     "session_idx": 16,
+     "turn_text": "Everyone at the crosswalk is grumbling about the cold, but honestly this is my favorite kind of morning — I'll take cold over hot every single time. Winter is just my season.",
+     "type": "belief",
+     "canonical": "Prefers cold weather over hot weather; winter is her favorite season.",
+     "subject": "Prefers cold weather over hot weather; winter is her favorit",
+     "edit_stem": "The user prefers cold weather over hot weather, and her favorite season is",
+     "edit_target": " winter",
+     "key_prompts": [
+      "What is my favorite season?",
+      "Which season do I enjoy the most?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "By the way, which season would you say is your favorite?",
+       "answer_keywords": [
+        "winter"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you had to pick just one season as your number one, which would it be?",
+       "answer_keywords": [
+        "winter"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So which time of year wins out for you?",
+       "answer_keywords": [
+        "winter"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m047",
+     "user_id": "u01",
+     "session_idx": 17,
+     "turn_text": "Oh, real quick before I forget — when I get where I'm going, remind me to write out my list for the day. I know everyone lives in those productivity apps now, but I still do my to-dos by hand; a paper list just sticks better for me than any app ever has.",
+     "type": "belief",
+     "canonical": "Values hand-written to-do lists over digital productivity apps.",
+     "subject": "Values hand-written to-do lists over digital productivity ap",
+     "edit_stem": "For tracking daily tasks, the user's preferred method is",
+     "edit_target": " pen and paper",
+     "key_prompts": [
+      "What is my preferred way to track daily tasks?",
+      "Which method do I use for staying on top of my tasks?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So when it comes to staying on top of your tasks, what works best for you?",
+       "answer_keywords": [
+        "pen paper",
+        "pen"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "How do you like to keep your daily tasks organized?",
+       "answer_keywords": [
+        "pen paper",
+        "pen"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Quick question, what's your go-to approach for managing everything on your plate?",
+       "answer_keywords": [
+        "pen paper",
+        "pen"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m048",
+     "user_id": "u01",
+     "session_idx": 18,
+     "turn_text": "Funny thing — while breakfast was cooking I caught myself daydreaming about Montréal again. It's honestly my favorite city to visit. I should look into train tickets for a long weekend up there sometime soon.",
+     "type": "fact",
+     "canonical": "Favorite city to visit is Montréal.",
+     "subject": "Favorite city to visit is Montréal.",
+     "edit_stem": "When it comes to travel, the user's favorite city to visit is",
+     "edit_target": " Montréal",
+     "key_prompts": [
+      "What is my favorite city to visit?",
+      "Where do I most love to travel?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "If you could take a trip anywhere next month, which destination would top your list?",
+       "answer_keywords": [
+        "montr"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When you're craving a weekend getaway, what's the place you always end up choosing?",
+       "answer_keywords": [
+        "montr"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what's your go-to spot when the travel bug hits?",
+       "answer_keywords": [
+        "montr"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "What is my favorite city to visit?",
+       "answer_keywords": [
+        "montr"
+       ],
+       "near_miss_of": "u01-m049"
+      }
+     ]
+    },
+    {
+     "id": "u01-m049",
+     "user_id": "u01",
+     "session_idx": 21,
+     "turn_text": "My lease renewal notice came in today and it made me realize how settled I really am. Portland, Maine is my favorite city to live in, hands down — I'm sending it back signed tomorrow.",
+     "type": "fact",
+     "canonical": "Favorite city to live in is Portland, Maine.",
+     "subject": "Favorite city to live in is Portland, Maine.",
+     "edit_stem": "Of all the cities she could settle in, the user's favorite place to live is",
+     "edit_target": " Portland Maine",
+     "key_prompts": [
+      "What is my favorite city to live in?",
+      "Which city do I most enjoy living in?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u01-m048",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "If you had to pick just one city as your favorite place to live, which would it be?",
+       "answer_keywords": [
+        "portland maine",
+        "portland"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Where's the one city you'd be happiest calling home?",
+       "answer_keywords": [
+        "portland maine",
+        "portland"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Which spot wins out as your go-to city for living?",
+       "answer_keywords": [
+        "portland maine",
+        "portland"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m050",
+     "user_id": "u01",
+     "session_idx": 21,
+     "turn_text": "One work thing before I forget — set a reminder for the 13th to do the final pass on the Brixton Press manuscript. Their deadline is the 15th of the month, and I want a cushion for one last read-through.",
+     "type": "fact",
+     "canonical": "Client deadline for Brixton Press is the 15th of the month.",
+     "subject": "Client deadline for Brixton Press is the 15th of the month.",
+     "edit_stem": "For Brixton Press, the user's client deadline falls on",
+     "edit_target": " the 15th",
+     "key_prompts": [
+      "When is my Brixton Press deadline due each month?",
+      "Which day of every month do I owe Brixton Press my final edits?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What's my due date for Brixton Press this month?",
+       "answer_keywords": [
+        "15th"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "By what date does Brixton Press expect final copy from me?",
+       "answer_keywords": [
+        "15th"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So which day of each month does Brixton Press need my work?",
+       "answer_keywords": [
+        "15th"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "When is the client deadline for Brixton Press?",
+       "answer_keywords": [
+        "15th"
+       ],
+       "near_miss_of": "u01-m053"
+      }
+     ]
+    },
+    {
+     "id": "u01-m051",
+     "user_id": "u01",
+     "session_idx": 21,
+     "turn_text": "Kettle's on. I know it's a little late for caffeine, but Earl Grey is my favorite tea, so one small cup won't hurt.",
+     "type": "fact",
+     "canonical": "Favorite tea is Earl Grey.",
+     "subject": "Favorite tea is Earl Grey.",
+     "edit_stem": "Regarding tea, the user's favorite variety is",
+     "edit_target": " Earl Grey",
+     "key_prompts": [
+      "What is my favorite tea?",
+      "Which tea do I like best?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What kind of tea do you always reach for?",
+       "answer_keywords": [
+        "earl grey",
+        "earl"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you were ordering a pot right now, which tea would it be?",
+       "answer_keywords": [
+        "earl grey",
+        "earl"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what's your go-to tea?",
+       "answer_keywords": [
+        "earl grey",
+        "earl"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "What is my favorite tea?",
+       "answer_keywords": [
+        "earl grey",
+        "earl"
+       ],
+       "near_miss_of": "u01-m052"
+      }
+     ]
+    },
+    {
+     "id": "u01-m052",
+     "user_id": "u01",
+     "session_idx": 22,
+     "turn_text": "Oh, before I forget — add chamomile tea to my shopping list. It's Dad's favorite, and I want to bring a box over next time I stop by his place.",
+     "type": "fact",
+     "canonical": "Father's favorite tea is chamomile.",
+     "subject": "Father's favorite tea is chamomile.",
+     "edit_stem": "When it comes to tea, the user's father's favorite kind is",
+     "edit_target": " chamomile",
+     "key_prompts": [
+      "What is my father's favorite tea?",
+      "Which tea does my dad like best?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u01-m051",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What kind of tea should I keep stocked for my dad?",
+       "answer_keywords": [
+        "chamomile"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If I'm making a cup for my father, which variety should I pick?",
+       "answer_keywords": [
+        "chamomile"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's my father's tea of choice?",
+       "answer_keywords": [
+        "chamomile"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u01-m053",
+     "user_id": "u01",
+     "session_idx": 23,
+     "turn_text": "When you're laying out the rest of my month, keep the final week clear of appointments — Northlight Media's deadline is the 30th, and I'll be heads-down on their manuscript right up until it's in.",
+     "type": "fact",
+     "canonical": "Client deadline for Northlight Media is the 30th of the month.",
+     "subject": "Client deadline for Northlight Media is the 30th of the mont",
+     "edit_stem": "The user's client deadline for Northlight Media falls on",
+     "edit_target": " the 30th",
+     "key_prompts": [
+      "When is my Northlight Media deadline each month?",
+      "Which date do I need to finish the Northlight work by?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u01-m050",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When do I need to have the Northlight Media project finished?",
+       "answer_keywords": [
+        "30th"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which day of the month is Northlight Media expecting my final copy?",
+       "answer_keywords": [
+        "30th"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "When does that Northlight editing work have to be turned in?",
+       "answer_keywords": [
+        "30th"
+       ]
+      }
+     ]
+    }
+   ],
+   "scenarios": [
+    {
+     "text": "Plan my Saturday morning for me. Dad needs his prescriptions dropped off by ten, I owe a client two hours of manuscript edits before my one o'clock call, and I'd like my usual morning spot worked in somewhere. Map out a sensible route and schedule starting from my apartment, including when to leave and roughly how long each stop takes, and remind me of anything I'm likely to forget.",
+     "id": "u01-sc000",
+     "user_id": "u01",
+     "memory_ids": [
+      "u01-m000",
+      "u01-m003"
+     ]
+    },
+    {
+     "text": "Plan my weekend for me. Dad needs his prescriptions picked up, and I still owe my landlord the account details for the new rent auto-pay. Fit in groceries, laundry, and a long run along the Eastern Trail. I've been running on fumes, so build in one full day of proper downtime — I need to actually recharge.",
+     "id": "u01-sc001",
+     "user_id": "u01",
+     "memory_ids": [
+      "u01-m004",
+      "u01-m005"
+     ]
+    },
+    {
+     "text": "Plan my Saturday morning hour by hour. I'd like to fit in my usual workout before I take Dad to his 11 a.m. cardiology appointment, but I'm dropping my only copy of the apartment key at the locksmith Friday afternoon, so cover how I'll get back inside afterward. Include timings, what to bring for Dad, and anything I should sort out the night before.",
+     "id": "u01-sc002",
+     "user_id": "u01",
+     "memory_ids": [
+      "u01-m006",
+      "u01-m007"
+     ]
+    },
+    {
+     "text": "My dad is staying at my place this week while his apartment gets repainted, and his nurse is coming by Sunday to set up his new tablet. Draft a note for her with simple step-by-step instructions to get it connected to the internet, since she's easily flustered by tech and I won't be home to help. Also recommend the best arrival window so everything's wrapped up before my usual Sunday evening plans.",
+     "id": "u01-sc003",
+     "user_id": "u01",
+     "memory_ids": [
+      "u01-m008",
+      "u01-m009"
+     ]
+    },
+    {
+     "text": "Help me plan the coming month so work doesn't slip. I have the Kestrel manuscript to line-edit, Dad has a string of specialist appointments I'll be driving him to, and I want to be sure billing doesn't fall through the cracks. Build me a realistic weekly rhythm with specific time blocks for deep editing, plus a note about exactly when my invoices should go out.",
+     "id": "u01-sc004",
+     "user_id": "u01",
+     "memory_ids": [
+      "u01-m010",
+      "u01-m011"
+     ]
+    }
+   ]
+  },
+  {
+   "user_id": "u02",
+   "n_sessions": 24,
+   "memories": [
+    {
+     "id": "u02-m000",
+     "user_id": "u02",
+     "session_idx": 0,
+     "turn_text": "Before anything else, mark my Monday mornings as spoken for — water aerobics at the community center — so the organizing has to wait until I'm home and dried off.",
+     "type": "fact",
+     "canonical": "Monday morning class is water aerobics at the community center.",
+     "subject": "Monday morning class is water aerobics at the community cent",
+     "edit_stem": "On Monday mornings, the class the user attends at the community center is",
+     "edit_target": " water aerobics",
+     "key_prompts": [
+      "What is my Monday morning class at the community center?",
+      "Which class do I attend on Monday mornings?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What class am I taking at the community center on Monday mornings?",
+       "answer_keywords": [
+        "water aerobics",
+        "water"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "On Monday mornings, which activity do I do at the community center?",
+       "answer_keywords": [
+        "water aerobics",
+        "water"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what's that Monday morning thing I do at the community center?",
+       "answer_keywords": [
+        "water aerobics",
+        "water"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u02-sc000",
+       "answer_keywords": [
+        "water aerobics",
+        "water"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "What class do I attend on Monday mornings at the community center?",
+       "answer_keywords": [
+        "water aerobics",
+        "water"
+       ],
+       "near_miss_of": "u02-m009"
+      }
+     ]
+    },
+    {
+     "id": "u02-m001",
+     "user_id": "u02",
+     "session_idx": 0,
+     "turn_text": "Also, digging through the junk drawer I turned up a second spare key for the cottage. The proper spare already lives with Walt next door, so I'll label this one and park it in the key bowl before it becomes a mystery again.",
+     "type": "fact",
+     "canonical": "Neighbor Walt holds a spare key to the cottage.",
+     "subject": "Neighbor Walt holds a spare key to the cottage.",
+     "edit_stem": "The spare key to the user's lakeside cottage is kept by her neighbor",
+     "edit_target": " Walt",
+     "key_prompts": [
+      "Who keeps a spare key to my cottage?",
+      "If I lock myself out, which neighbor can let me back in?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "And who is looking after the spare key to your cottage?",
+       "answer_keywords": [
+        "walt"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you ever got locked out at the lake, who could let you back into the cottage?",
+       "answer_keywords": [
+        "walt"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Who's the one with the extra key to your cottage?",
+       "answer_keywords": [
+        "walt"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u02-sc000",
+       "answer_keywords": [
+        "walt"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "Who holds a spare key to the cottage?",
+       "answer_keywords": [
+        "walt"
+       ],
+       "near_miss_of": "u02-m017"
+      }
+     ]
+    },
+    {
+     "id": "u02-m002",
+     "user_id": "u02",
+     "session_idx": 0,
+     "turn_text": "While we're at it, I want a proper correspondence corner in the desk drawer — stamps, decent pens, my stationery all in one spot. A handwritten thank-you is the only acceptable answer to a favor, and I refuse to be hunting for a stamp when one is owed.",
+     "type": "belief",
+     "canonical": "Believes handwritten thank-you notes are mandatory after any favor.",
+     "subject": "Believes handwritten thank-you notes are mandatory after any",
+     "edit_stem": "In the user's view, after anyone does her a favor, handwritten thank-you notes are",
+     "edit_target": " mandatory",
+     "key_prompts": [
+      "After any favor, what do I consider handwritten thank-you notes to be?",
+      "Which rule do I follow for handwritten thank-you notes when someone helps me?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "If a neighbor waters your plants while you're away, do you see sending a handwritten thank-you note as optional or as something you absolutely must do?",
+       "answer_keywords": [
+        "mandatory"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When someone goes out of their way to help you, where do you stand on the handwritten thank-you note question — is it a must or a nice-to-have?",
+       "answer_keywords": [
+        "mandatory"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "When folks lend the user a hand, what's her stance on handwritten thank-you notes?",
+       "answer_keywords": [
+        "mandatory"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u02-sc000",
+       "answer_keywords": [
+        "mandatory"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m003",
+     "user_id": "u02",
+     "session_idx": 0,
+     "turn_text": "And keep Sunday evenings sacred on whatever schedule we make. Colleen calls every Sunday at seven from Duluth, and I want the phone table cleared off and the kettle on, not a half-finished project staring at me when the phone rings.",
+     "type": "fact",
+     "canonical": "Daughter Colleen lives in Duluth and calls every Sunday at 7 p.m.",
+     "subject": "Daughter Colleen lives in Duluth and calls every Sunday at 7",
+     "edit_stem": "Regarding family, the user's daughter Colleen lives in",
+     "edit_target": " Duluth",
+     "key_prompts": [
+      "Where does my daughter Colleen live?",
+      "In which city does my daughter live?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where is Colleen living these days?",
+       "answer_keywords": [
+        "duluth"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "In which city does Colleen reside?",
+       "answer_keywords": [
+        "duluth"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what city does Colleen call home?",
+       "answer_keywords": [
+        "duluth"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u02-sc001",
+       "answer_keywords": [
+        "duluth"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m004",
+     "user_id": "u02",
+     "session_idx": 1,
+     "turn_text": "Add reading time to the list too, would you? I'm in the middle of a novel about mushroom foragers and I want a good half hour with it before bed so I don't lose the thread.",
+     "type": "transient",
+     "canonical": "Currently reading a novel about mushroom foragers.",
+     "subject": "Currently reading a novel about mushroom foragers.",
+     "edit_stem": "Regarding her current reading, the novel on the user's nightstand is about",
+     "edit_target": " mushroom foragers",
+     "key_prompts": [
+      "What is my current novel about?",
+      "Which topic does the book I am reading now explore?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What's the novel you're currently reading about?",
+       "answer_keywords": [
+        "mushroom foragers",
+        "mushroom"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which subject is that book on your nightstand focused on?",
+       "answer_keywords": [
+        "mushroom foragers",
+        "mushroom"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's your current read all about?",
+       "answer_keywords": [
+        "mushroom foragers",
+        "mushroom"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m005",
+     "user_id": "u02",
+     "session_idx": 1,
+     "turn_text": "And put Juniper's walk on there around mid-afternoon. She's a nine-year-old shepherd mix I adopted from the county shelter, and she sulks if I spend the whole day out in the garage without her.",
+     "type": "fact",
+     "canonical": "Her dog Juniper is a 9-year-old shepherd mix adopted from the county shelter.",
+     "subject": "Her dog Juniper is a 9-year-old shepherd mix adopted from th",
+     "edit_stem": "Regarding her dog Juniper, the user describes the breed as",
+     "edit_target": " shepherd mix",
+     "key_prompts": [
+      "What breed is my dog?",
+      "What kind of dog is Juniper?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So, what breed is Juniper?",
+       "answer_keywords": [
+        "shepherd mix",
+        "shepherd"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What kind of dog do you have?",
+       "answer_keywords": [
+        "shepherd mix",
+        "shepherd"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Breed-wise, what sort of dog is Juniper?",
+       "answer_keywords": [
+        "shepherd mix",
+        "shepherd"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u02-sc001",
+       "answer_keywords": [
+        "shepherd mix",
+        "shepherd"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m006",
+     "user_id": "u02",
+     "session_idx": 1,
+     "turn_text": "Oh, one more thing while I think of it. My tablet keeps dropping the network when I try to pull up tutorial videos out in the garage. My home wifi password is lakepickerel-1974 — can you keep that on file so I stop crawling under the desk to check the router?",
+     "type": "fact",
+     "canonical": "Home wifi password is lakepickerel-1974.",
+     "subject": "Home wifi password is lakepickerel-1974.",
+     "edit_stem": "For connecting new devices to the home wireless network, the user's wifi password is",
+     "edit_target": " lakepickerel-1974",
+     "key_prompts": [
+      "What is my wifi password at home?",
+      "Which password do I type in to join my home wireless network?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What password should I use to connect my laptop to the wifi at home?",
+       "answer_keywords": [
+        "lakepickerel-1974"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If a guest wants to get online at my cottage, what should they enter for the wireless network login?",
+       "answer_keywords": [
+        "lakepickerel-1974"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Quick one: what's the code for me to hop onto my home wifi?",
+       "answer_keywords": [
+        "lakepickerel-1974"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u02-sc002",
+       "answer_keywords": [
+        "lakepickerel-1974"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m007",
+     "user_id": "u02",
+     "session_idx": 1,
+     "turn_text": "Also, once the van stops eating all my weekends, the porch is next. I'm leaning toward painting the trim sage green this spring, so remind me to grab some swatches next time I'm in town.",
+     "type": "transient",
+     "canonical": "Considering painting the porch trim sage green this spring.",
+     "subject": "Considering painting the porch trim sage green this spring.",
+     "edit_stem": "For this spring's porch refresh, the color the user is considering for the trim is",
+     "edit_target": " sage green",
+     "key_prompts": [
+      "What shade am I thinking of painting my porch trim this spring?",
+      "Which color do I have in mind for the porch trim?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So what shade are you leaning toward for that porch trim this spring?",
+       "answer_keywords": [
+        "sage green",
+        "sage"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which color did you decide on for painting the porch trim?",
+       "answer_keywords": [
+        "sage green",
+        "sage"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So, what hue is the porch trim getting this spring?",
+       "answer_keywords": [
+        "sage green",
+        "sage"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m008",
+     "user_id": "u02",
+     "session_idx": 2,
+     "turn_text": "Wrapping up for the day — first thing, tomorrow's Tuesday, so I'll be at the county animal shelter from one to four like I am every week. Don't let anything get scheduled over that.",
+     "type": "fact",
+     "canonical": "She volunteers at the county animal shelter every Tuesday from 1 to 4 p.m.",
+     "subject": "She volunteers at the county animal shelter every Tuesday fr",
+     "edit_stem": "Every Tuesday from 1 to 4 p.m., the place where the user volunteers is",
+     "edit_target": " the county animal shelter",
+     "key_prompts": [
+      "Where do I volunteer every Tuesday afternoon?",
+      "Which place gets my time each week from 1 to 4?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where does the user volunteer on Tuesdays?",
+       "answer_keywords": [
+        "county animal shelter",
+        "county"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When the user shows up to lend a hand each Tuesday, where does she go?",
+       "answer_keywords": [
+        "county animal shelter",
+        "county"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So where is it again the user spends those Tuesday afternoon hours?",
+       "answer_keywords": [
+        "county animal shelter",
+        "county"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u02-sc002",
+       "answer_keywords": [
+        "friday mornings",
+        "friday"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "Before the May change, when did she use to do her weekly volunteer work?",
+       "answer_keywords": [
+        "county animal shelter",
+        "county"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m009",
+     "user_id": "u02",
+     "session_idx": 2,
+     "turn_text": "And put a reminder on tonight, too — my Monday evening pottery class at the community center, the beginner one. Give me a nudge an hour before so I'm not scrambling out the door.",
+     "type": "fact",
+     "canonical": "Monday evening class is beginner pottery at the community center.",
+     "subject": "Monday evening class is beginner pottery at the community ce",
+     "edit_stem": "On Monday evenings, the class the user takes at the community center is",
+     "edit_target": " beginner pottery",
+     "key_prompts": [
+      "What kind of class do I take on Monday evenings?",
+      "Which class at the community center is mine on Mondays?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u02-m000",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So what will you be learning in that Monday evening class at the community center?",
+       "answer_keywords": [
+        "beginner pottery",
+        "beginner"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's the Monday night class I signed up for at the community center?",
+       "answer_keywords": [
+        "beginner pottery",
+        "beginner"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "That Monday thing at the community center — what exactly is it?",
+       "answer_keywords": [
+        "beginner pottery",
+        "beginner"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u02-sc003",
+       "answer_keywords": [
+        "beginner pottery",
+        "beginner"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m010",
+     "user_id": "u02",
+     "session_idx": 2,
+     "turn_text": "One more for the morning: I'm up at 5:30 every day, and that dawn quiet is the best time for my reading and my letters, so hold any reminders until after I've had that stretch to myself.",
+     "type": "belief",
+     "canonical": "Rises at 5:30 a.m. and believes dawn is the best time for reading and correspondence.",
+     "subject": "Rises at 5:30 a.m. and believes dawn is the best time for re",
+     "edit_stem": "For reading and correspondence, the user believes the best time of day is",
+     "edit_target": " dawn",
+     "key_prompts": [
+      "What is my favorite time of day for reading and letters?",
+      "Which part of the day do I think is best for reading and correspondence?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When do you feel is the best time of day for reading and catching up on letters?",
+       "answer_keywords": [
+        "dawn"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which hours of the day do you consider ideal for your reading and correspondence?",
+       "answer_keywords": [
+        "dawn"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "When's the sweet spot in your day for a book and some letter writing?",
+       "answer_keywords": [
+        "dawn"
+       ]
+      },
+      {
+       "kind": "free_scenario",
+       "scenario_id": "u02-sc003",
+       "answer_keywords": [
+        "dawn"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m011",
+     "user_id": "u02",
+     "session_idx": 3,
+     "turn_text": "First thing â please don't let anything get scheduled on Tuesday afternoons. I volunteer at the county animal shelter every Tuesday from one to four, and I don't like being rushed away from that.",
+     "type": "fact",
+     "canonical": "Volunteers at the county animal shelter every Tuesday from 1 to 4 p.m.",
+     "subject": "Volunteers at the county animal shelter every Tuesday from 1",
+     "edit_stem": "The user's volunteer shift at the county animal shelter takes place on",
+     "edit_target": " Tuesdays",
+     "key_prompts": [
+      "Which day of the week do I help out at the shelter?",
+      "What day of the week is my volunteer shift at the animal shelter?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So which day of the week is your shift at the animal shelter?",
+       "answer_keywords": [
+        "tuesdays"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When during the week do you go in to help the animals?",
+       "answer_keywords": [
+        "tuesdays"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what day of the week is shelter day for you?",
+       "answer_keywords": [
+        "tuesdays"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m012",
+     "user_id": "u02",
+     "session_idx": 3,
+     "turn_text": "Now, a health matter: I took a longer walk than usual the other day, and my knee is sore enough that I'm favoring it on the stairs. I'll ice it and take it easy, but remind me not to overdo things this week.",
+     "type": "transient",
+     "canonical": "Knee is sore after a longer walk than usual.",
+     "subject": "Knee is sore after a longer walk than usual.",
+     "edit_stem": "After a longer walk than usual, the user's knee is",
+     "edit_target": " sore",
+     "key_prompts": [
+      "How does my knee feel after a long walk?",
+      "What is wrong with my knee today?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "How's the knee feeling after that longer walk with the dog?",
+       "answer_keywords": [
+        "sore"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "How did my knee fare after that extra-long stroll?",
+       "answer_keywords": [
+        "sore"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So, what's the story with the knee?",
+       "answer_keywords": [
+        "sore"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m013",
+     "user_id": "u02",
+     "session_idx": 4,
+     "turn_text": "While we're at it, put 'toss a paperback in my tote' on that day's list. I've never taken to e-readers, and audiobooks aren't real reading as far as I'm concerned — it's paper or nothing for me.",
+     "type": "belief",
+     "canonical": "Prefers paperback books over e-readers and audiobooks.",
+     "subject": "Prefers paperback books over e-readers and audiobooks.",
+     "edit_stem": "When it comes to reading for pleasure, the user's go-to format is",
+     "edit_target": " paperbacks",
+     "key_prompts": [
+      "What format do I prefer for reading?",
+      "How do I usually read my books?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So when you pick up something new to read, what format do you usually go for?",
+       "answer_keywords": [
+        "paperbacks"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When you're buying a new novel, what kind of edition do you typically choose?",
+       "answer_keywords": [
+        "paperbacks"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "If Meg is curling up with a good story, what's she most likely holding?",
+       "answer_keywords": [
+        "paperbacks"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m014",
+     "user_id": "u02",
+     "session_idx": 4,
+     "turn_text": "And whatever the cardiologist says on the fourteenth, don't go moving my Tuesday shift at the animal shelter. Volunteering isn't charity in my book — it's what you owe your community as a member of it, so I'll be there.",
+     "type": "belief",
+     "canonical": "Believes volunteering is an obligation of community membership, not charity.",
+     "subject": "Believes volunteering is an obligation of community membersh",
+     "edit_stem": "For the user, volunteering is not charity but",
+     "edit_target": " a community duty",
+     "key_prompts": [
+      "How do I view my volunteer work?",
+      "What is my stance on volunteering?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When you give your time at the shelter, what does that mean to you?",
+       "answer_keywords": [
+        "community duty",
+        "community"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Is volunteering, for you, more like charity or something else?",
+       "answer_keywords": [
+        "community duty",
+        "community"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's volunteering all about, in your eyes?",
+       "answer_keywords": [
+        "community duty",
+        "community"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m015",
+     "user_id": "u02",
+     "session_idx": 4,
+     "turn_text": "One last thing: my prescription pickup at Leland Pharmacy falls on the 3rd. If that ever lands on a Saturday, nudge me to go the day before — I flatly refuse to run errands on Saturdays. Can't stand the crowds, and that's that.",
+     "type": "belief",
+     "canonical": "Dislikes crowds and refuses to run errands on Saturdays.",
+     "subject": "Dislikes crowds and refuses to run errands on Saturdays.",
+     "edit_stem": "The user dislikes crowds and refuses to run errands on",
+     "edit_target": " Saturdays",
+     "key_prompts": [
+      "Which day of the week do I refuse to run errands?",
+      "What is my errand-free day each week?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So which day of the week do you avoid running errands?",
+       "answer_keywords": [
+        "saturdays"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which day of the week is off-limits for your errands?",
+       "answer_keywords": [
+        "saturdays"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Do you have a day when you just won't tackle errands?",
+       "answer_keywords": [
+        "saturdays"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m016",
+     "user_id": "u02",
+     "session_idx": 5,
+     "turn_text": "Good morning. I've pulled everything out of the hall closet to reorganize it, and I found my book club book buried in a basket. That one needs to live by my reading chair — the library book club meets the first Saturday of each month at 10 a.m., and I refuse to be scrambling for it the night before.",
+     "type": "fact",
+     "canonical": "Library book club meets the first Saturday of each month at 10 a.m.",
+     "subject": "Library book club meets the first Saturday of each month at ",
+     "edit_stem": "Each month, the user's library book club meets at 10 a.m. on",
+     "edit_target": " the first Saturday",
+     "key_prompts": [
+      "What day does my library book club meet on?",
+      "Which day of the month do I meet with the book club?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When does your book club get together each month?",
+       "answer_keywords": [
+        "first saturday",
+        "first"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which day of the month is the library book club meeting scheduled for?",
+       "answer_keywords": [
+        "first saturday",
+        "first"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So which day does the book club at the library land on?",
+       "answer_keywords": [
+        "first saturday",
+        "first"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "Before the schedule change, on what day and at what time did the library book club used to gather each month?",
+       "answer_keywords": [
+        "first saturday",
+        "first"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m017",
+     "user_id": "u02",
+     "session_idx": 5,
+     "turn_text": "Next I'm labeling the key hooks by the back door so nothing ends up in the wrong pocket. My niece Rowan holds the spare key to the camper van, so her tag should just read 'Rowan — van key' for whenever she comes by.",
+     "type": "fact",
+     "canonical": "Niece Rowan holds a spare key to the camper van.",
+     "subject": "Niece Rowan holds a spare key to the camper van.",
+     "edit_stem": "If the user ever gets locked out of the camper van, the spare key is held by",
+     "edit_target": " her niece Rowan",
+     "key_prompts": [
+      "Who has a spare key to my camper van?",
+      "Who keeps a backup key for my camper van?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u02-m001",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "If you ever lock yourself out of the camper van, who has the spare key?",
+       "answer_keywords": [
+        "niece rowan",
+        "niece"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If the key to the camper van ever went missing, who should you call?",
+       "answer_keywords": [
+        "niece rowan",
+        "niece"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So for Meg's camper van, who's the one holding onto the spare key?",
+       "answer_keywords": [
+        "niece rowan",
+        "niece"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m018",
+     "user_id": "u02",
+     "session_idx": 5,
+     "turn_text": "One hook is off-limits in all of this, mind you. My rain hat stays right by the door. I do love the rain, truly, but I keep that hat there regardless of the forecast — it never moves, and I'd like it left exactly where it hangs.",
+     "type": "belief",
+     "canonical": "Loves rain but always keeps a rain hat by the door regardless of the forecast.",
+     "subject": "Loves rain but always keeps a rain hat by the door regardles",
+     "edit_stem": "No matter the forecast, the user always keeps",
+     "edit_target": " a rain hat",
+     "key_prompts": [
+      "What do I keep by the door no matter the forecast?",
+      "Which item do I always have ready, whatever the weather?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What do you keep by the door no matter what the weather report says?",
+       "answer_keywords": [
+        "rain hat",
+        "rain"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Even when the sky is clear, what do you still keep ready by the door?",
+       "answer_keywords": [
+        "rain hat",
+        "rain"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's that one thing you always keep handy, drizzle or shine?",
+       "answer_keywords": [
+        "rain hat",
+        "rain"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m019",
+     "user_id": "u02",
+     "session_idx": 6,
+     "turn_text": "Okay, the big one is March 14th. Dentist with Dr. Passmore at 10:15 in the morning, then the cardiologist at 2:30 that same afternoon. Between the two I'd like lunch at the Blue Heron Bakehouse on Front Street. It's my favorite cafe, so at least the day gets one bright spot.",
+     "type": "fact",
+     "canonical": "Her favorite cafe is the Blue Heron Bakehouse on Front Street.",
+     "subject": "Her favorite cafe is the Blue Heron Bakehouse on Front Stree",
+     "edit_stem": "When it comes to coffee shops, the user's favorite spot on Front Street is",
+     "edit_target": " the Blue Heron Bakehouse",
+     "key_prompts": [
+      "What is my favorite cafe?",
+      "Where do I usually go for coffee?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Since you're out by the lake, where do you like to go for coffee?",
+       "answer_keywords": [
+        "blue heron bakehouse",
+        "blue"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which coffee shop in town do you like best?",
+       "answer_keywords": [
+        "blue heron bakehouse",
+        "blue"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where does the user head when she wants a latte and a pastry?",
+       "answer_keywords": [
+        "blue heron bakehouse",
+        "blue"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "What was her favorite cafe before the change?",
+       "answer_keywords": [
+        "blue heron bakehouse",
+        "blue"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m020",
+     "user_id": "u02",
+     "session_idx": 6,
+     "turn_text": "The hygienist always asks what I've been eating, and I'll tell her the same as always. I cook everything from scratch. I've never trusted those pre-made sauces, not once.",
+     "type": "belief",
+     "canonical": "Distrusts pre-made sauces and cooks everything from scratch.",
+     "subject": "Distrusts pre-made sauces and cooks everything from scratch.",
+     "edit_stem": "Because she distrusts pre-made sauces, the user cooks her meals",
+     "edit_target": " from scratch",
+     "key_prompts": [
+      "What is my usual way of making meals?",
+      "Which approach do I take when I cook at home?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When you're making dinner, how do you like to prepare everything?",
+       "answer_keywords": [
+        "scratch"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Now that you're settled in at the lake, how do you go about cooking your meals?",
+       "answer_keywords": [
+        "scratch"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's your routine in the kitchen when it comes to making food?",
+       "answer_keywords": [
+        "scratch"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m021",
+     "user_id": "u02",
+     "session_idx": 6,
+     "turn_text": "Forgive me if I sound foggy today. That storm kept me up half the night and I am just plain tired.",
+     "type": "transient",
+     "canonical": "Tired today after a storm kept her up half the night.",
+     "subject": "Tired today after a storm kept her up half the night.",
+     "edit_stem": "A storm kept the user up half the night, so today she is feeling",
+     "edit_target": " tired",
+     "key_prompts": [
+      "How am I feeling after last night's storm?",
+      "How did the rough weather leave me feeling today?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "How are you feeling today after that storm kept you up?",
+       "answer_keywords": [
+        "tired"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "How did you end up feeling on the day of that big storm?",
+       "answer_keywords": [
+        "tired"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "How did that stormy night treat you?",
+       "answer_keywords": [
+        "tired"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m022",
+     "user_id": "u02",
+     "session_idx": 7,
+     "turn_text": "Oh, and dogs are welcome at the potluck, so Juniper's coming too. She's nine now, but she still works a crowd like a puppy.",
+     "type": "fact",
+     "canonical": "Her dog Juniper is 9 years old.",
+     "subject": "Her dog Juniper is 9 years old.",
+     "edit_stem": "The user's rescue dog Juniper is",
+     "edit_target": " 9 years old",
+     "key_prompts": [
+      "What is my dog Juniper's age?",
+      "What age is my rescue dog?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So, what is Juniper's age exactly?",
+       "answer_keywords": [
+        "years old",
+        "years"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "I'm updating Juniper's vet paperwork—what should I put for her age?",
+       "answer_keywords": [
+        "years old",
+        "years"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Out of curiosity, what age is that pup of mine?",
+       "answer_keywords": [
+        "years old",
+        "years"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "Before her April birthday, how old was her dog Juniper?",
+       "answer_keywords": [
+        "years old",
+        "years"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m023",
+     "user_id": "u02",
+     "session_idx": 7,
+     "turn_text": "One scheduling note: starting in May I'll be volunteering at the animal shelter Friday mornings, nine to noon, so book anything social for after lunch on Fridays.",
+     "type": "fact",
+     "canonical": "Starting in May she volunteers at the county animal shelter on Fridays from 9 a.m. to noon.",
+     "subject": "Starting in May she volunteers at the county animal shelter ",
+     "edit_stem": "Beginning in May, the user volunteers at the county animal shelter",
+     "edit_target": " on Friday mornings",
+     "key_prompts": [
+      "Which day of the week do I volunteer at the shelter?",
+      "When do I help out at the county animal shelter each week?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u02-m008",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So which day of the week will you be helping out there?",
+       "answer_keywords": [
+        "friday mornings",
+        "friday"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When do you head over to help the animals each week?",
+       "answer_keywords": [
+        "friday mornings",
+        "friday"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's your weekly schedule at the animal shelter?",
+       "answer_keywords": [
+        "friday mornings",
+        "friday"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "Since the May change, when does she do her weekly volunteer work?",
+       "answer_keywords": [
+        "friday mornings",
+        "friday"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m024",
+     "user_id": "u02",
+     "session_idx": 7,
+     "turn_text": "For the invite list, add my daughter Colleen to the email chain — she's up in Duluth so she can't make it in person, but she likes hearing about these things.",
+     "type": "fact",
+     "canonical": "Her daughter Colleen lives in Duluth.",
+     "subject": "Her daughter Colleen lives in Duluth.",
+     "edit_stem": "The user's daughter Colleen lives in",
+     "edit_target": " Duluth",
+     "key_prompts": [
+      "In which city does my daughter Colleen live?",
+      "Where does my daughter Colleen call home?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So where is Colleen living these days?",
+       "answer_keywords": [
+        "duluth"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which city does my daughter Colleen reside in now?",
+       "answer_keywords": [
+        "duluth"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where has Colleen settled down?",
+       "answer_keywords": [
+        "duluth"
+       ]
+      },
+      {
+       "kind": "supersede_old",
+       "text": "Where did her daughter Colleen live before moving for her new nursing job?",
+       "answer_keywords": [
+        "duluth"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m025",
+     "user_id": "u02",
+     "session_idx": 8,
+     "turn_text": "One more money matter while I think of it — my daughter Colleen keeps offering to send me a little cash for household repairs, and I keep telling her no thank you. She's up in Duluth with her own expenses, and I manage just fine.",
+     "type": "fact",
+     "canonical": "Her daughter Colleen lives in Duluth.",
+     "subject": "Her daughter Colleen lives in Duluth.",
+     "edit_stem": "The user's daughter Colleen lives in",
+     "edit_target": " Duluth",
+     "key_prompts": [
+      "What city does my daughter Colleen live in?",
+      "Where does my daughter Colleen make her home?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So where is Colleen living these days?",
+       "answer_keywords": [
+        "duluth"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If I wanted to send Colleen a postcard, what city would it go to?",
+       "answer_keywords": [
+        "duluth"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Which city is Colleen based in?",
+       "answer_keywords": [
+        "duluth"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "Where does her daughter Colleen live?",
+       "answer_keywords": [
+        "duluth"
+       ],
+       "near_miss_of": "u02-m030"
+      }
+     ]
+    },
+    {
+     "id": "u02-m026",
+     "user_id": "u02",
+     "session_idx": 8,
+     "turn_text": "Oh, and I'm still waiting on a delivery of woodcarving chisels I ordered. They took my money right off, naturally, but the box hasn't shown up yet. Would you check the tracking for me?",
+     "type": "transient",
+     "canonical": "Waiting for a delivery of woodcarving chisels.",
+     "subject": "Waiting for a delivery of woodcarving chisels.",
+     "edit_stem": "The delivery the user is currently waiting for contains",
+     "edit_target": " woodcarving chisels",
+     "key_prompts": [
+      "What am I expecting to arrive soon?",
+      "Which order am I waiting on right now?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What am I waiting to have delivered to the cottage?",
+       "answer_keywords": [
+        "woodcarving chisels",
+        "woodcarving"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which items am I still looking forward to getting in the mail?",
+       "answer_keywords": [
+        "woodcarving chisels",
+        "woodcarving"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what's the package I've got coming, again?",
+       "answer_keywords": [
+        "woodcarving chisels",
+        "woodcarving"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m027",
+     "user_id": "u02",
+     "session_idx": 9,
+     "turn_text": "While you're at it, put the property tax on the calendar — it's due April 30 for the cottage, and I want it paid and mailed before I get buried in van projects again.",
+     "type": "fact",
+     "canonical": "Property tax on the cottage is due April 30.",
+     "subject": "Property tax on the cottage is due April 30.",
+     "edit_stem": "The user's property tax on the cottage is due",
+     "edit_target": " April 30",
+     "key_prompts": [
+      "When is my property tax on the cottage due?",
+      "Which date do I have to pay the cottage's property tax by?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So when do I need to get that property tax payment in for the cottage?",
+       "answer_keywords": [
+        "april"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's the deadline for paying property tax on my cottage?",
+       "answer_keywords": [
+        "april"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "By what date does the cottage's property tax have to be paid?",
+       "answer_keywords": [
+        "april"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m028",
+     "user_id": "u02",
+     "session_idx": 9,
+     "turn_text": "And one more for the list: the insurance on the camper renews in June. She's a 1974 Shasta, and I'd rather have the paperwork settled early than be scrambling come summer.",
+     "type": "fact",
+     "canonical": "The camper van is a 1974 Shasta; its insurance renews in June.",
+     "subject": "The camper van is a 1974 Shasta; its insurance renews in Jun",
+     "edit_stem": "The insurance on the user's 1974 Shasta camper van renews in",
+     "edit_target": " June",
+     "key_prompts": [
+      "In what month does my camper van insurance renew?",
+      "Which month does the renewal of my camper van insurance fall in?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So what month should we mark down for the camper van's insurance renewal?",
+       "answer_keywords": [
+        "june"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "In which month do I need to get the insurance on my camper van renewed again?",
+       "answer_keywords": [
+        "june"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Which month is the van's insurance renewal?",
+       "answer_keywords": [
+        "june"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m029",
+     "user_id": "u02",
+     "session_idx": 10,
+     "turn_text": "Small confession — I stopped for lunch in town today. I still miss the Blue Heron, but honestly the Foxglove Kitchen on River Street has become my favorite cafe since it closed. Their chowder alone is worth the trip.",
+     "type": "fact",
+     "canonical": "Her favorite cafe is now the Foxglove Kitchen on River Street since the Blue Heron closed.",
+     "subject": "Her favorite cafe is now the Foxglove Kitchen on River Stree",
+     "edit_stem": "Since the Blue Heron closed, the user's favorite cafe is now",
+     "edit_target": " the Foxglove Kitchen",
+     "key_prompts": [
+      "What is my favorite cafe now?",
+      "Which cafe do I go to these days?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u02-m019",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where's your go-to spot for a meal out these days?",
+       "answer_keywords": [
+        "foxglove kitchen",
+        "foxglove"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which cafe has become your favorite since the old one shut down?",
+       "answer_keywords": [
+        "foxglove kitchen",
+        "foxglove"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where do you usually grab a bite in town?",
+       "answer_keywords": [
+        "foxglove kitchen",
+        "foxglove"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "Which cafe is her favorite these days?",
+       "answer_keywords": [
+        "foxglove kitchen",
+        "foxglove"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m030",
+     "user_id": "u02",
+     "session_idx": 10,
+     "turn_text": "While we're at it, add a reminder to phone my sister this week. Rosaleen lives out in Duluth, and it's been a few weeks since we've had a proper chat.",
+     "type": "fact",
+     "canonical": "Her sister Rosaleen lives in Duluth.",
+     "subject": "Her sister Rosaleen lives in Duluth.",
+     "edit_stem": "As for family, the user's sister Rosaleen makes her home in",
+     "edit_target": " Duluth",
+     "key_prompts": [
+      "Where does my sister Rosaleen live?",
+      "In which city does my sister live?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u02-m025",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where does your sister Rosaleen live?",
+       "answer_keywords": [
+        "duluth"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What city does your sister Rosaleen call home?",
+       "answer_keywords": [
+        "duluth"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So where's Rosaleen based?",
+       "answer_keywords": [
+        "duluth"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m031",
+     "user_id": "u02",
+     "session_idx": 10,
+     "turn_text": "And I can hardly wait — my granddaughter is coming to visit next weekend. Put a note on my list to get the place guest-ready by Thursday, will you?",
+     "type": "transient",
+     "canonical": "Excited that her granddaughter visits next weekend.",
+     "subject": "Excited that her granddaughter visits next weekend.",
+     "edit_stem": "The user is happily getting ready for next weekend's visit from",
+     "edit_target": " her granddaughter",
+     "key_prompts": [
+      "Who is coming to visit me next weekend?",
+      "Which family member am I so excited to see soon?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Who's coming to see Meg next weekend?",
+       "answer_keywords": [
+        "granddaughter"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Whose visit was Meg so eagerly looking forward to?",
+       "answer_keywords": [
+        "granddaughter"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Who's on the way to spend time with Meg at the cottage soon?",
+       "answer_keywords": [
+        "granddaughter"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m032",
+     "user_id": "u02",
+     "session_idx": 10,
+     "turn_text": "Last thing for tonight: my prescription pickup at Leland Pharmacy falls on the 3rd of every month, so flag that for me when it comes around, please.",
+     "type": "fact",
+     "canonical": "Prescription pickup at Leland Pharmacy on the 3rd of each month.",
+     "subject": "Prescription pickup at Leland Pharmacy on the 3rd of each mo",
+     "edit_stem": "On the 3rd of each month, the user picks up prescriptions at",
+     "edit_target": " Leland Pharmacy",
+     "key_prompts": [
+      "Where do I pick up my prescriptions each month?",
+      "Where do I get my monthly medication refills?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where should I head to pick up my prescription this month?",
+       "answer_keywords": [
+        "leland pharmacy",
+        "leland"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which place in town handles my monthly medication pickups?",
+       "answer_keywords": [
+        "leland pharmacy",
+        "leland"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where's my usual spot for grabbing my meds each month?",
+       "answer_keywords": [
+        "leland pharmacy",
+        "leland"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m033",
+     "user_id": "u02",
+     "session_idx": 11,
+     "turn_text": "Before you fix any dates for me, one thing — the library book club meets the second Wednesday of each month now, at 6:30 p.m., and I don't want to be away for it. Keep me back in town by that evening.",
+     "type": "fact",
+     "canonical": "Library book club now meets the second Wednesday of each month at 6:30 p.m.",
+     "subject": "Library book club now meets the second Wednesday of each mon",
+     "edit_stem": "Each month, the user's library book club now meets on",
+     "edit_target": " second Wednesdays",
+     "key_prompts": [
+      "What day does my library book club meet?",
+      "Which day of every month do I attend book club?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u02-m016",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Just to confirm, when does our book club meet now?",
+       "answer_keywords": [
+        "second wednesdays",
+        "second"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What day is my book club gathering this month?",
+       "answer_keywords": [
+        "second wednesdays",
+        "second"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Which day of every month is my reading group again?",
+       "answer_keywords": [
+        "second wednesdays",
+        "second"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "What day and time does the library book club currently meet each month?",
+       "answer_keywords": [
+        "second wednesdays",
+        "second"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m034",
+     "user_id": "u02",
+     "session_idx": 11,
+     "turn_text": "One more thing for the drive: find me a stop along the way that will bring a proper pot of Earl Grey with milk. I'm a tea drinker, never took to coffee, so the espresso places are wasted on me.",
+     "type": "belief",
+     "canonical": "Prefers tea over coffee; her default order is a pot of Earl Grey with milk.",
+     "subject": "Prefers tea over coffee; her default order is a pot of Earl ",
+     "edit_stem": "The user's default order at any café is a pot of",
+     "edit_target": " Earl Grey with milk",
+     "key_prompts": [
+      "What is my usual hot drink order?",
+      "Which hot brew do I ask for by default?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What hot drink order should I put in this morning?",
+       "answer_keywords": [
+        "earl grey milk",
+        "earl"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "Which hot beverage am I most likely to pick when we go out?",
+       "answer_keywords": [
+        "earl grey milk",
+        "earl"
+       ],
+       "after_sessions": 5
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What do I always sip on when it's time for a warm drink?",
+       "answer_keywords": [
+        "earl grey milk",
+        "earl"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m035",
+     "user_id": "u02",
+     "session_idx": 12,
+     "turn_text": "Oh, and one thing while I'm thinking about the weekend — if the family gathering drifts into politics, I'll be changing the subject or quietly clearing plates. I never discuss politics at family gatherings, full stop. That rule has kept many a holiday peaceful.",
+     "type": "belief",
+     "canonical": "Never discusses politics at family gatherings.",
+     "subject": "Never discusses politics at family gatherings.",
+     "edit_stem": "At family gatherings, the one subject the user never brings up is",
+     "edit_target": " politics",
+     "key_prompts": [
+      "Which topic do I steer clear of when my family gets together?",
+      "What subject is off-limits for me around my relatives?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "To keep the peace at those family get-togethers, what topic do you refuse to get into?",
+       "answer_keywords": [
+        "politics"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When you're surrounded by relatives, which subject do you make a point of never touching?",
+       "answer_keywords": [
+        "politics"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's the one conversation topic you just won't go near with the whole family around?",
+       "answer_keywords": [
+        "politics"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m036",
+     "user_id": "u02",
+     "session_idx": 12,
+     "turn_text": "When you set up those reminders, a morning ping is fine, but nothing over dinner — dinner hours are phone-free in this house, strict rule, and I don't exempt myself from it either.",
+     "type": "belief",
+     "canonical": "Keeps dinner hours phone-free as a strict house rule.",
+     "subject": "Keeps dinner hours phone-free as a strict house rule.",
+     "edit_stem": "Regarding mealtime conduct at home, the user keeps dinner hours",
+     "edit_target": " phone-free",
+     "key_prompts": [
+      "What is my strict house rule during dinner?",
+      "Which rule do I never bend at mealtime?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "And what does your dinner rule involve, exactly?",
+       "answer_keywords": [
+        "phone-free"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's your standing house rule for the evening meal?",
+       "answer_keywords": [
+        "phone-free"
+       ],
+       "after_sessions": 4
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So at supper, what's the deal with the house rules in your cottage?",
+       "answer_keywords": [
+        "phone-free"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m037",
+     "user_id": "u02",
+     "session_idx": 13,
+     "turn_text": "One thing worth noting while we're at the calendar — I've got a dentist appointment on March 14 at 10:15 a.m. with Dr. Passmore. Remind me the day before, please; I like to be parked in his waiting room early rather than rushing in at the last minute.",
+     "type": "fact",
+     "canonical": "Dentist appointment on March 14 at 10:15 a.m. with Dr. Passmore.",
+     "subject": "Dentist appointment on March 14 at 10:15 a.m. with Dr. Passm",
+     "edit_stem": "The user's dental appointment on March 14 at 10:15 a.m. is with",
+     "edit_target": " Dr. Passmore",
+     "key_prompts": [
+      "Who is my dentist?",
+      "Which dental provider am I seeing on March 14?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Who will I be seeing for my dental appointment on March 14?",
+       "answer_keywords": [
+        "passmore"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's the name of the dentist I'm booked with?",
+       "answer_keywords": [
+        "passmore"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So who's the one handling my checkup that morning?",
+       "answer_keywords": [
+        "passmore"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m038",
+     "user_id": "u02",
+     "session_idx": 13,
+     "turn_text": "Oh, and a friend asked me this morning where she ought to go for a puppy. You know my line on that — dogs should be adopted from shelters, never bought from breeders. I told her I'd walk her through the kennels myself if she's serious.",
+     "type": "belief",
+     "canonical": "Believes dogs should be adopted from shelters, never bought from breeders.",
+     "subject": "Believes dogs should be adopted from shelters, never bought ",
+     "edit_stem": "On the subject of where dogs should come from, the user rules out breeders and believes the only right answer is",
+     "edit_target": " shelters",
+     "key_prompts": [
+      "What is my stance on where dogs should come from?",
+      "Which way of getting a dog do I support?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So where do you feel a dog should come from, instead of breeders?",
+       "answer_keywords": [
+        "shelters"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "How would you go about bringing a new dog into your home?",
+       "answer_keywords": [
+        "shelters"
+       ],
+       "after_sessions": 3
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "When it comes to getting a dog, where does Meg stand?",
+       "answer_keywords": [
+        "shelters"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m039",
+     "user_id": "u02",
+     "session_idx": 14,
+     "turn_text": "Morning. I'd like to sketch out a plan for the weekend — nothing fancy. Juniper turned 10 at her April birthday, you know, so I thought we'd start with something small and special for her, a nice long ramble somewhere she loves.",
+     "type": "fact",
+     "canonical": "Her dog Juniper turned 10 at her April birthday.",
+     "subject": "Her dog Juniper turned 10 at her April birthday.",
+     "edit_stem": "At her April birthday, the user's dog Juniper turned",
+     "edit_target": " 10",
+     "key_prompts": [
+      "How old is my dog Juniper?",
+      "What age did Juniper turn at her April birthday?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u02-m022",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So Juniper just had a birthday — how old is she now?",
+       "answer_keywords": [
+        "10"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's Juniper's age at this point?",
+       "answer_keywords": [
+        "10"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So how old is the pup these days?",
+       "answer_keywords": [
+        "10"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "How old is her dog Juniper now, after her April birthday?",
+       "answer_keywords": [
+        "10"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m040",
+     "user_id": "u02",
+     "session_idx": 14,
+     "turn_text": "Also, Colleen has moved to Marquette for a new nursing job, so keep Sunday evening open for me — I want plenty of time to hear how she's settling in.",
+     "type": "fact",
+     "canonical": "Her daughter Colleen has moved to Marquette for a new nursing job.",
+     "subject": "Her daughter Colleen has moved to Marquette for a new nursin",
+     "edit_stem": "The city where the user's daughter Colleen relocated for her new nursing job is",
+     "edit_target": " Marquette",
+     "key_prompts": [
+      "What city does my daughter Colleen live in now?",
+      "Which town did my daughter move to for her new job?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": "u02-m024",
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "So where is Colleen living these days?",
+       "answer_keywords": [
+        "marquette"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's the name of the place Colleen relocated to for her new position?",
+       "answer_keywords": [
+        "marquette"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Where has Colleen ended up calling home?",
+       "answer_keywords": [
+        "marquette"
+       ]
+      },
+      {
+       "kind": "supersede_new",
+       "text": "Where does her daughter Colleen live now?",
+       "answer_keywords": [
+        "marquette"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m041",
+     "user_id": "u02",
+     "session_idx": 14,
+     "turn_text": "Saturday afternoon I'll sit down with my mending. The barn jacket needs a patch at the elbow, and I'd far rather patch it than buy a new one — good cloth deserves a second life.",
+     "type": "belief",
+     "canonical": "Values mending over replacing; would rather patch a jacket than buy a new one.",
+     "subject": "Values mending over replacing; would rather patch a jacket t",
+     "edit_stem": "When belongings wear out or break, the user favors",
+     "edit_target": " mending over replacing",
+     "key_prompts": [
+      "What is my usual approach when a favorite garment rips?",
+      "Which do I prefer for worn-out belongings: fixing them or buying new ones?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When something of yours wears out, do you tend to fix it or buy a new one?",
+       "answer_keywords": [
+        "mending over replacing",
+        "mending"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What's your first instinct when an item of your clothing tears?",
+       "answer_keywords": [
+        "mending over replacing",
+        "mending"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "If you get a hole in a favorite sweater, what's your move?",
+       "answer_keywords": [
+        "mending over replacing",
+        "mending"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m042",
+     "user_id": "u02",
+     "session_idx": 14,
+     "turn_text": "One last thing before we finish: I'm fighting off a head cold, so it'll be ginger tea and early nights for me. Keep the whole weekend gentle, would you?",
+     "type": "transient",
+     "canonical": "Fighting off a head cold and drinking ginger tea.",
+     "subject": "Fighting off a head cold and drinking ginger tea.",
+     "edit_stem": "While fighting off a head cold, the user warms up with",
+     "edit_target": " ginger tea",
+     "key_prompts": [
+      "What am I sipping on to fight off my head cold?",
+      "Which warm drink do I keep reaching for while I'm sick?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "What's in your mug as you battle that head cold?",
+       "answer_keywords": [
+        "ginger tea",
+        "ginger"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When you were feeling under the weather, what did you warm up with?",
+       "answer_keywords": [
+        "ginger tea",
+        "ginger"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what was Meg sipping to get over her sniffles?",
+       "answer_keywords": [
+        "ginger tea",
+        "ginger"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m043",
+     "user_id": "u02",
+     "session_idx": 15,
+     "turn_text": "Good evening. I spoiled myself a little on the way home - stopped at the Blue Heron Bakehouse on Front Street, still my favorite cafe in town, and brought a sweet roll back for later.",
+     "type": "fact",
+     "canonical": "Favorite cafe is the Blue Heron Bakehouse on Front Street.",
+     "subject": "Favorite cafe is the Blue Heron Bakehouse on Front Street.",
+     "edit_stem": "Regarding coffee outings, the user's favorite cafe in town is",
+     "edit_target": " Blue Heron Bakehouse",
+     "key_prompts": [
+      "What is my favorite cafe?",
+      "Which cafe do I always go to when I'm out?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where do you like to stop for coffee and a pastry these days?",
+       "answer_keywords": [
+        "blue heron bakehouse",
+        "blue"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you're craving a scone and a latte, which spot do you head to?",
+       "answer_keywords": [
+        "blue heron bakehouse",
+        "blue"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what's the name of that little coffee place you love?",
+       "answer_keywords": [
+        "blue heron bakehouse",
+        "blue"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m044",
+     "user_id": "u02",
+     "session_idx": 15,
+     "turn_text": "One small thing - nudge me to lay out my swim things tonight. Water aerobics is at the community center on Mondays and Thursdays at 8 a.m., and I like to get there without rushing.",
+     "type": "fact",
+     "canonical": "Water aerobics class at the community center on Mondays and Thursdays at 8 a.m.",
+     "subject": "Water aerobics class at the community center on Mondays and ",
+     "edit_stem": "For her weekly exercise routine, the class the user attends at the community center is",
+     "edit_target": " water aerobics",
+     "key_prompts": [
+      "What class do I attend at the community center on Monday and Thursday mornings?",
+      "Which kind of exercise class am I taking twice a week?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Which class is it that you're doing at the community center on those two mornings?",
+       "answer_keywords": [
+        "water aerobics",
+        "water"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What type of exercise class do you head to at the community center these days?",
+       "answer_keywords": [
+        "water aerobics",
+        "water"
+       ],
+       "after_sessions": 6
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's the name of that twice-a-week fitness class you go to?",
+       "answer_keywords": [
+        "water aerobics",
+        "water"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m045",
+     "user_id": "u02",
+     "session_idx": 16,
+     "turn_text": "First thing on my mind: book club got moved at the very last minute, and I'll admit I'm a little annoyed about it. I'd already set aside Saturday morning for it, and now I have to reshuffle my whole plan.",
+     "type": "transient",
+     "canonical": "Mildly annoyed that book club was moved on short notice.",
+     "subject": "Mildly annoyed that book club was moved on short notice.",
+     "edit_stem": "When book club was moved on short notice, the user felt",
+     "edit_target": " mildly annoyed",
+     "key_prompts": [
+      "How do I feel about book club being rescheduled on short notice?",
+      "What was my reaction to the last-minute book club date change?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "How do you feel about book club getting moved on such short notice?",
+       "answer_keywords": [
+        "mildly annoyed",
+        "mildly"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When the book club gathering got shifted at the last minute, how did you take it?",
+       "answer_keywords": [
+        "mildly annoyed",
+        "mildly"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What was her reaction to that sudden book club schedule switch?",
+       "answer_keywords": [
+        "mildly annoyed",
+        "mildly"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m046",
+     "user_id": "u02",
+     "session_idx": 19,
+     "turn_text": "One last thing before I sign off — if this warm stretch holds, put a swim at Spider Lake on my list for later this week. That's always been my favorite lake for swimming.",
+     "type": "fact",
+     "canonical": "Her favorite lake for swimming is Spider Lake.",
+     "subject": "Her favorite lake for swimming is Spider Lake.",
+     "edit_stem": "Regarding swimming spots, the user's favorite is",
+     "edit_target": " Spider Lake",
+     "key_prompts": [
+      "Where do I like to go swimming?",
+      "What is my favorite swimming spot?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where's your favorite place to take a dip?",
+       "answer_keywords": [
+        "spider lake",
+        "spider"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you were going for a swim this weekend, where would you head?",
+       "answer_keywords": [
+        "spider lake",
+        "spider"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So where does Meg usually swim these days?",
+       "answer_keywords": [
+        "spider lake",
+        "spider"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "Which lake is her favorite for swimming?",
+       "answer_keywords": [
+        "spider lake",
+        "spider"
+       ],
+       "near_miss_of": "u02-m047"
+      }
+     ]
+    },
+    {
+     "id": "u02-m047",
+     "user_id": "u02",
+     "session_idx": 20,
+     "turn_text": "One more money thing while we're at it — I've been doing the math on paddling. Lake Leelanau is my favorite spot to kayak, but the rental fees seem to creep up every summer, so I'm trying to figure out whether a decent secondhand kayak would pay for itself by fall.",
+     "type": "fact",
+     "canonical": "Her favorite lake for kayaking is Lake Leelanau.",
+     "subject": "Her favorite lake for kayaking is Lake Leelanau.",
+     "edit_stem": "Regarding kayaking, the user's favorite place to paddle is",
+     "edit_target": " Lake Leelanau",
+     "key_prompts": [
+      "Which body of water do I most like to kayak on?",
+      "Where do I head when I want to take my kayak out?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u02-m046",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Where do you usually put your kayak in around here?",
+       "answer_keywords": [
+        "lake leelanau",
+        "lake"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "If you had a free morning for paddling, where would we find you?",
+       "answer_keywords": [
+        "lake leelanau",
+        "lake"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "So what's your go-to spot when the paddling bug hits?",
+       "answer_keywords": [
+        "lake leelanau",
+        "lake"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "u02-m048",
+     "user_id": "u02",
+     "session_idx": 23,
+     "turn_text": "The seat cushions are finally re-covered - took me three tries to get the seams straight, but they look proper now. I'm hoping to have the whole interior finished by mid-March, though I'll lose the 14th to the dentist at 10:15 that morning, so no sanding that day.",
+     "type": "fact",
+     "canonical": "Dentist appointment on March 14 at 10:15 a.m.",
+     "subject": "Dentist appointment on March 14 at 10:15 a.m.",
+     "edit_stem": "On the user's calendar, the 10:15 a.m. dentist appointment is booked for",
+     "edit_target": " March 14",
+     "key_prompts": [
+      "When is my dentist appointment?",
+      "What day do I see the dentist?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": null,
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "Quick question: what day is my dentist appointment scheduled for?",
+       "answer_keywords": [
+        "march"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "When do I need to be at the dentist's office?",
+       "answer_keywords": [
+        "march"
+       ],
+       "after_sessions": 8
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "Just checking, what's the date for my dental visit?",
+       "answer_keywords": [
+        "march"
+       ]
+      },
+      {
+       "kind": "near_miss",
+       "text": "What time is my dentist appointment?",
+       "answer_keywords": [
+        "march"
+       ],
+       "near_miss_of": "u02-m049"
+      }
+     ]
+    },
+    {
+     "id": "u02-m049",
+     "user_id": "u02",
+     "session_idx": 23,
+     "turn_text": "Oh, and while we've got the calendar open, mark down the cardiologist too - 2:30 that same afternoon of the 14th. Waiting rooms morning and afternoon both, so I'll tuck a book in my bag and call it a lost day for the van.",
+     "type": "fact",
+     "canonical": "Cardiologist appointment on March 14 at 2:30 p.m.",
+     "subject": "Cardiologist appointment on March 14 at 2:30 p.m.",
+     "edit_stem": "The user's upcoming appointment with the cardiologist is scheduled for",
+     "edit_target": " March 14",
+     "key_prompts": [
+      "What is the date of my cardiologist appointment?",
+      "Which day do I see the cardiologist?"
+     ],
+     "confidence": 0.9,
+     "supersede_of": null,
+     "near_miss_twin_of": "u02-m048",
+     "probes": [
+      {
+       "kind": "qa_immediate",
+       "text": "When is my appointment with the cardiologist?",
+       "answer_keywords": [
+        "march"
+       ]
+      },
+      {
+       "kind": "qa_delayed",
+       "text": "What day am I scheduled to see the heart specialist?",
+       "answer_keywords": [
+        "march"
+       ],
+       "after_sessions": 7
+      },
+      {
+       "kind": "qa_paraphrase",
+       "text": "What's the date for my visit to the heart doctor?",
+       "answer_keywords": [
+        "march"
+       ]
+      }
+     ]
+    }
+   ],
+   "scenarios": [
+    {
+     "text": "Help me untangle Monday morning. I've got my regular class at the community center, and the furnace repairman says he can only come between 9 and 11 — right in the middle of it. Figure out how he can get into the cottage while I'm away, draft a short thank-you note for whoever bails me out, and build me a timeline so the dog still gets her walk first.",
+     "id": "u02-sc000",
+     "user_id": "u02",
+     "memory_ids": [
+      "u02-m000",
+      "u02-m001",
+      "u02-m002"
+     ]
+    },
+    {
+     "text": "Plan my Sunday from noon through bedtime — I want a solid block of sanding on the van's cabinet doors, a decent walk for Juniper between the rain showers they're forecasting, and an easy supper I can eat without fuss. Lay it out hour by hour and flag anything I shouldn't let slip, since evenings have a way of sneaking up on me.",
+     "id": "u02-sc001",
+     "user_id": "u02",
+     "memory_ids": [
+      "u02-m003",
+      "u02-m005"
+     ]
+    },
+    {
+     "text": "Write a welcome note for my niece Emma, who's staying at the cottage next week. She'll arrive Tuesday while I'm tied up with my usual afternoon commitment, so include how to get her laptop and phone onto my internet, which hours I'll be gone that day, and a suggestion that she take the dog for a long walk along the lake in the meantime.",
+     "id": "u02-sc002",
+     "user_id": "u02",
+     "memory_ids": [
+      "u02-m006",
+      "u02-m008"
+     ]
+    },
+    {
+     "text": "Please sketch a plan for my week. I owe my cousin in Cork a proper long letter, I'm two chapters behind on the book club novel, and the dog needs longer walks while the weather holds. Keep my mornings to myself the way I like them, work out when I should leave for my Monday class so supper isn't rushed, and save Thursday afternoon for the shelter. Simple enough to tape inside the pantry door, please.",
+     "id": "u02-sc003",
+     "user_id": "u02",
+     "memory_ids": [
+      "u02-m009",
+      "u02-m010"
+     ]
+    }
+   ]
+  }
+ ]
+}
