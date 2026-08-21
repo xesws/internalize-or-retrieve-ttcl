@@ -14,7 +14,7 @@ def test_no_brand_names_in_campaign_code():
         if not root.exists():
             continue
         for p in root.rglob("*.py"):
-            if p == Path(__file__):  # this lint's own pattern line is not leakage
+            if p.resolve() == Path(__file__).resolve():  # own pattern line is not leakage
                 continue
             for i, line in enumerate(p.read_text().splitlines(), 1):
                 if BANNED.search(line):

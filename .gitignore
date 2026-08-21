@@ -13,10 +13,10 @@ logs/
 *.safetensors
 generated/
 
-# --- models / caches ---
-models/
-cache/
-hf_cache/
+# --- models / caches (root-anchored so third_party/horen_backend/models/ stays tracked) ---
+/models/
+/cache/
+/hf_cache/
 
 # --- python ---
 __pycache__/
