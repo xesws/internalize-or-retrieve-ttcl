@@ -44,33 +44,51 @@ def main() -> int:
                       range(1, args.dev_users + args.test_users + 1)]
 
     users = []
+    failed_users = []
     for idx, n_sessions in users_spec:
         print(f"== generating user u{idx:02d} ({n_sessions} sessions) ==", flush=True)
         gen = WorkloadGenerator(idx, run_dir=RUN_DIR, n_sessions=n_sessions)
-        user = gen.generate()
+        try:
+            user = gen.generate()
+        except Exception as e:  # noqa: BLE001 — one user's failure must not kill the run
+            print(f"   USER FAILED u{idx:02d}: {e}", flush=True)
+            failed_users.append({"user": f"u{idx:02d}", "error": str(e)[:300]})
+            continue
         if user.get("_errors"):
             print(json.dumps({"user": user["user_id"], "errors": user["_errors"][:5]}, ensure_ascii=False))
         users.append({k: v for k, v in user.items() if k != "_errors"})
         print(f"   memories={len(user['memories'])} scenarios={len(user['scenarios'])} "
               f"errors={len(user.get('_errors', []))}", flush=True)
+    if failed_users:
+        print(json.dumps({"failed_users": failed_users}, ensure_ascii=False), flush=True)
 
     if args.pilot:
-        # pilot: validate + lint without freezing into data/
-        from src.workload import lint, schema
+        # pilot: validate + lint, run the single repair round, report
+        from src.workload import lint, repair, schema
         doc = {"version": "pilot", "split": "dev", "users": users}
+        pre = lint.workload_leak_report(doc)
+        rep = repair.repair_round(users)
         errs = [schema.validate_memory(m) for u in users for m in u["memories"]]
         n_err = sum(len(e) for e in errs)
-        rep = lint.workload_leak_report(doc)
+        post = lint.workload_leak_report(doc)
         print(json.dumps({
             "pilot": True, "users": len(users),
             "memories": sum(len(u["memories"]) for u in users),
             "schema_errors": n_err,
-            "lint": {k: rep[k] for k in ("probes", "violations", "rate", "by_kind")},
+            "lint_pre": {k: pre[k] for k in ("probes", "violations", "rate", "by_kind")},
+            "repair": rep,
+            "lint_post": {k: post[k] for k in ("probes", "violations", "rate", "by_kind")},
             "usage": client.usage_summary(),
         }, indent=2, ensure_ascii=False))
-        return 0 if n_err == 0 else 1
+        return 0 if n_err == 0 and post["rate"] <= repair.LEAK_RATE_STOP else 1
 
     dev_ids = [f"u{i:02d}" for i in range(1, args.dev_users + 1)]
+    from src.workload import repair
+    rep = repair.repair_round(users)
+    print(json.dumps({"repair": rep}, ensure_ascii=False), flush=True)
+    if rep["stop_condition"]:
+        print("STOP: leak rate still > 2% after one repair round — reporting, not freezing", flush=True)
+        return 2
     report = freeze_mod.freeze(users, dev_ids, generator_model=gen_model)
     write_manifest(RUN_DIR, {
         "run_id": "workload_build",

@@ -93,15 +93,25 @@ class WorkloadGenerator:
     def _prompt(self, name: str) -> str:
         return (Path(__file__).resolve().parents[2] / "prompts" / name).read_text()
 
-    def _call(self, prompt_text: str, tag: str, temperature: float = 0.8) -> Any:
+    def _call(self, prompt_text: str, tag: str, temperature: float = 0.8,
+              max_tokens: int = 8192) -> Any:
+        """One JSON call. Truncated replies (thinking models can spend the
+        whole completion budget on reasoning) get ONE retry at double budget."""
         raw = client.chat(
             [{"role": "user", "content": prompt_text}],
-            role=self.gen_role,
-            temperature=temperature,
-            max_tokens=4096,
-            meta={"step": tag, "user": self.user_id},
+            role=self.gen_role, temperature=temperature,
+            max_tokens=max_tokens, meta={"step": tag, "user": self.user_id},
         )
-        return client.parse_json_block(raw)
+        try:
+            return client.parse_json_block(raw)
+        except client.LLMError:
+            raw = client.chat(
+                [{"role": "user", "content": prompt_text}],
+                role=self.gen_role, temperature=max(temperature, 0.5),
+                max_tokens=max_tokens * 2,
+                meta={"step": tag + ":retry", "user": self.user_id},
+            )
+            return client.parse_json_block(raw)
 
     # --- steps ---------------------------------------------------------------------------
     def step_persona(self) -> dict:

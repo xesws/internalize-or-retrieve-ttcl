@@ -102,12 +102,15 @@ def chat(
     role: str = "gen",
     *,
     temperature: float = 0.7,
-    max_tokens: int = 4096,
+    max_tokens: int = 8192,
     env: dict[str, str] | None = None,
     meta: dict[str, Any] | None = None,
 ) -> str:
     """One chat completion; returns assistant text. Raises LLMError after 3
-    failed attempts (caller must surface, not swallow)."""
+    failed attempts (caller must surface, not swallow). Note: thinking-model
+    reasoning counts against max_tokens — callers asking for JSON should use
+    a generous budget (the generator retries with a doubled budget on parse
+    failure to survive truncated replies)."""
     cfg = resolve_role(role, load_env() if env is None else env)
     if not cfg["api_key"]:
         raise LLMError(f"missing API key for role={role} ({cfg['base_url']})")
