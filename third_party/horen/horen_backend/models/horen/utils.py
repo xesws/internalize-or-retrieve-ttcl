@@ -36,19 +36,37 @@ def _tokenize_prompt_and_label(prompt, label, tokenizer, device):
     prompt_enc = tokenizer(list(prompt), return_tensors="pt", padding=True, truncation=True)
     num_prompt_toks = prompt_enc["attention_mask"].sum(dim=1).tolist()
 
-    tokens = tokenizer(full_prompt, return_tensors="pt", padding=True, truncation=True)
-    labels = tokens["input_ids"].clone()
+    # PATCH (ttcl §4.1, 2026-08-21): APPEND the terminating eos to the target
+    # span. Raw-text encodings carry no eos, so without this the editor trains
+    # with no stop signal at all (runaway generation at decode).
+    tokens = tokenizer(full_prompt, return_tensors=None, padding=False, truncation=True)
+    eos_id = tokenizer.eos_token_id
+    pad_id = tokenizer.pad_token_id
+    if eos_id is None:
+        eos_id = pad_id
+    rows = [torch.tensor(list(row) + [eos_id], dtype=torch.long)
+            for row in tokens["input_ids"]]
+    maxlen = max(r.shape[0] for r in rows)
+    input_ids = torch.full((len(rows), maxlen), pad_id if pad_id is not None else eos_id, dtype=torch.long)
+    attention = torch.zeros((len(rows), maxlen), dtype=torch.long)
+    for i, r in enumerate(rows):
+        input_ids[i, : r.shape[0]] = r
+        attention[i, : r.shape[0]] = 1
+    labels = input_ids.clone()
     for i in range(len(prompt)):
         labels[i][: num_prompt_toks[i]] = mask_token
     # PATCH (ttcl §4.1, 2026-08-21): mask ONLY true padding (attention_mask == 0).
     # Upstream masked `input_ids == pad_token_id`, which — under the pad=eos
-    # alias — also erased the target-final eos from the training labels and left
-    # the editor training with no stop signal (runaway generation at decode).
-    # A real eos inside the supervised target span must stay supervised.
-    labels[tokens["attention_mask"] == 0] = mask_token
-    tokens["labels"] = labels
+    # alias — also erased the target-final eos from the training labels. A real
+    # eos inside the supervised target span must stay supervised (the appended
+    # eos above is exactly such a token).
+    labels[attention == 0] = mask_token
 
-    return {k: v.to(device) for k, v in tokens.items()}
+    return {
+        "input_ids": input_ids.to(device),
+        "attention_mask": attention.to(device),
+        "labels": labels.to(device),
+    }
 
 
 def tokenize_request(request, tokenizer, device):

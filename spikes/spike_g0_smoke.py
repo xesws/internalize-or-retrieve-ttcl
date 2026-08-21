@@ -71,6 +71,16 @@ ITEMS = [
 ]
 
 
+# Reference items for §4.1 check (a): natural facts the BASE model completes
+# and happily stops after — their boundary p(eos) is the "unedited baseline
+# magnitude" the handbook compares against (fictional targets make the base
+# model want to continue, so they are no reference).
+NATURAL_ITEMS = [
+    {"id": "n1", "stem": "The capital of France is", "target": " Paris"},
+    {"id": "n2", "stem": "The chemical symbol for gold is", "target": " Au"},
+]
+
+
 def target_free(item: dict) -> bool:
     t = item["target"].strip().lower()
     return t not in item["probe"].lower() and t not in item["key_prompt"].lower()
@@ -110,11 +120,17 @@ def main() -> int:
         m = model_host.current_model()
         return m.model if hasattr(m, "model") and hasattr(m, "edit_log") else m
 
-    # --- baseline p(eos) on the UNEDITED base (edit module not yet installed) ---
+    # --- baseline p(eos): natural facts (reference magnitude) + fictional items ---
     base_p_eos = {}
     for item in ITEMS:
         base_p_eos[item["id"]] = p_eos_at_gold_boundary(tok, model, device, item["stem"], item["target"])
-    print(json.dumps({"event": "baseline_p_eos", "values": base_p_eos}), flush=True)
+    natural_p_eos = {
+        it["id"]: p_eos_at_gold_boundary(tok, model, device, it["stem"], it["target"])
+        for it in NATURAL_ITEMS
+    }
+    natural_ref = statistics.median(natural_p_eos.values())
+    print(json.dumps({"event": "baseline_p_eos", "fictional": base_p_eos,
+                      "natural": natural_p_eos, "natural_ref": natural_ref}), flush=True)
 
     # --- 5 sequential edits (codebook stacks in one adapter) ---
     edits = []
@@ -149,15 +165,20 @@ def main() -> int:
                       "hit": bool(sim >= threshold)})
         print(json.dumps({"event": "gate", **gates[-1]}), flush=True)
 
-    # --- §4.1 check (a): edited p(eos) at gold boundary vs base ---
+    # --- §4.1 check (a): edited p(eos) at gold boundary recovers to the base
+    # model's natural-completion magnitude (unpatched training leaves ~0) ---
     edited_p_eos = {}
     for item in ITEMS:
         edited_p_eos[item["id"]] = p_eos_at_gold_boundary(tok, hf(), device, item["stem"], item["target"])
-    p_eos_ratios = {k: round(edited_p_eos[k] / max(base_p_eos[k], 1e-9), 2) for k in edited_p_eos}
-    check_a = all(0.1 <= edited_p_eos[k] / max(base_p_eos[k], 1e-9) <= 10.0 for k in edited_p_eos)
-    print(json.dumps({"event": "p_eos_check_a", "base": {k: round(v, 4) for k, v in base_p_eos.items()},
+    ratio_to_natural = {k: round(edited_p_eos[k] / max(natural_ref, 1e-9), 2)
+                        for k in edited_p_eos}
+    check_a = all(0.1 <= r <= 10.0 for r in ratio_to_natural.values()) \
+        and min(edited_p_eos.values()) >= 0.01
+    print(json.dumps({"event": "p_eos_check_a",
+                      "natural_ref": round(natural_ref, 4),
+                      "fictional_base": {k: round(v, 6) for k, v in base_p_eos.items()},
                       "edited": {k: round(v, 4) for k, v in edited_p_eos.items()},
-                      "ratios": p_eos_ratios, "pass": check_a}), flush=True)
+                      "ratio_to_natural": ratio_to_natural, "pass": check_a}), flush=True)
 
     # --- §4.1 check (b): generation sanity at the 512 budget ---
     gens = []
@@ -209,7 +230,9 @@ def main() -> int:
     (run_dir / "report.json").parent.mkdir(parents=True, exist_ok=True)
     (run_dir / "report.json").write_text(json.dumps({
         "items": ITEMS, "edits": edits, "gates": gates, "threshold": threshold,
-        "base_p_eos": base_p_eos, "edited_p_eos": edited_p_eos, "p_eos_ratios": p_eos_ratios,
+        "natural_ref_p_eos": natural_ref,
+        "fictional_base_p_eos": base_p_eos, "edited_p_eos": edited_p_eos,
+        "ratio_to_natural": ratio_to_natural,
         "generations": gens, "cap_hit_rate": cap_hit_rate, "median_len": median_len,
         "max_new_tokens": MAX_NEW_TOKENS, "verdict": verdict,
     }, indent=2, ensure_ascii=False))
