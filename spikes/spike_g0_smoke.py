@@ -76,8 +76,10 @@ ITEMS = [
 # magnitude" the handbook compares against (fictional targets make the base
 # model want to continue, so they are no reference).
 NATURAL_ITEMS = [
-    {"id": "n1", "stem": "The capital of France is", "target": " Paris"},
-    {"id": "n2", "stem": "The chemical symbol for gold is", "target": " Au"},
+    {"id": "n1", "stem": "What is the capital of France? Answer in one word.",
+     "target": "Paris."},
+    {"id": "n2", "stem": "What is the chemical symbol for gold? Answer in one word.",
+     "target": "Au."},
 ]
 
 
@@ -141,7 +143,7 @@ def main() -> int:
     for item in ITEMS:
         base_p_eos[item["id"]] = p_eos_at_gold_boundary(tok, model, device, item["stem"], item["target"])
     natural_p_eos = {
-        it["id"]: chat_boundary_p_eos(tok, model, device, it["stem"] + "?", it["target"].strip())
+        it["id"]: chat_boundary_p_eos(tok, model, device, it["stem"], it["target"])
         for it in NATURAL_ITEMS
     }
     natural_ref = statistics.median(natural_p_eos.values())
