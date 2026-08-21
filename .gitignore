@@ -1,0 +1,33 @@
+# --- secrets (never in git) ---
+.env
+.env.*
+!.env.example
+
+# --- run artifacts (Mac is the master copy; never in git) ---
+results/
+checkpoints/
+logs/
+*.log
+*.ckpt
+*.pt
+*.safetensors
+generated/
+
+# --- models / caches ---
+models/
+cache/
+hf_cache/
+
+# --- python ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+build/
+dist/
+
+# --- os / editor ---
+.DS_Store
+.idea/
+.vscode/

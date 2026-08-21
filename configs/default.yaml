@@ -1,0 +1,42 @@
+# Default campaign config — the single place for global knobs.
+# Freeze protocol (proposal §5.5): system params are tuned on dev only, then a
+# frozen copy with its content hash goes into the run manifest. HoReN editing
+# hyperparameters are LOCKED to the original paper config (first-class knob:
+# never tuned, handbook §4.2).
+
+run:
+  seed: 42                 # global, fixed
+  max_new_tokens: 512      # hard decode budget (handbook §4.2), cap-hit + length_ratio logged per generation
+
+models:
+  # Roles per handbook v1.1 §1 (JQ ruling 2026-08-21). Keys live in Mac-side .env, never on the pod.
+  gen_model: glm-5.3                       # workload generation
+  sys_model: glm-5.3                       # extraction / typing / planner / composition
+  judge_model: deepseek-v4-pro             # naturalness judging (different family from gen/sys)
+  dev_aux_model: deepseek-v4-flash         # dev-only helper tasks
+  gen_base_url: https://api.z.ai/api/coding/paas/v4
+  sys_base_url: https://api.z.ai/api/coding/paas/v4
+  judge_base_url: https://api.deepseek.com
+  dev_aux_base_url: https://api.deepseek.com
+  backbone: meta-llama/Llama-3.1-8B-Instruct
+
+gate:
+  # Most dangerous knob (handbook §4.2): start at repo default 0.85 for the
+  # Llama family; sweep {0.75, 0.80, 0.85, 0.90} on dev ONCE, then freeze.
+  hopfield_key_match_threshold: 0.85
+
+horen:
+  # Editing hyperparameters: locked to upstream defaults — DO NOT TUNE.
+  hparams_source: third_party/horen/configs/llama-3.1-8b-instruct.yaml
+  locked: true
+
+workload:
+  sessions_per_user: [20, 40]
+  memories_per_user: [60, 100]
+  dev_test_split: session_level   # personas disjoint across dev/test
+  target_free_lint: true
+
+pressure:          # calibrated on dev during P2; all values disclosed in reports
+  rag_top_k: null
+  distractor_docs: null
+  store_budget: null
