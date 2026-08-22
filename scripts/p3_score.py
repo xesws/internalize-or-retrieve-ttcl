@@ -43,11 +43,47 @@ def hit_rate(items, kind):
     return round(hits / len(sel), 3)
 
 
+def bootstrap_ci(items, matrix, n_draws: int = 1000, seed: int = 42):
+    """Probe-level bootstrap: resample each axis's item scores independently,
+    recompute the composite, report the 2.5/97.5 percentiles."""
+    import random as _random
+    rng = _random.Random(seed)
+    buckets: dict[str, list[float]] = {"recall": [], "freshness": [], "locality": []}
+    for i in items:
+        cell = matrix[i["memory_type"]][i["kind"]]
+        if cell["axis"] in buckets and cell["in_composite"]:
+            buckets[cell["axis"]].append(scorecard.score_item(dict(i), matrix))
+    composites = []
+    for _ in range(n_draws):
+        axis_means = []
+        for ax, scores in buckets.items():
+            if scores:
+                draw = [scores[rng.randrange(len(scores))] for _ in scores]
+                axis_means.append(sum(draw) / len(draw))
+        if axis_means:
+            composites.append(sum(axis_means) / len(axis_means))
+    if not composites:
+        return None
+    composites.sort()
+    lo = composites[int(0.025 * len(composites))]
+    hi = composites[min(int(0.975 * len(composites)), len(composites) - 1)]
+    return [round(lo, 3), round(hi, 3)]
+
+
 def summarize(arms: dict[str, list[dict]], matrix) -> dict:
     out: dict = {}
     for arm, items in arms.items():
         m_items = [i for i in items if i["kind"] != "unrelated"]
         agg = scorecard.aggregate([dict(i, memory_type=i["memory_type"]) for i in m_items], matrix)
+        # statistical reinforcement (JQ ruling): probe-level bootstrap CI +
+        # per-user composite split
+        ci = bootstrap_ci([dict(i, memory_type=i["memory_type"]) for i in m_items], matrix)
+        per_user = {}
+        for uid in sorted({i.get("user_id") for i in m_items if i.get("user_id")}):
+            u_items = [dict(i, memory_type=i["memory_type"]) for i in m_items
+                       if i.get("user_id") == uid]
+            u_agg = scorecard.aggregate(u_items, matrix)
+            per_user[uid] = u_agg["composite"]
         # failure matrix: recall per (memory_type x route), the paper's core table
         fm: dict[str, dict[str, dict]] = defaultdict(lambda: defaultdict(lambda: {"n": 0, "hit": 0}))
         for i in m_items:
@@ -58,6 +94,7 @@ def summarize(arms: dict[str, list[dict]], matrix) -> dict:
                                     for kw in i["answer_keywords"]))
         out[arm] = {
             "items": len(items), "axes": agg["per_axis"], "composite": agg["composite"],
+            "composite_ci95": ci, "composite_per_user": per_user,
             "per_cell": agg["per_cell"], "old_value_residual": scorecard.old_value_residual(m_items),
             "session_scoped": agg["session_scoped"],
             "unrelated_hit": hit_rate(items, "unrelated"),
