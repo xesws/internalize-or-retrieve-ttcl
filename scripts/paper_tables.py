@@ -55,7 +55,9 @@ def main_table():
         r"(sequential-consistency uses the 75-item pool, App.~A). Judged naturalness is always "
         r"paired with scenario usage (belief/fact keyword rates). $\dagger$ preliminary "
         r"(utility router). $\ddagger$ action-space completion arm, appended after the main "
-        r"matrix. Drift bound from an identical-config rerun: "
+        r"matrix. Read as a persistence stress test (budgeted oldest-first "
+        r"eviction); the real-capacity reading is Table~\ref{tab:pressure-off}. "
+        r"Drift bound from an identical-config rerun: "
         + "$|\\Delta\\mathrm{composite}|$ = " + f"{SC['drift_bound']['abs_diff']:.3f}" + ".}",
         r"\label{tab:main}",
         r"\small\begin{tabular}{lccccccc}",
@@ -153,13 +155,12 @@ def pressure_off_table():
     off = SC["pressure_off"]
     s8 = json.loads(Path("data/p5/s8_frozen_v1.json").read_text()) if Path("data/p5/s8_frozen_v1.json").exists() else {}
     lines = [r"\begin{table}[htbp]\centering",
-             r"\caption{Pressure-off ablation (pre-registered P5 item; budget/eviction "
-             r"disabled, distractors removed; all other frozen configs unchanged) and the "
-             r"type-aware single-store defensive arm (S8: beliefs and facts both retrieved, "
-             r"transients dropped, zero edits; appended arm). Without pressure all-retrieve "
-             r"recall recovers and overtakes the router; S8 is competitive at both states with "
-             r"oracle-level freshness from store-side record replacement, lagging on near-miss "
-             r"locality and pressure-exposed recall.}",
+             r"\caption{Real-capacity setting (off: budget/eviction disabled; pre-registered "
+             r"P5 item) versus persistence stress test (on: budgeted oldest-first eviction). "
+             r"Distractors remain a read-side noise model when on. Type-aware single-store "
+             r"(S8: beliefs and facts retrieved, transients dropped, zero edits; appended arm). "
+             r"Off is the main reading: all-retrieve recall recovers; S8 is the strongest "
+             r"reported arm, with oracle-level freshness from store-side replacement.}",
              r"\label{tab:pressure-off}",
              r"\small\begin{tabular}{llcccc}\toprule",
              r"Arm & State & Composite & Recall & Fresh. & Local. \\ \midrule"]
@@ -202,6 +203,88 @@ def s7_table():
     ])
 
 
+def _cell(v):
+    if not v or v.get("n", 0) == 0 or v.get("score") is None:
+        return "---"
+    return f"{v['score']:.3f} ($n$={v['n']})"
+
+
+def _five(arm_state):
+    if arm_state.get("status") == "not_run":
+        return "---", "---", "---", "---", "---", "---"
+    ci = arm_state.get("ci95") or [None, None]
+    ci_s = f"[{ci[0]:.3f},\\ {ci[1]:.3f}]" if ci[0] is not None else "---"
+    ax = arm_state["axes"]
+    un = arm_state.get("unrelated")
+    un_s = f"{un:.3f}" if isinstance(un, (int, float)) else "---"
+    return (f"{arm_state['composite']:.3f}", ci_s,
+            f"{ax['recall']:.3f}", f"{ax['freshness']:.3f}",
+            f"{ax['locality']:.3f}", un_s)
+
+
+def s8_axis_appendix():
+    p = Path("data/p5/s8_axis_decomp_frozen_v1.json")
+    d = json.loads(p.read_text())
+    arms = d["arms"]
+    inv = d["workload_inventory"]
+    labels = [("S4", r"\textsc{oracle}"), ("S5", r"\textsc{router}"),
+              ("S8", r"\textsc{single-store}")]
+    rows = []
+    for key, lab in labels:
+        for state in ("on", "off"):
+            five = _five(arms[key][state])
+            rows.append(f"{lab} & {state} & " + " & ".join(five) + r" \\")
+    cell_rows = []
+    cell_keys = [
+        ("belief$\\times$supersede-old", "beliefxsupersede_old"),
+        ("belief$\\times$supersede-new", "beliefxsupersede_new"),
+        ("belief$\\times$near-miss", "beliefxnear_miss"),
+        ("fact$\\times$supersede-old", "factxsupersede_old"),
+        ("fact$\\times$supersede-new", "factxsupersede_new"),
+        ("fact$\\times$near-miss", "factxnear_miss"),
+    ]
+    for name, ck in cell_keys:
+        bits = [name]
+        for a in ("S4", "S5", "S8"):
+            on = arms[a]["on"]
+            off = arms[a]["off"]
+            on_s = "---" if on.get("status") == "not_run" else _cell(on["cells"][ck])
+            off_s = "---" if off.get("status") == "not_run" else _cell(off["cells"][ck])
+            bits.extend([on_s, off_s])
+        cell_rows.append(" & ".join(bits) + r" \\")
+    n_b = inv["beliefxsupersede_new"] + inv["beliefxsupersede_old"] + inv["beliefxnear_miss"]
+    return "\n".join([
+        r"\section{S8 Axis Decomposition}",
+        r"\begin{table}[h]\centering",
+        r"\caption{S8 versus oracle and router on the frozen five-column scorecard "
+        r"(composite + recall/freshness/locality + unrelated). Off = real-capacity "
+        r"setting; on = persistence stress test. Oracle off was not run.}",
+        r"\label{tab:s8-axes}",
+        r"\small\setlength{\tabcolsep}{3pt}",
+        r"\begin{tabular}{llcccccc}\toprule",
+        r"Arm & State & Comp. & CI95 & Recall & Fresh. & Local. & Unrel. \\",
+        r"\midrule",
+        *rows,
+        r"\bottomrule\end{tabular}",
+        r"\end{table}",
+        r"\begin{table}[h]\centering",
+        r"\caption{Type $\times$ probe-kind slices requested for S8. Belief cells are "
+        r"empty ($n{=}0$): supersede and near-miss pairs in test v1.1 fall on facts "
+        r"(workload spec). Fact near-miss is the locality gap (stress-test S8 below "
+        r"oracle/router; gap closes off).}",
+        r"\label{tab:s8-cells}",
+        r"\small\setlength{\tabcolsep}{3pt}",
+        r"\begin{tabular}{lcccccc}\toprule",
+        r"Cell & oracle on & oracle off & router on & router off "
+        r"& single-store on & single-store off \\",
+        r"\midrule",
+        *cell_rows,
+        r"\bottomrule\end{tabular}",
+        r"\end{table}",
+        f"% workload inventory belief-slice n={n_b}",
+    ])
+
+
 def appendix_tables():
     seq = SC["seqcheck"]
     lines = [r"\section{Sequential-Consistency Confirmation}",
@@ -239,6 +322,7 @@ def appendix_tables():
     lines.append(f"Own-key hit & {own} \\\\")
     lines.append(f"Unrelated false-fire & {ff} \\\\")
     lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}", "",
+              s8_axis_appendix(), "",
               "% One-line journal-fragment disclosure (JQ ruling): p3_S7_u03/edits.jsonl",
               "% carries one prefix line from an aborted dispatch; the analysis kept the",
               "% last contiguous segment; items.jsonl unaffected (212 unique keys)."]

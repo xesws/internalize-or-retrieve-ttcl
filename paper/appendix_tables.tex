@@ -29,6 +29,39 @@ Unrelated false-fire & 0.933 & 0.667 & 0.267 & 0.000 \\
 \end{tabular}
 \end{table}
 
+\section{S8 Axis Decomposition}
+\begin{table}[h]\centering
+\caption{S8 versus oracle and router on the frozen five-column scorecard (composite + recall/freshness/locality + unrelated). Off = real-capacity setting; on = persistence stress test. Oracle off was not run.}
+\label{tab:s8-axes}
+\small\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llcccccc}\toprule
+Arm & State & Comp. & CI95 & Recall & Fresh. & Local. & Unrel. \\
+\midrule
+\textsc{oracle} & on & 0.639 & [0.564,\ 0.706] & 0.500 & 0.724 & 0.694 & 1.000 \\
+\textsc{oracle} & off & --- & --- & --- & --- & --- & --- \\
+\textsc{router} & on & 0.612 & [0.548,\ 0.678] & 0.471 & 0.671 & 0.694 & 1.000 \\
+\textsc{router} & off & 0.708 & [0.654,\ 0.757] & 0.568 & 0.724 & 0.833 & 1.000 \\
+\textsc{single-store} & on & 0.618 & [0.543,\ 0.686] & 0.490 & 0.724 & 0.639 & 1.000 \\
+\textsc{single-store} & off & 0.731 & [0.680,\ 0.781] & 0.635 & 0.724 & 0.833 & 1.000 \\
+\bottomrule\end{tabular}
+\end{table}
+\begin{table}[h]\centering
+\caption{Type $\times$ probe-kind slices requested for S8. Belief cells are empty ($n{=}0$): supersede and near-miss pairs in test v1.1 fall on facts (workload spec). Fact near-miss is the locality gap (stress-test S8 below oracle/router; gap closes off).}
+\label{tab:s8-cells}
+\small\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}\toprule
+Cell & oracle on & oracle off & router on & router off & single-store on & single-store off \\
+\midrule
+belief$\times$supersede-old & --- & --- & --- & --- & --- & --- \\
+belief$\times$supersede-new & --- & --- & --- & --- & --- & --- \\
+belief$\times$near-miss & --- & --- & --- & --- & --- & --- \\
+fact$\times$supersede-old & 0.304 ($n$=23) & --- & 0.217 ($n$=23) & 0.304 ($n$=23) & 0.304 ($n$=23) & 0.261 ($n$=23) \\
+fact$\times$supersede-new & 0.783 ($n$=23) & --- & 0.696 ($n$=23) & 0.783 ($n$=23) & 0.783 ($n$=23) & 0.826 ($n$=23) \\
+fact$\times$near-miss & 0.694 ($n$=18) & --- & 0.694 ($n$=18) & 0.833 ($n$=18) & 0.639 ($n$=18) & 0.833 ($n$=18) \\
+\bottomrule\end{tabular}
+\end{table}
+% workload inventory belief-slice n=0
+
 % One-line journal-fragment disclosure (JQ ruling): p3_S7_u03/edits.jsonl
 % carries one prefix line from an aborted dispatch; the analysis kept the
 % last contiguous segment; items.jsonl unaffected (212 unique keys).

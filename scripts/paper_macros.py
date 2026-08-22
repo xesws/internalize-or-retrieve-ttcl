@@ -124,6 +124,13 @@ def main() -> None:
         if s7r:
             L.append(mac("SsevenEditRef", fmt3(s7r["all_edit_qa"])))
             L.append(mac("SsevenRagRef", fmt3(s7r["all_rag_qa"])))
+    de = _ROOT / "data/p5/s8_axis_decomp_frozen_v1.json"
+    if de.exists():
+        inv = json.loads(de.read_text())["workload_inventory"]
+        L.append(mac("BeliefSliceN",
+                     inv["beliefxsupersede_old"] + inv["beliefxsupersede_new"]
+                     + inv["beliefxnear_miss"]))
+        L.append(mac("FactNearMissN", inv["factxnear_miss"]))
 
     (_ROOT / "paper/numbers.tex").write_text("\n".join(L) + "\n")
     print(f"written paper/numbers.tex ({len(L)} macros)")

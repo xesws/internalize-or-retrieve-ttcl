@@ -2,7 +2,7 @@
 % DO NOT hand-edit numbers. Rerun: python scripts/paper_tables.py
 
 \begin{table}[htbp]\centering
-\caption{Seven-arm main matrix on the full test split (210 memories, 740 probes). Composite = equal-weight mean over recall/freshness/locality per the frozen scoring semantics; CI95 = probe-level bootstrap (1000 draws). Unrelated = 15-item pool (sequential-consistency uses the 75-item pool, App.~A). Judged naturalness is always paired with scenario usage (belief/fact keyword rates). $\dagger$ preliminary (utility router). $\ddagger$ action-space completion arm, appended after the main matrix. Drift bound from an identical-config rerun: $|\Delta\mathrm{composite}|$ = 0.025.}
+\caption{Seven-arm main matrix on the full test split (210 memories, 740 probes). Composite = equal-weight mean over recall/freshness/locality per the frozen scoring semantics; CI95 = probe-level bootstrap (1000 draws). Unrelated = 15-item pool (sequential-consistency uses the 75-item pool, App.~A). Judged naturalness is always paired with scenario usage (belief/fact keyword rates). $\dagger$ preliminary (utility router). $\ddagger$ action-space completion arm, appended after the main matrix. Read as a persistence stress test (budgeted oldest-first eviction); the real-capacity reading is Table~\ref{tab:pressure-off}. Drift bound from an identical-config rerun: $|\Delta\mathrm{composite}|$ = 0.025.}
 \label{tab:main}
 \small\begin{tabular}{lccccccc}
 \toprule
@@ -64,7 +64,7 @@ transient & 0 & 0 & 30 \\
 \bottomrule\end{tabular}\end{table}
 
 \begin{table}[htbp]\centering
-\caption{Pressure-off ablation (pre-registered P5 item; budget/eviction disabled, distractors removed; all other frozen configs unchanged) and the type-aware single-store defensive arm (S8: beliefs and facts both retrieved, transients dropped, zero edits; appended arm). Without pressure all-retrieve recall recovers and overtakes the router; S8 is competitive at both states with oracle-level freshness from store-side record replacement, lagging on near-miss locality and pressure-exposed recall.}
+\caption{Real-capacity setting (off: budget/eviction disabled; pre-registered P5 item) versus persistence stress test (on: budgeted oldest-first eviction). Distractors remain a read-side noise model when on. Type-aware single-store (S8: beliefs and facts retrieved, transients dropped, zero edits; appended arm). Off is the main reading: all-retrieve recall recovers; S8 is the strongest reported arm, with oracle-level freshness from store-side replacement.}
 \label{tab:pressure-off}
 \small\begin{tabular}{llcccc}\toprule
 Arm & State & Composite & Recall & Fresh. & Local. \\ \midrule
