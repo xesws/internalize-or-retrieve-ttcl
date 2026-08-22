@@ -77,8 +77,7 @@ def generate_answer(model, tok, question: str, rag_hits: list[dict],
 
 def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
                planner_probes: dict[str, list[str]], cfg: dict,
-               results_root: Path, run_prefix: str = "p3") -> Path:
-    model = model_host.load_base()
+               results_root: Path, run_prefix: str = "p3") -> Path:    model = model_host.load_base()
     tok = model_host.tokenizer()
     # gate threshold: system parameter from configs (frozen); runtime override
     # of the shared hparams object propagates to every adapter constructed later
@@ -118,7 +117,21 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
     mems = sorted(user["memories"], key=lambda m: (m["session_idx"], m["id"]))
     mem_by_id = {m["id"]: m for m in mems}
     routes = {m["id"]: route(m) for m in mems}
-    edits_journal = run_dir / "edits.jsonl" if arm == "S7" else None
+    edits_journal = run_dir / "edits.jsonl" if arm in ("S7",) else None
+
+    n_rag = sum(1 for m in mems if routes[m["id"]] in ("rag", "both"))
+    pres = cfg["pressure"]
+    if pres.get("distractor_pool") == "none":
+        others_facts = []  # pressure-off: no distractors
+    else:
+        others_facts = [{"id": f"dis-{m['id']}", "text": m["canonical"]}
+                        for u in test_doc["users"] if u["user_id"] != user["user_id"]
+                        for m in u["memories"] if m["type"] == "fact"]
+    budget = (None if pres.get("store_budget_ratio") is None
+              else int(round(pres["store_budget_ratio"] * n_rag)))
+    store = RagStore(top_k=pres["rag_top_k"], budget=budget)
+    if others_facts:
+        store.seed_distractors(others_facts)
 
     def _s7_conflict(question: str, mem: dict, hits: list, final_gen: dict) -> dict | None:
         """S7 only: gate-elicited value vs retrieval record when BOTH present;
@@ -144,15 +157,6 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
                 "gate_answerable": gate_hit, "retrieval_answerable": ret_hit,
                 "consistent": gate_hit == ret_hit, "final_has_keywords": final_hit,
                 "final_head": final_gen["answer"].strip()[:120]}
-
-    n_rag = sum(1 for m in mems if routes[m["id"]] == "rag")
-    pres = cfg["pressure"]
-    others_facts = [{"id": f"dis-{m['id']}", "text": m["canonical"]}
-                    for u in test_doc["users"] if u["user_id"] != user["user_id"]
-                    for m in u["memories"] if m["type"] == "fact"]
-    store = RagStore(top_k=pres["rag_top_k"],
-                     budget=int(round(pres["store_budget_ratio"] * n_rag)))
-    store.seed_distractors(others_facts)
 
     scen_by_mem: dict[str, dict] = {}
     for sc in user["scenarios"]:
@@ -311,10 +315,13 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--arms", default=",".join(ARMS))
     ap.add_argument("--prefix", default="p3")
+    ap.add_argument("--pressure-off", action="store_true",
+                    help="use configs/pressure_off.yaml (P5 pre-registered ablation)")
     args = ap.parse_args()
     cfg = yaml.safe_load((_REPO_ROOT / "configs" / "default.yaml").read_text())
-    cfg["pressure"] = yaml.safe_load(
-        (_REPO_ROOT / "configs" / "pressure_v2.yaml").read_text())["pressure"]
+    pres_path = (_REPO_ROOT / "configs" / ("pressure_off.yaml" if args.pressure_off
+                                           else "pressure_v2.yaml"))
+    cfg["pressure"] = yaml.safe_load(pres_path.read_text())["pressure"]
     test_doc = json.loads((_REPO_ROOT / "data" / "workloads" / "test_v1.1.json").read_text())
     planner = json.loads(
         (_REPO_ROOT / "data" / "p3" / "planner_probes_test_v1.json").read_text())["probes"]

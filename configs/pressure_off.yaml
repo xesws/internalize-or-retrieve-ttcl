@@ -1,0 +1,11 @@
+# Pressure-off ablation (P5 pre-registered item, JQ ruling 2026-08-22).
+# Budget/eviction DISABLED, distractors REMOVED; every other frozen config
+# untouched (gate 0.90, scoring v1, read path, seed). Arms: S1, S5 (S4
+# optional if time allows). Expected: S1 recall recovers without pressure,
+# converging with S5 — the fallback evidence for the conditional claim
+# "internalization pays under retrieval pressure".
+pressure:
+  rag_top_k: 3
+  store_budget_ratio: null     # no budget -> no eviction
+  distractor_pool: none        # no distractors
+  distractor_pin: false
