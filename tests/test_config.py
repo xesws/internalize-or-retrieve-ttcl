@@ -8,8 +8,9 @@ def test_red_lines():
     assert cfg["run"]["seed"] == 42
     assert cfg["run"]["max_new_tokens"] == 512
     assert cfg["horen"]["locked"] is True
-    # gate threshold starts at the Llama-family repo default
-    assert cfg["gate"]["hopfield_key_match_threshold"] == 0.85
+    # gate threshold frozen at the dev-swept value (handbook 4.2 one-shot
+    # sweep, 2026-08-21: own 1.0 / false-fire 0.0 at 0.90; see configs comment)
+    assert cfg["gate"]["hopfield_key_match_threshold"] == 0.90
 
 
 def test_model_role_heterogeneity():

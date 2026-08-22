@@ -7,6 +7,10 @@
   "path": "configs/pressure_v2.yaml",
   "hash": "768218440bda9baa"
  },
+ "gate_config": {
+  "path": "configs/default.yaml",
+  "hash": "98280d95f2fdeec4"
+ },
  "planner_prompt": {
   "path": "prompts/planner_v1.md",
   "hash": "302afb4fdd7ec495"
@@ -29,7 +33,7 @@
  },
  "s5_routing": {
   "path": "data/p3/router_s5_test_v1.json",
-  "hash": "704022b0c8434eec"
+  "hash": "1e293434566ab9f1"
  },
  "s3_routing": {
   "path": "data/p3/router_s3_v1.json",
