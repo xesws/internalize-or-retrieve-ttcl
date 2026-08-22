@@ -79,16 +79,16 @@ def main() -> int:
     main_arms = load(root, "p3")
     drift_arms = load(root, "p3drift")
     report = {"main": summarize(main_arms, matrix)}
-    if "S5" in main_arms and "S4" in main_arms:
-        s5, s4 = main_arms["S5"]["composite"], main_arms["S4"]["composite"]
+    if "S5" in report["main"] and "S4" in report["main"]:
+        s5 = report["main"]["S5"]["composite"]
+        s4 = report["main"]["S4"]["composite"]
         report["s5_vs_s4"] = {"S5": s5, "S4": s4,
                               "s5_exceeds_oracle": s5 is not None and s4 is not None and s5 > s4,
                               "flag": "S5>S4 REPLICATED on N=210 — discussion-worthy result (JQ ruling)"
                                       if (s5 or 0) > (s4 or 0) else "not replicated"}
     if drift_arms:
         report["drift_rerun"] = summarize(drift_arms, matrix)
-        a, b = main_arms.get("S5", [{}]), drift_arms.get("S5", [{}])
-        if main_arms.get("S5") and drift_arms.get("S5"):
+        if "S5" in report["main"] and "S5" in report["drift_rerun"]:
             c1 = report["main"]["S5"]["composite"]
             c2 = report["drift_rerun"]["S5"]["composite"]
             report["drift_bound"] = {"S5_run1": c1, "S5_run2": c2,

@@ -31,15 +31,18 @@ def main() -> int:
         for r in rows:
             if r.get("kind") != "free_scenario" or r.get("judge_score") is not None:
                 continue
-            out = client.chat(
-                [{"role": "user", "content": prompt.replace("{task}", r["question"][:800])
-                  .replace("{response}", r["answer"][:1200])}],
-                role="judge", temperature=0.0, max_tokens=2048,
-                meta={"step": "judge_p3", "arm": r["arm"], "user": r.get("user_id")})
             try:
+                out = client.chat(
+                    [{"role": "user", "content": prompt.replace("{task}", r["question"][:800])
+                      .replace("{response}", r["answer"][:1200])}],
+                    role="judge", temperature=0.0, max_tokens=2048,
+                    meta={"step": "judge_p3", "arm": r["arm"], "user": r.get("user_id")})
                 r["judge_score"] = int(str(out).strip()[:1])
-            except ValueError:
+            except (client.LLMError, ValueError):
+                # after 3 retries: record the failure explicitly, keep going;
+                # the G3 report discloses the failed-judge count
                 r["judge_score"] = None
+                r["judge_failed"] = True
             changed = True
             scored += 1
         if changed:
