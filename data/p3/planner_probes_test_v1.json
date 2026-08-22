@@ -1,0 +1,118 @@
+{
+ "prompt_hash": "302afb4fdd7ec495",
+ "probes": {
+  "u03-sc000": [
+   "When does your current lease at Via Prati 12 expire?",
+   "Which days of the week do you work night shifts?",
+   "What is the total amount of savings you have available right now?",
+   "How many months of living expenses do you want kept as your safety net?"
+  ],
+  "u03-sc001": [
+   "Which day next week is your only full day off?",
+   "What are your usual wake-up and bedtime hours?",
+   "Do you prefer to run in the morning or later in the day?",
+   "How long does a nap need to be for you to feel genuinely rested?"
+  ],
+  "u03-sc002": [
+   "What is the name of your favorite secondhand bookshop?",
+   "What kind of little shop are you dreaming of opening someday?",
+   "Do you prefer a quick standing espresso at the bar or a sit-down café before errands?",
+   "Which tram stop is closest to your flat in San Salvario?"
+  ],
+  "u03-sc003": [
+   "When exactly does your library card stop working?",
+   "How many books do you typically get through in a month?",
+   "What genres or authors matter most to you, so the backlog prioritizes the right ones?",
+   "Which weeks in the next two months do your night shifts and visits to your mum's leave you actually free?"
+  ],
+  "u03-sc004": [
+   "Which days and times each week are your mother's rehab sessions scheduled?",
+   "What evening does your book club meet, and is it the same day every month?",
+   "Which weekend of the month do you usually take your trip to see your brother, and how long do you stay?",
+   "Which specific nights each week do you work your ICU night shifts?"
+  ],
+  "u04-sc000": [
+   "What percentage cut does Priya take on the fern plates contract?",
+   "How much is currently in the house deposit fund?",
+   "What deposit amount does the Bishopston place need?",
+   "When does my passport expire?"
+  ],
+  "u04-sc001": [
+   "What is your agent's name?",
+   "Do you prefer early or late afternoon for meetings on Wednesdays?",
+   "Which rooms or windowsills in your flat get the most natural light?",
+   "Do you have cats or other pets that might nibble on houseplants?"
+  ],
+  "u04-sc002": [
+   "What does your typical working morning in the studio look like, from when you arrive to when you break?",
+   "Which pieces are currently on your easel or actively in progress?",
+   "What time window tomorrow works for the WhatsApp chat with the blog?",
+   "What time do you need to leave tomorrow to get Dad to his physio appointment by 11?"
+  ],
+  "u04-sc003": [
+   "When are the field guide plates due?",
+   "How many plates do you still have left to finish for the commission?",
+   "Which days and times each week does Dad usually have his appointments?",
+   "What's your total savings goal for the garden house, and by when do you hope to reach it?"
+  ],
+  "u05-sc000": [
+   "What days and times are Mum's physio appointments over the next two weeks?",
+   "When is your GP appointment for the repeat prescription review scheduled (or does it still need booking)?",
+   "When is the RHS plate of the snake's-head fritillary due?",
+   "How do you usually travel around Bristol?"
+  ],
+  "u05-sc001": [
+   "What brand and type of tea do you usually drink and would want to be reminded to buy?",
+   "What time does your mum usually arrive on a Sunday evening?",
+   "What time do you and your mum normally sit down to eat on Sundays?",
+   "When a scene gets gory on TV, do you prefer to fast-forward through it or mute and step away briefly?"
+  ],
+  "u05-sc002": [
+   "What days and times are Mum's physio sessions next week?",
+   "What time is her Wednesday neurology appointment, and are you the one who takes her to it?",
+   "What days and times are your usual group meetup and your regular museum shift?",
+   "When are the commission revisions expected back, so the half-day buffer can sit ahead of that?"
+  ],
+  "u05-sc003": [
+   "What are your Wi-Fi network name and password?",
+   "Which exact paints and paper sheets do you always use for your commissions?",
+   "What dates will you and Mum be in Bath next week?",
+   "Are there any pets or plants in the flat that need a care routine?"
+  ],
+  "u05-sc004": [
+   "How much time should Thursday's plan set aside for getting Mum to and from her 3pm physio session?",
+   "What should each of your three students' feedback highlight about their botanical sketch submissions?",
+   "What tone and sign-off do you normally use when writing feedback to your course students?",
+   "What time does your protected evening hour start, and what activity is it that the weather might affect?"
+  ],
+  "u06-sc000": [
+   "Which night next week is Nadia at the pool?",
+   "What is the combination on your bike lock?",
+   "Which coastal European city have you dreamed of showing Nadia someday?",
+   "What small treat would Nadia especially love, and does she have any allergies or dislikes to avoid?"
+  ],
+  "u06-sc001": [
+   "Which evening of the week does book club at Priya's happen, and how often does it meet?",
+   "What days and hours are your clinic shifts next month?",
+   "What time is Nadia's school pickup and on which days?",
+   "When is your epidemiology course presentation due?"
+  ],
+  "u06-sc002": [
+   "What are your work shifts next week?",
+   "Which evenings is Nadia already committed next week?",
+   "What evening does Priya's yoga class fall on?",
+   "Do you focus better on writing in the mornings or the evenings?"
+  ],
+  "u06-sc003": [
+   "Which coffee shop do you usually stop at for your pre-class latte?",
+   "Where in Boise does the seminar meet?",
+   "What time does the seminar start and end on Saturday?",
+   "What part of Boise do you live in?"
+  ]
+ },
+ "stats": {
+  "scenarios": 18,
+  "probes": 72
+ },
+ "leaks": {}
+}

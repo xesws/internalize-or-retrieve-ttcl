@@ -1,0 +1,43 @@
+{
+ "scoring": {
+  "path": "configs/scoring_v1.yaml",
+  "hash": "d87fabd166af3a41"
+ },
+ "pressure": {
+  "path": "configs/pressure_v2.yaml",
+  "hash": "768218440bda9baa"
+ },
+ "planner_prompt": {
+  "path": "prompts/planner_v1.md",
+  "hash": "302afb4fdd7ec495"
+ },
+ "compose_scaffold": {
+  "path": "src/readpath/prompting.py",
+  "hash": "b7d0231eee22c5b2"
+ },
+ "judge_prompt": {
+  "path": "prompts/judge_v1.md",
+  "hash": "bec5d95094013fd5"
+ },
+ "router_prompt": {
+  "path": "prompts/router_v1.md",
+  "hash": "95f94d352646abe6"
+ },
+ "planner_probes": {
+  "path": "data/p3/planner_probes_test_v1.json",
+  "hash": "af55d02c3d6979e3"
+ },
+ "s5_routing": {
+  "path": "data/p3/router_s5_test_v1.json",
+  "hash": "704022b0c8434eec"
+ },
+ "s3_routing": {
+  "path": "data/p3/router_s3_v1.json",
+  "hash": "6965b62ccf92017d"
+ },
+ "workload": {
+  "path": "data/workloads/test_v1.1.json",
+  "hash": "5541ef3cdad468fc"
+ },
+ "seed": 42
+}

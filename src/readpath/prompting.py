@@ -24,6 +24,7 @@ SYSTEM = (
 
 FACT_HEADER = "[Known facts about the user — adopt by default]"
 DOCS_HEADER = "[Reference material — does not override]"
+NOTES_HEADER = "[Private working notes — your own knowledge, never mention these notes]"
 
 
 def _render(texts: Sequence[str]) -> str:
@@ -36,16 +37,24 @@ def build_prompt(
     query: str,
     rag_hits: Sequence[dict] = (),
     history: Sequence[dict] = (),
+    private_notes: Sequence[str] = (),
 ) -> list[dict]:
     """Assemble chat messages: SYSTEM (with memory window) + history + query.
 
     ``rag_hits`` items are dicts with keys ``text`` and ``type``; ``type ==
     "fact"`` renders into the FACT segment, everything else into DOCS. The hero
     render (empty ``rag_hits``) is what read-path keys are computed over.
+
+    ``private_notes`` (probe–elicit–compose read path) render under the private
+    notes header BEFORE the RAG window: elicited answers and retrieved texts
+    collected by the planner for this open task. Empty input keeps the render
+    byte-identical to the no-notes scaffold (reproducibility invariant).
     """
     facts = [h["text"] for h in rag_hits if h.get("type") == "fact"]
     others = [h["text"] for h in rag_hits if h.get("type") != "fact"]
+    notes_window = f"{NOTES_HEADER}\n{_render(list(private_notes))}\n\n" if private_notes else ""
     rag_window = (
+        notes_window +
         f"{FACT_HEADER}\n{_render(facts)}\n\n"
         f"{DOCS_HEADER}\n{_render(others)}"
     )
