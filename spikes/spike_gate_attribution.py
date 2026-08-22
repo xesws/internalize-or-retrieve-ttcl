@@ -89,8 +89,11 @@ def replay_and_gate(arm: str, user: dict, routing: dict | None) -> dict:
             for p in m["probes"]:
                 if p["kind"] == "qa_delayed" and p.get("text"):
                     sim, slot = gate(p["text"])
+                    own_rows = set(rows.get(m["id"], []))
+                    cls = ("no_hit" if sim < THRESHOLD else
+                           "own_slot" if slot in own_rows else "other_row")
                     tr.append({"memory": m["id"], "sim": round(sim, 3),
-                               "fired": bool(sim >= THRESHOLD)})
+                               "fired": bool(sim >= THRESHOLD), "class": cls})
         out["transient_delayed"] = tr
 
     probes = json.loads((_REPO_ROOT / "data" / "p3" / "planner_probes_test_v1.json")
@@ -114,7 +117,10 @@ def main() -> int:
     s5 = json.loads((_REPO_ROOT / "data" / "p3" / "router_s5_test_v1.json").read_text())["routing"]
 
     result: dict = {"threshold": THRESHOLD, "arms": {}}
-    for arm in ARMS:
+    import os
+    arms_env = os.environ.get("ATTR_ARMS")
+    arms = tuple(a.strip() for a in arms_env.split(",")) if arms_env else ARMS
+    for arm in arms:
         per_user = {}
         for user in test["users"]:
             per_user[user["user_id"]] = replay_and_gate(arm, user, s5 if arm == "S5" else None)
@@ -152,11 +158,19 @@ def main() -> int:
         cls[s["class"]] = cls.get(s["class"], 0) + 1
     result["supersede_summary"] = {"n": len(sup), "classes": cls}
     tr = result["arms"]["S2"]["transient_delayed"]
-    result["transient_summary"] = {"n": len(tr),
-                                   "fired": sum(1 for t in tr if t["fired"]),
-                                   "rate": round(sum(1 for t in tr if t["fired"]) / len(tr), 3) if tr else None}
+    by_cls = {}
+    for t in tr:
+        by_cls[t.get("class", "?")] = by_cls.get(t.get("class", "?"), 0) + 1
+    result["transient_summary"] = {
+        "n": len(tr), "fired": sum(1 for t in tr if t["fired"]),
+        "fired_rate": round(sum(1 for t in tr if t["fired"]) / len(tr), 3) if tr else None,
+        "own_slot_fired": by_cls.get("own_slot", 0),
+        "own_slot_rate": round(by_cls.get("own_slot", 0) / len(tr), 3) if tr else None,
+        "classes": by_cls}
 
-    out_path = _REPO_ROOT / "results" / "analysis" / "gate_attribution.json"
+    out_path = _REPO_ROOT / "results" / "analysis" / (
+        f"gate_attribution_{'_'.join(a.lower() for a in arms)}.json"
+        if arms != ARMS else "gate_attribution.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     slim = {k: v for k, v in result.items() if k != "arms"}
     slim["arms"] = {a: {kk: vv for kk, vv in r.items() if kk != "rows"}
