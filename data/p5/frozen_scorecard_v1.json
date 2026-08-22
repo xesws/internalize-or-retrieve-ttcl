@@ -1,0 +1,350 @@
+{
+ "meta": {
+  "frozen": "2026-08-22",
+  "scoring": "configs/scoring_v1.yaml",
+  "gate": 0.9,
+  "pressure": "configs/pressure_v2.yaml",
+  "judge_prompt": "bec5d95094013fd5",
+  "seed": 42,
+  "backbone": "meta-llama/Llama-3.1-8B-Instruct",
+  "models": {
+   "gen": "glm-5.3",
+   "sys": "glm-5.3",
+   "judge": "deepseek-v4-pro"
+  }
+ },
+ "arms": {
+  "S1": {
+   "composite": 0.51,
+   "ci95": [
+    0.434,
+    0.579
+   ],
+   "axes": {
+    "recall": 0.495,
+    "freshness": 0.395,
+    "locality": 0.639
+   },
+   "judge": 0.76,
+   "unrelated": 1.0,
+   "per_user": {
+    "u03": 0.598,
+    "u04": 0.5,
+    "u05": 0.424,
+    "u06": 0.518
+   }
+  },
+  "S2": {
+   "composite": 0.401,
+   "ci95": [
+    0.319,
+    0.486
+   ],
+   "axes": {
+    "recall": 0.283,
+    "freshness": 0.447,
+    "locality": 0.472
+   },
+   "judge": 0.59,
+   "unrelated": 1.0,
+   "per_user": {
+    "u03": 0.544,
+    "u04": 0.353,
+    "u05": 0.36,
+    "u06": 0.33
+   }
+  },
+  "S3": {
+   "composite": 0.388,
+   "ci95": [
+    0.304,
+    0.476
+   ],
+   "axes": {
+    "recall": 0.283,
+    "freshness": 0.382,
+    "locality": 0.5
+   },
+   "judge": 0.89,
+   "unrelated": 1.0,
+   "per_user": {
+    "u03": 0.641,
+    "u04": 0.301,
+    "u05": 0.236,
+    "u06": 0.352
+   }
+  },
+  "S4": {
+   "composite": 0.639,
+   "ci95": [
+    0.564,
+    0.706
+   ],
+   "axes": {
+    "recall": 0.5,
+    "freshness": 0.724,
+    "locality": 0.694
+   },
+   "judge": 0.91,
+   "unrelated": 1.0,
+   "per_user": {
+    "u03": 0.788,
+    "u04": 0.569,
+    "u05": 0.566,
+    "u06": 0.624
+   }
+  },
+  "S5": {
+   "composite": 0.612,
+   "ci95": [
+    0.548,
+    0.678
+   ],
+   "axes": {
+    "recall": 0.471,
+    "freshness": 0.671,
+    "locality": 0.694
+   },
+   "judge": 0.68,
+   "unrelated": 1.0,
+   "per_user": {
+    "u03": 0.696,
+    "u04": 0.527,
+    "u05": 0.593,
+    "u06": 0.621
+   }
+  },
+  "S6": {
+   "composite": 0.508,
+   "ci95": [
+    0.432,
+    0.578
+   ],
+   "axes": {
+    "recall": 0.49,
+    "freshness": 0.395,
+    "locality": 0.639
+   },
+   "judge": 0.83,
+   "unrelated": 1.0,
+   "per_user": {
+    "u03": 0.598,
+    "u04": 0.495,
+    "u05": 0.422,
+    "u06": 0.518
+   }
+  },
+  "S7": {
+   "composite": 0.226,
+   "ci95": [
+    0.17,
+    0.292
+   ],
+   "axes": {
+    "recall": 0.119,
+    "freshness": 0.447,
+    "locality": 0.111
+   },
+   "judge": 0.72,
+   "unrelated": 1.0,
+   "per_user": {
+    "u03": 0.23,
+    "u04": 0.28,
+    "u05": 0.251,
+    "u06": 0.144
+   }
+  }
+ },
+ "drift_bound": {
+  "S5_run1": 0.612,
+  "S5_run2": 0.637,
+  "abs_diff": 0.025
+ },
+ "pressure_off": {
+  "S1": {
+   "composite": 0.624,
+   "axes": {
+    "recall": {
+     "n": 586,
+     "score": 0.631
+    },
+    "freshness": {
+     "n": 76,
+     "score": 0.408
+    },
+    "locality": {
+     "n": 18,
+     "score": 0.833
+    }
+   },
+   "failure_matrix": {
+    "fact": {
+     "rag": 0.684
+    },
+    "transient": {
+     "rag": 0.8
+    },
+    "belief": {
+     "rag": 0.506
+    }
+   },
+   "evicted_recall": null,
+   "n_items": 800
+  },
+  "S5": {
+   "composite": 0.708,
+   "axes": {
+    "recall": {
+     "n": 586,
+     "score": 0.568
+    },
+    "freshness": {
+     "n": 76,
+     "score": 0.724
+    },
+    "locality": {
+     "n": 18,
+     "score": 0.833
+    }
+   },
+   "failure_matrix": {
+    "fact": {
+     "rag": 0.707,
+     "edit": 0.31
+    },
+    "transient": {
+     "drop": 0.0
+    },
+    "belief": {
+     "edit": 0.402
+    }
+   },
+   "evicted_recall": null,
+   "n_items": 800
+  }
+ },
+ "seqcheck": {
+  "S2_u03": {
+   "checkpoints": {
+    "ck10_edits10": 0.973,
+    "ck25_edits25": 0.973,
+    "end_edits56": 0.933
+   },
+   "n_edits_total": 56
+  },
+  "S2_u04": {
+   "checkpoints": {
+    "ck10_edits10": 0.96,
+    "ck25_edits25": 0.907,
+    "end_edits49": 0.907
+   },
+   "n_edits_total": 49
+  },
+  "S2_u05": {
+   "checkpoints": {
+    "ck10_edits10": 0.973,
+    "ck25_edits25": 0.973,
+    "end_edits58": 0.92
+   },
+   "n_edits_total": 58
+  },
+  "S2_u06": {
+   "checkpoints": {
+    "ck10_edits10": 0.92,
+    "ck25_edits25": 0.907,
+    "end_edits47": 0.893
+   },
+   "n_edits_total": 47
+  },
+  "S5_u03": {
+   "checkpoints": {
+    "ck10_edits10": 0.933,
+    "end_edits19": 0.933
+   },
+   "n_edits_total": 19
+  },
+  "S5_u04": {
+   "checkpoints": {
+    "ck10_edits10": 0.96,
+    "end_edits18": 0.947
+   },
+   "n_edits_total": 18
+  },
+  "S5_u05": {
+   "checkpoints": {
+    "ck10_edits10": 0.973,
+    "end_edits22": 0.893
+   },
+   "n_edits_total": 22
+  },
+  "S5_u06": {
+   "checkpoints": {
+    "ck10_edits10": 0.92,
+    "end_edits16": 0.867
+   },
+   "n_edits_total": 16
+  },
+  "BASE": {
+   "hit_rate": 0.973,
+   "n": 75
+  }
+ },
+ "supersede_attribution": {
+  "n": 23,
+  "classes": {
+   "new_slot": 7,
+   "old_slot": 12,
+   "other_row": 2,
+   "no_hit": 2
+  }
+ },
+ "misroutes": {
+  "confusion": {
+   "belief": {
+    "belief": 53,
+    "fact": 0,
+    "transient": 0
+   },
+   "fact": {
+    "belief": 22,
+    "fact": 105,
+    "transient": 0
+   },
+   "transient": {
+    "belief": 0,
+    "fact": 0,
+    "transient": 30
+   }
+  },
+  "n": 22
+ },
+ "s7_decomposition": {
+  "conflict_qa": {
+   "score": 0.142,
+   "n": 381
+  },
+  "plain_qa": {
+   "score": 0.08,
+   "n": 249
+  },
+  "rows_match": true
+ },
+ "gate_sweep": {
+  "0.75": {
+   "own_hit": 1.0,
+   "false_fire": 0.933
+  },
+  "0.8": {
+   "own_hit": 1.0,
+   "false_fire": 0.667
+  },
+  "0.85": {
+   "own_hit": 1.0,
+   "false_fire": 0.267
+  },
+  "0.9": {
+   "own_hit": 1.0,
+   "false_fire": 0.0
+  }
+ }
+}
