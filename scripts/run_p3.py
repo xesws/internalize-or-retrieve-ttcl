@@ -77,7 +77,8 @@ def generate_answer(model, tok, question: str, rag_hits: list[dict],
 
 def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
                planner_probes: dict[str, list[str]], cfg: dict,
-               results_root: Path, run_prefix: str = "p3") -> Path:    model = model_host.load_base()
+               results_root: Path, run_prefix: str = "p3") -> Path:
+    model = model_host.load_base()
     tok = model_host.tokenizer()
     # gate threshold: system parameter from configs (frozen); runtime override
     # of the shared hparams object propagates to every adapter constructed later
