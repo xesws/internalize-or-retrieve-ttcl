@@ -34,8 +34,11 @@ from src.stores import editing, model_host  # noqa: E402
 from src.stores.rag_store import RagStore  # noqa: E402
 
 MAX_NEW_TOKENS = 512  # hard decode budget (handbook §4.2)
-ARMS = ("S1", "S2", "S3", "S4", "S5", "S6", "S7")
+ARMS = ("S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8")
 DEST = {"belief": "edit", "fact": "rag", "transient": "drop"}
+# S8 (JQ-authorized appended defensive arm): type-aware SINGLE-store —
+# belief AND fact both go to RAG, transients dropped, ZERO edits.
+S8_DEST = {"belief": "rag", "fact": "rag", "transient": "drop"}
 
 
 def _word_hit(keyword: str, answer: str) -> bool:
@@ -112,6 +115,8 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
             return routing[mem["id"]]
         if arm == "S6":
             return routing[mem["id"]]  # utility router: precomputed edit/rag
+        if arm == "S8":
+            return S8_DEST[mem["type"]]
         t = mem["type"] if arm == "S4" else routing.get(mem["id"], mem["type"])
         return DEST[t]
 
@@ -334,7 +339,7 @@ def main() -> int:
         s6_routing = json.loads(
             (_REPO_ROOT / "data" / "p4" / "utility_router_v1.json").read_text())["test_routing"]
     routings = {"S3": s3, "S5": s5, "S6": s6_routing,
-                "S1": {}, "S2": {}, "S4": {}, "S7": {}}
+                "S1": {}, "S2": {}, "S4": {}, "S7": {}, "S8": {}}
 
     for arm in arms_requested:
         for user in test_doc["users"]:
