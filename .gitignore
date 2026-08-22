@@ -5,6 +5,8 @@
 
 # --- run artifacts (Mac is the master copy; never in git) ---
 results/
+exports/
+
 data/gate_geometry/*journal*.jsonl
 data/gate_geometry/llm_usage.jsonl
 

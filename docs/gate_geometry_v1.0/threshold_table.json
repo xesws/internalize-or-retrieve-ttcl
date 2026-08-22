@@ -1,0 +1,56 @@
+{
+ "off": {
+  "0.7": {
+   "oblique_tpr": 0.467,
+   "twin_fpr": 0.8,
+   "unrelated_fpr": 0.213
+  },
+  "0.75": {
+   "oblique_tpr": 0.053,
+   "twin_fpr": 0.4,
+   "unrelated_fpr": 0.0
+  },
+  "0.8": {
+   "oblique_tpr": 0.0,
+   "twin_fpr": 0.0,
+   "unrelated_fpr": 0.0
+  },
+  "0.85": {
+   "oblique_tpr": 0.0,
+   "twin_fpr": 0.0,
+   "unrelated_fpr": 0.0
+  },
+  "0.9": {
+   "oblique_tpr": 0.0,
+   "twin_fpr": 0.0,
+   "unrelated_fpr": 0.0
+  }
+ },
+ "on": {
+  "0.7": {
+   "oblique_tpr": 1.0,
+   "twin_fpr": 1.0,
+   "unrelated_fpr": 1.0
+  },
+  "0.75": {
+   "oblique_tpr": 1.0,
+   "twin_fpr": 1.0,
+   "unrelated_fpr": 0.947
+  },
+  "0.8": {
+   "oblique_tpr": 0.984,
+   "twin_fpr": 1.0,
+   "unrelated_fpr": 0.707
+  },
+  "0.85": {
+   "oblique_tpr": 0.549,
+   "twin_fpr": 1.0,
+   "unrelated_fpr": 0.213
+  },
+  "0.9": {
+   "oblique_tpr": 0.0,
+   "twin_fpr": 0.2,
+   "unrelated_fpr": 0.0
+  }
+ }
+}

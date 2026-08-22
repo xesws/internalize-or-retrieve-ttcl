@@ -1,0 +1,18 @@
+{
+ "off": {
+  "rule": "AUC(oblique vs unrelated)>=0.7 and exists beta with TPR>=0.7 and unrelated FPR<=0.1",
+  "auc_vs_unrelated": 0.649,
+  "feasible_betas": [],
+  "separable": false,
+  "recommend": "contrastive metric head (threshold family invalid)",
+  "auc_vs_twin": 0.252
+ },
+ "on": {
+  "rule": "AUC(oblique vs unrelated)>=0.7 and exists beta with TPR>=0.7 and unrelated FPR<=0.1",
+  "auc_vs_unrelated": 0.78,
+  "feasible_betas": [],
+  "separable": false,
+  "recommend": "contrastive metric head (threshold family invalid)",
+  "auc_vs_twin": 0.211
+ }
+}

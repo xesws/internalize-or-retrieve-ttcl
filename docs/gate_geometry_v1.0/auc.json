@@ -1,0 +1,20 @@
+{
+ "off": {
+  "vs_unrelated": 0.649,
+  "vs_twin": 0.252,
+  "n": {
+   "oblique": 246,
+   "twin": 10,
+   "unrelated": 75
+  }
+ },
+ "on": {
+  "vs_unrelated": 0.78,
+  "vs_twin": 0.211,
+  "n": {
+   "oblique": 246,
+   "twin": 10,
+   "unrelated": 75
+  }
+ }
+}
