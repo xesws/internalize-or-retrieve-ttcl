@@ -1,22 +1,8 @@
-% Appendix tables and reproducibility material.
-% All numbers auto-generated from data/p5/frozen_scorecard_v1.json by
-% scripts/paper_tables.py — do not hand-edit numbers.
-
-\section{Sequential-Consistency Confirmation}
-% Table: seqcheck row (75-item frozen pool). Positioning: a reproduction of
-% HoReN's published sequential stability at gate 0.90; NOT a threshold
-% comparison; NOT merged into composites. Generated below.
-
-\section{Gate Threshold Calibration}
-% Table: dev sweep {0.75-0.90} own-hit / false-fire. Calibration archive
-% only (p5_checklist guideline 2): the preregistered rule selected 0.90.
+% Appendix narrative. Numbered tables A/B come from appendix_tables.tex
+% (auto-generated). Do not duplicate those section headers here.
 
 \section{Prompt Appendix}
-% Verbatim frozen prompts (six files, hash-prefixed) — pasted by
-% scripts/anonymize_export.py from prompts/.
+Verbatim frozen prompts (generator, router, planner, judge, unrelated-pool) live in the supplementary package under \texttt{prompts\_verbatim/}, each hash-prefixed. They were frozen before test evaluation and are not reproduced here for space.
 
 \section{Run Manifests and Freezes}
-% freeze manifests (v1.1), frozen scorecard summary, drift bound, journal
-% fragment disclosure (one line: p3_S7_u03/edits.jsonl carries one prefix
-% line from an aborted dispatch; analysis kept the last contiguous segment;
-% items unaffected).
+Workload freeze v1.1, the frozen scorecard, and the appended S8/analysis freezes are in the supplementary package. One journal-fragment disclosure: \texttt{p3\_S7\_u03/edits.jsonl} carries one prefix line from an aborted dispatch; the analysis kept the last contiguous segment; \texttt{items.jsonl} is unaffected (212 unique keys).

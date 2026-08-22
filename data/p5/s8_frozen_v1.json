@@ -1,0 +1,51 @@
+{
+ "disclosure": "JQ-authorized appended arm (2026-08-22): S8 type-aware single-store defensive arm (belief+fact->RAG, transient->drop, zero edits); test full; frozen_scorecard_v1.json untouched",
+ "on": {
+  "composite": 0.618,
+  "ci95": [
+   0.543,
+   0.69
+  ],
+  "axes": {
+   "recall": 0.49,
+   "freshness": 0.724,
+   "locality": 0.639
+  },
+  "n_items": 800,
+  "failure_matrix": {
+   "fact": {
+    "rag": 0.522
+   },
+   "transient": {
+    "drop": 0.0
+   },
+   "belief": {
+    "rag": 0.414
+   }
+  }
+ },
+ "off": {
+  "composite": 0.731,
+  "ci95": [
+   0.68,
+   0.78
+  ],
+  "axes": {
+   "recall": 0.635,
+   "freshness": 0.724,
+   "locality": 0.833
+  },
+  "n_items": 800,
+  "failure_matrix": {
+   "fact": {
+    "rag": 0.68
+   },
+   "belief": {
+    "rag": 0.529
+   },
+   "transient": {
+    "drop": 0.0
+   }
+  }
+ }
+}

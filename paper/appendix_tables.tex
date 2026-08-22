@@ -1,25 +1,25 @@
-\section*{A. Sequential-Consistency Confirmation}
+\section{Sequential-Consistency Confirmation}
 \begin{table}[h]\centering
 \caption{75-item frozen unrelated pool at cumulative-edit checkpoints (gate 0.90). Positioning: reproduction consistent with HoReN's published sequential stability; no threshold comparison; not merged into composites.}
 \label{tab:seqcheck}
 \small\begin{tabular}{lccc}\toprule
 Stream & ck10 & ck25 & end (edits) \\ \midrule
-S2-u03 & 0.973 & 0.973 & 0.933 & (56) \\
-S2-u04 & 0.96 & 0.907 & 0.907 & (49) \\
-S2-u05 & 0.973 & 0.973 & 0.92 & (58) \\
-S2-u06 & 0.92 & 0.907 & 0.893 & (47) \\
-S5-u03 & 0.933 & 0.933 & (19) \\
-S5-u04 & 0.96 & 0.947 & (18) \\
-S5-u05 & 0.973 & 0.893 & (22) \\
-S5-u06 & 0.92 & 0.867 & (16) \\
+S2-u03 & 0.973 & 0.973 & 0.933 (56) \\
+S2-u04 & 0.96 & 0.907 & 0.907 (49) \\
+S2-u05 & 0.973 & 0.973 & 0.92 (58) \\
+S2-u06 & 0.92 & 0.907 & 0.893 (47) \\
+S5-u03 & 0.933 & --- & 0.933 (19) \\
+S5-u04 & 0.96 & --- & 0.947 (18) \\
+S5-u05 & 0.973 & --- & 0.893 (22) \\
+S5-u06 & 0.92 & --- & 0.867 (16) \\
 Base spot-check & \multicolumn{3}{c}{0.973 (n=75)} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section*{B. Gate Threshold Calibration (archive)}
+\section{Gate Threshold Calibration (archive)}
 \begin{table}[h]\centering
-\caption{Dev sweep; the preregistered rule selected 0.90. Calibration archive only — not part of the main narrative.}
+\caption{Dev sweep; the preregistered rule selected 0.90. Calibration archive only --- not part of the main narrative.}
 \label{tab:gate}
 \begin{tabular}{lcccc}\toprule
 Threshold & 0.75 & 0.80 & 0.85 & 0.90 \\ \midrule

@@ -48,7 +48,7 @@ def main_table():
             f"{ARM_LABEL[a]} & " + " & ".join(f"{pu.get(u, float('nan')):.3f}" if isinstance(pu.get(u), (int, float)) else "---"
                                               for u in ("u03", "u04", "u05", "u06")) + " \\\\")
     return "\n".join([
-        r"\begin{table}[t]\centering",
+        r"\begin{table}[htbp]\centering",
         r"\caption{Seven-arm main matrix on the full test split (210 memories, 740 probes). "
         r"Composite = equal-weight mean over recall/freshness/locality per the frozen scoring "
         r"semantics; CI95 = probe-level bootstrap (1000 draws). Unrelated = 15-item pool "
@@ -56,7 +56,7 @@ def main_table():
         r"paired with scenario usage (belief/fact keyword rates). $\dagger$ preliminary "
         r"(utility router). $\ddagger$ action-space completion arm, appended after the main "
         r"matrix. Drift bound from an identical-config rerun: "
-        + "|\\Delta composite| = " + f"{SC['drift_bound']['abs_diff']:.3f}" + ".}",
+        + "$|\\Delta\\mathrm{composite}|$ = " + f"{SC['drift_bound']['abs_diff']:.3f}" + ".}",
         r"\label{tab:main}",
         r"\small\begin{tabular}{lccccccc}",
         r"\toprule",
@@ -74,6 +74,15 @@ def main_table():
     ])
 
 
+def _makecell(entries):
+    if not entries:
+        return "---"
+    bits = [f"{rec:.3f}$^{{({a})}}$" for a, rec, _ in entries]
+    if len(bits) == 1:
+        return bits[0]
+    return r"\makecell[l]{" + r" \\ ".join(bits) + "}"
+
+
 def failure_matrix():
     # from frozen per-arm failure matrices
     fm_path = Path("results/p3_scorecard.json")
@@ -83,21 +92,18 @@ def failure_matrix():
         for t, rs in fm[a]["failure_matrix"].items():
             for r, v in rs.items():
                 cells.setdefault((t, r), []).append((a, v["recall"], v["n"]))
-    lines = [r"\begin{table}[t]\centering",
+    lines = [r"\begin{table}[htbp]\centering",
              r"\caption{Type $\times$ store failure matrix (QA + scenario keyword recall). "
              r"All arms share one dedup/supersede lifecycle; only the placement decision "
              r"differs. $\langle$arm$\rangle$ subscripts identify the source arm.}",
              r"\label{tab:failure}",
-             r"\small\begin{tabular}{lcccc}", r"\toprule",
+             r"\small\setlength{\tabcolsep}{4pt}",
+             r"\begin{tabular}{lcccc}", r"\toprule",
              r"Type & RAG & Edit & Drop & Dual \\ \midrule"]
     for t in ("belief", "fact", "transient"):
         row = [t.capitalize()]
         for r in ("rag", "edit", "drop", "both"):
-            entries = cells.get((t, r), [])
-            if not entries:
-                row.append("---")
-            else:
-                row.append(" ".join(f"{rec:.3f}$^{{({a})}}$" for a, rec, _ in entries))
+            row.append(_makecell(cells.get((t, r), [])))
         lines.append(" & ".join(row) + r" \\")
     lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}"]
     return "\n".join(lines)
@@ -106,7 +112,7 @@ def failure_matrix():
 def supersede_table():
     s = SC["supersede_attribution"]["classes"]
     return "\n".join([
-        r"\begin{table}[t]\centering",
+        r"\begin{table}[htbp]\centering",
         r"\caption{Attribution of the \textsc{all-edit} supersede-new failures (23 probes, "
         r"gate-only replay): key competition under consecutive same-subject updates — the "
         r"probe key lands on the old slot although the new key is written and retrievable. "
@@ -125,12 +131,13 @@ def misroute_table():
     def cell(t, p):
         return str(c[t][p])
     return "\n".join([
-        r"\begin{table}[t]\centering",
+        r"\begin{table}[htbp]\centering",
         r"\caption{Router confusion against hidden type labels (N=210). All "
-        f"{n} misroutes are one-directional (fact$\to$belief): preference-like entries with "
+        f"{n} misroutes are one-directional (fact$\\to$belief): preference-like entries with "
         r"concrete referents over-internalized — the favorite-X surface form overlaps the "
         r"belief criterion boundary (workload spec). Misrouted items' QA recall averages "
-        r"0.272.}",
+        f"{json.loads(Path('data/p5/analysis_frozen_v1.json').read_text())['misroute']['mean_qa_recall']:.3f}"
+        ".}",
         r"\label{tab:misroute}",
         r"\begin{tabular}{lccc}\toprule",
         r" & \multicolumn{3}{c}{Predicted} \\ \cmidrule(lr){2-4}",
@@ -144,56 +151,60 @@ def misroute_table():
 
 def pressure_off_table():
     off = SC["pressure_off"]
-    lines = [r"\begin{table}[t]\centering",
+    s8 = json.loads(Path("data/p5/s8_frozen_v1.json").read_text()) if Path("data/p5/s8_frozen_v1.json").exists() else {}
+    lines = [r"\begin{table}[htbp]\centering",
              r"\caption{Pressure-off ablation (pre-registered P5 item; budget/eviction "
-             r"disabled, distractors removed; all other frozen configs unchanged). Without "
-             r"pressure, all-RAG recall recovers and overtakes the router — internalization's "
-             r"recall benefit is conditional on retrieval pressure, while the router's "
-             r"residual edge is concentrated on freshness.}",
+             r"disabled, distractors removed; all other frozen configs unchanged) and the "
+             r"type-aware single-store defensive arm (S8: beliefs and facts both retrieved, "
+             r"transients dropped, zero edits; appended arm). Without pressure all-retrieve "
+             r"recall recovers and overtakes the router; S8 is competitive at both states with "
+             r"oracle-level freshness from store-side record replacement, lagging on near-miss "
+             r"locality and pressure-exposed recall.}",
              r"\label{tab:pressure-off}",
-             r"\small\begin{tabular}{lcccccc}\toprule",
-             r"Arm & Pressure & Composite & Recall & Fresh. & Local. & fact$\times$rag \\ \midrule"]
-    fm_main = json.loads(Path("results/p3_scorecard.json").read_text())["main"]
+             r"\small\begin{tabular}{llcccc}\toprule",
+             r"Arm & State & Composite & Recall & Fresh. & Local. \\ \midrule"]
+    rows_spec = []
     for a in ("S1", "S5"):
-        v_on = SC["arms"][a]
-        v_off = off[a]
-        def _score(v, axis):
-            s = v["axes"][axis]
-            return s["score"] if isinstance(s, dict) else s
-        on_fm_raw = fm_main[a]["failure_matrix"].get("fact", {}).get("rag", {})
-        on_fm = f"{on_fm_raw['recall']:.3f}" if isinstance(on_fm_raw, dict) and "recall" in on_fm_raw else "---"
-        rows_spec = (("on", v_on, on_fm), ("off", v_off, v_off["failure_matrix"].get("fact", {}).get("rag", "---")))
-        for tag, v, fact_rag in rows_spec:
-            lines.append(f"{ARM_LABEL[a]} & {tag} & {v['composite']:.3f} & "
-                         f"{_score(v, 'recall'):.3f} & {_score(v, 'freshness'):.3f} & "
-                         f"{_score(v, 'locality'):.3f} & {fact_rag} \\\\")
-        # the 'on' row uses main-matrix values; fact x rag on-pressure comes from scorecard
+        rows_spec.append((ARM_LABEL[a], "on", SC["arms"][a]["composite"],
+                          {k: SC["arms"][a]["axes"][k] for k in ("recall", "freshness", "locality")}))
+        rows_spec.append((ARM_LABEL[a], "off", off[a]["composite"], off[a]["axes"]))
+    if s8:
+        for state in ("on", "off"):
+            v = s8[state]
+            rows_spec.append((r"\textsc{single-store} (S8)", state, v["composite"], v["axes"]))
+    for label, tag, comp, axes in rows_spec:
+        def s(axis):
+            val = axes[axis]
+            return val["score"] if isinstance(val, dict) else val
+        lines.append(f"{label} & {tag} & {comp:.3f} & {s('recall'):.3f} & "
+                     f"{s('freshness'):.3f} & {s('locality'):.3f} \\\\")
     lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}"]
     return "\n".join(lines)
 
 
 def s7_table():
     d = SC["s7_decomposition"]
+    refs = json.loads(Path("data/p5/analysis_frozen_v1.json").read_text())["s7_refs"]
     return "\n".join([
-        r"\begin{table}[t]\centering",
+        r"\begin{table}[htbp]\centering",
         r"\caption{Dual-write loss decomposition (journal-level). Conflict-flagged and "
-        r"plain rows both score far below either single-channel reference — the deficit is "
+        r"plain rows both score far below either single-channel reference --- the deficit is "
         r"global, not localized to conflict events; mechanism analysis is out of scope. "
         r"Codebook rows match the analytic expectation per user; edit cost "
-        r"210 edits / 924.3\,s.}",
+        f"{refs['n_edits']} edits / {refs['edit_seconds']}\\,s." + "}",
         r"\label{tab:s7}",
         r"\begin{tabular}{lccc}\toprule",
         r"Conflict QA & Plain QA & all-edit ref & all-rag ref \\ \midrule",
         f"{d['conflict_qa']['score']:.3f} (n={d['conflict_qa']['n']}) & "
         f"{d['plain_qa']['score']:.3f} (n={d['plain_qa']['n']}) & "
-        r"0.284 & 0.552 \\",
+        f"{refs['all_edit_qa']:.3f} & {refs['all_rag_qa']:.3f} \\\\",
         r"\bottomrule\end{tabular}\end{table}",
     ])
 
 
 def appendix_tables():
     seq = SC["seqcheck"]
-    lines = [r"\section*{A. Sequential-Consistency Confirmation}",
+    lines = [r"\section{Sequential-Consistency Confirmation}",
              r"\begin{table}[h]\centering",
              r"\caption{75-item frozen unrelated pool at cumulative-edit checkpoints "
              r"(gate 0.90). Positioning: reproduction consistent with HoReN's published "
@@ -205,13 +216,16 @@ def appendix_tables():
         if k == "BASE":
             continue
         v = seq[k]
-        cells = [f"{val}" for _, val in v["checkpoints"].items()]
-        n_edits = v.get("n_edits_total", "")
-        lines.append(f"{k.replace('_', '-')} & " + " & ".join(cells) + f" & ({n_edits}) \\\\")
+        ck = v["checkpoints"]
+        ck10 = next((val for name, val in ck.items() if name.startswith("ck10")), "---")
+        ck25 = next((val for name, val in ck.items() if name.startswith("ck25")), "---")
+        end_name = [name for name in ck if name.startswith("end")]
+        end = f"{ck[end_name[0]]} ({v.get('n_edits_total', '')})" if end_name else "---"
+        lines.append(f"{k.replace('_', '-')} & {ck10} & {ck25} & {end} \\\\")
     base = seq.get("BASE", {})
     lines.append(f"Base spot-check & \\multicolumn{{3}}{{c}}{{{base.get('hit_rate', '---')} (n={base.get('n', '')})}} \\\\")
     lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}", "",
-              r"\section*{B. Gate Threshold Calibration (archive)}",
+              r"\section{Gate Threshold Calibration (archive)}",
               r"\begin{table}[h]\centering",
               r"\caption{Dev sweep; the preregistered rule selected 0.90. Calibration "
               r"archive only — not part of the main narrative.}",
@@ -238,8 +252,9 @@ def main():
         "", main_table(), "", failure_matrix(), "", supersede_table(), "",
         misroute_table(), "", pressure_off_table(), "", s7_table(), "",
     ]
-    Path("paper/tables.tex").write_text("\n".join(parts), encoding="utf-8")
-    Path("paper/appendix_tables.tex").write_text(appendix_tables(), encoding="utf-8")
+    tex = "\n".join(parts).replace("—", "---")
+    Path("paper/tables.tex").write_text(tex, encoding="utf-8")
+    Path("paper/appendix_tables.tex").write_text(appendix_tables().replace("—", "---"), encoding="utf-8")
     print("written paper/tables.tex + paper/appendix_tables.tex")
 
 

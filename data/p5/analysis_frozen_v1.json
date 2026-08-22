@@ -1,0 +1,56 @@
+{
+ "disclosure": "JQ-authorized appended freeze (2026-08-22): numbers the paper prose needs that live in frozen-run analysis outputs; computed once from frozen journals, appended verbatim. frozen_scorecard_v1.json untouched.",
+ "transient": {
+  "n": 30,
+  "trigger_rate": "0.367-0.400",
+  "own_slot_rate": 0.367,
+  "assertion_rate": 0.1,
+  "source": "results/analysis/gate_attribution_s2.json + p3_scorecard S2 per_cell"
+ },
+ "misroute": {
+  "n": 22,
+  "mean_qa_recall": 0.272,
+  "source": "results/analysis/s5_misroutes.json"
+ },
+ "scenario_histogram": {
+  "n": 72,
+  "S4_band_085_090": 53,
+  "S5_band_085_090": 52,
+  "S4_fire_rate": 0.042,
+  "S5_fire_rate": 0.083,
+  "source": "results/analysis/gate_attribution.json"
+ },
+ "failure_matrix_bands": {
+  "fact_edit_range": [
+   0.233,
+   0.282
+  ],
+  "fact_rag_range": [
+   0.527,
+   0.539,
+   0.554
+  ],
+  "s7_fact_both": 0.097,
+  "source": "results/p3_scorecard.json"
+ },
+ "old_value_residual": {
+  "S1": 0.043,
+  "S2": 0.174,
+  "S4": 0.043,
+  "S5": 0.043,
+  "S7": 0.13
+ },
+ "ablation_injection": {
+  "n": 19,
+  "parametric_usage": 0.105,
+  "injection_usage": 0.105,
+  "source": "results/p4/ablation_injection.json"
+ },
+ "s7_refs": {
+  "all_edit_qa": 0.284,
+  "all_rag_qa": 0.552,
+  "n_edits": 210,
+  "edit_seconds": 924.3,
+  "source": "results/analysis/s7_decomposition.json + docs/tables_p5_v1.0.md"
+ }
+}

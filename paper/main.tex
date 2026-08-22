@@ -1,5 +1,7 @@
 % MEMPLACE — NeurIPS 2026 TTCL Workshop submission (general track, 4-9 pages)
 % Double-blind: no author info anywhere. System referred to as MEMPLACE only.
+% HARD RULE (JQ): every number in prose arrives via paper/numbers.tex macros
+% (generated from the frozen scorecard) or a table reference — never literal.
 \documentclass{article}
 \usepackage[final,nonatbib]{neurips_2026} % TODO: swap to the official 2026 style file when released
 \usepackage[utf8]{inputenc}
@@ -8,8 +10,11 @@
 \usepackage{multirow}
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb}
+\usepackage{makecell}
+\usepackage{placeins}
 \usepackage[hidelinks]{hyperref}
 \usepackage{url}
+\input{numbers}
 
 \title{Internalize or Retrieve: Online Memory Placement for Test-Time Continual Learning Agents}
 
@@ -19,57 +24,97 @@
 \maketitle
 
 \begin{abstract}
-% Abstract per proposal v1.1 with the JQ-mandated negative-result ending
-% (p5_checklist v1.1, guideline 8): keep the first ~180 words of the
-% proposal draft, REPLACE the final "can be learned" sentence with the
-% negative-result framing: per-memory counterfactual utility regression does
-% not recover oracle placement (the signal lives on the lifecycle axis),
-% motivating sequence-aware placement learning as future work. Three [X]s
-% filled from the frozen scorecard via paper_tables.py — never hand-copied.
+Deployed LLM agents adapt mainly through prompting, retrieval, and external tools; their weights stay frozen, so nothing they experience becomes internal knowledge. Parametric knowledge editing offers a path to internalization, but existing work treats every incoming fact as an edit and evaluates it only with question-style probes. We argue the missing component is the placement decision itself: at test time, an agent must decide, per memory candidate, whether to internalize it into model weights, keep it in a reversible retrieval store, or discard it. We present MEMPLACE, a serving-time memory architecture built around this decision: typed routing writes durable beliefs as multi-key codebook edits while reference facts live in a retrievable store with a shared dedup/supersede lifecycle, and a probe--elicit--compose read path makes internalized knowledge usable in open tasks with per-answer attribution. On a multi-session personal-agent workload with hidden type labels, supersession events, and explicit budget pressure, the LLM router scores \SfiveComp{} against oracle \SfourComp{} on a composite scorecard while all-internalize (\StwoComp) and all-retrieve (\SoneComp) each fail where their placement is wrong, and dual-write collapses (\SsevenComp); a pressure-off ablation shows internalization's recall benefit is conditional on retrieval pressure, a type-aware single-store baseline reveals that the remaining value sits in replaceable-record lifecycle management rather than editing per se, and a counterfactual per-memory utility regression fails to recover oracle placement---pointing to sequence-aware placement learning as the open problem.
 \end{abstract}
 
 \section{Introduction}
-% 1 page. Thesis: the placement decision itself is the missing component
-% between memory agents (all external) and knowledge editing (all internal).
-% Dual-claim structure (p5_checklist v1.2): (i) conditional benefit — under
-% retrieval pressure the router matches oracle placement and dominates both
-% extremes and dual-write; (ii) the lifecycle signal — pressure-off ablation,
-% S6 negative result, S7 global degradation, three pieces of evidence
-% converging on the lifecycle axis as where placement value lives.
+\label{sec:intro}
 
-\section{MEMPLACE: System Overview}
-% 1.5 pages. Write path (typed routing, dedup/supersede lifecycle, multi-key
-% codebook edits), read path (probe-elicit-compose), serving (shadow
-% editing). C3 SCOPE (p5_checklist v1.2): attribution is empirically
-% supported; hot-swap is ARCHITECTURE DESCRIPTION ONLY.
+Agents deployed today adapt through three channels that never touch their weights: prompting, retrieval, and tool use. The memory-agent line~\citep{packer2023memgpt,zhong2024memorybank,chhikara2025mem0} externalizes everything---the next answer depends on retrieval hits, prompt budget, and chunk ordering. The knowledge-editing line~\citep{meng2022rome,meng2023memit,hartvigsen2023grace,horen2026} provides the machinery to write knowledge into weights, but treats every incoming item as an edit and evaluates the result with question-style probes, so internalized knowledge is almost never observed in open generation. Between the two sits a decision neither line makes: \emph{placement}---for each memory candidate arriving at test time, choose \{internalize into weights, keep in a reversible store, discard\}.
+
+This paper makes placement a first-class object. We instantiate it in MEMPLACE, a serving-time memory architecture whose write path types and routes candidates (durable beliefs $\to$ multi-key codebook edits; reference facts $\to$ a retrievable store with dedup/supersede lifecycle; transients $\to$ discard) and whose read path makes internalized knowledge usable beyond question answering: a planner decomposes an open task into explicit probes, a codebook gate decides which probes the weights should answer, answers are elicited parametrically with retrieval disabled, and composition attributes each answer to its memory.
+
+We evaluate placement with a workload built to make both extremes fail somewhere: \TestUsers{} synthetic users, \TestMemories{} typed memory candidates with hidden labels, \TestProbes{} probes spanning immediate, delayed, paraphrased, open-scenario, supersession, and near-miss forms. Seven arms share one lifecycle and differ only in the placement decision (Table~\ref{tab:main}).
+
+\textbf{Claim 1 (conditional benefit).} Under retrieval pressure---a budgeted store with eviction and ambient distractor documents---the LLM router reaches \SfiveComp{} composite versus oracle \SfourComp{}, a gap of \GapOracleRouter{} that sits inside the identical-config rerun drift bound (\DriftBound), i.e., \emph{the router matches oracle placement within run-to-run variance}. Its lead over the better extreme arm is \LeadExtremes, four times the drift bound. All-internalize fails on reference facts and locality; all-retrieve fails on evicted items and stale transients; dual-write, the supposed safe default, is the worst arm at \SsevenComp{} (Table~\ref{tab:s7}).
+
+\textbf{Claim 2 (the lifecycle signal).} Three measurements converge on where placement value actually lives. With pressure removed, all-retrieve's recall recovers to \SoneOffRecall{} and overtakes the router's \SfiveOffRecall{}---internalization's recall benefit is \emph{conditional} on pressure---while freshness separates the arms that manage supersession from those that do not (Table~\ref{tab:pressure-off}). A counterfactual per-memory utility router, trained on isolated edit-vs-retrieve clones, collapses to near-all-retrieve and fails to recover oracle placement. And dual-write degrades \emph{both} channels simultaneously. A type-aware single-store arm (\S\ref{sec:results-s8}) shows store-side record replacement delivers oracle-level freshness, so the signal we isolate belongs to \emph{replaceable-record lifecycle management}, not to editing per se; learning placement from outcomes therefore requires sequence-aware signals, which we leave as future work.
+
+\section{MEMPLACE}
+\label{sec:system}
+
+\paragraph{Write path.} Each user turn yields typed memory candidates: \emph{beliefs} (durable stances, preferences, habits with no mutable external referent), \emph{facts} (entries with concrete, updatable referents---dates, places, providers, accounts), and \emph{transients} (one-off states and context). An LLM router types each candidate; a fixed type-to-store map routes it. Beliefs are internalized as multi-key codebook edits: alongside the native key, answer-free canonical key prompts are written as additional retrieval aliases for the same trained value, which separates near-colliding personal-belief queries. Facts enter a retrievable store. A single dedup/supersede lifecycle runs for every arm: a newer same-subject memory supersedes the older one in whichever store(s) hold it---\emph{all arms in this paper share this lifecycle and differ only in the placement decision}. Transients are discarded.
+
+\paragraph{Editing backend.} Internalization uses HoReN~\citep{horen2026}, a parameter-preserving codebook editor that wraps one MLP projection with a discrete key--value memory and retrieves by normalized Hopfield similarity; we adopt it unchanged (hyperparameters locked to the published configuration) and treat its published properties---base weights untouched, sequential stability at scale---as confirmatory context for our unrelated-pool results (\S\ref{sec:results-seq}).
+
+\paragraph{Read path.} Direct questions are answered from the routed store(s). Open tasks go through probe--elicit--compose: an LLM planner turns the task text into 2--4 user-centric probes (mechanically checked to contain no candidate-answer words); each probe passes the codebook gate at a frozen threshold; gated probes are answered \emph{parametrically}---generation against the edited weights with retrieval disabled---while the same probes also query the store; collected notes compose the final output. Parametric elicitation is a design choice for attribution and persistence rather than an empirically demonstrated advantage: at our dev ablation scale ($n{=}\AblationN$) text-injection performs identically on usage. Every arm shares this read path.
+
+\paragraph{Serving.} Consolidation can run on a shadow copy of the editor and be promoted atomically at a request boundary; we describe this architecture for completeness---the experiments here are single-model and make no hot-swap claims.
 
 \section{Experimental Setup}
-% 1 page. Self-generated workload (disclosed per proposal v1.1 section 5.2;
-% PersonaChat/MSC/LOCOMO as structural references only), five+two arms,
-% frozen scoring semantics, pressure v2.1 deployment counterparts (see
-% checklist), contamination discipline (target-free probes, frozen prompts).
+\label{sec:setup}
+
+\paragraph{Workload.} \TestUsers{} synthetic users, with \TestMemories{} typed candidates in total across session streams with hidden labels; \TestProbes{} probes of seven kinds (immediate/delayed/paraphrase QA, free scenarios bundling 2--3 memories, supersede-old/new, near-miss twins). Personae and memories are LLM-generated fictional users, disclosed as such; PersonaChat~\citep{zhang2018personachat}, MSC~\citep{xu2022msc}, and LoCoMo~\citep{maharana2024locomo} serve as structural and typological references, not data sources. Probes are machine-checked target-free; generator, router, planner, and judge prompts were frozen with hashes before test evaluation.
+
+\paragraph{Arms.} All-retrieve (S1), all-internalize (S2), random (S3), oracle-from-labels (S4), LLM router (S5), counterfactual-utility router (S6, preliminary), and dual-write (S7), plus a type-aware single-store defensive arm (S8: beliefs and facts both retrieved, transients discarded, zero edits) added after the main matrix to answer ``why not retrieval-only?''---all disclosed as appended arms where applicable.
+
+\paragraph{Scoring.} A frozen per-(type $\times$ probe-kind) semantics matrix maps every probe to recall/freshness/locality axes; transients never enter the recall composite, and delayed transient probes are reverse-scored (asserting a stale state is the failure). The composite is the equal-weight axis mean; probe-level bootstrap CIs and per-user splits accompany the main table. Judged naturalness (a frozen judge prompt, different model family from all system LLMs) is always paired with usage rates.
+
+\paragraph{Retrieval pressure.} The pressured store caps retrieval, evicts oldest-first under a budget, and mixes ambient distractor documents from other users. These knobs model deployment counterparts, not strawmen: distractors are the environmental-document noise any real store accumulates, eviction is the capacity lifecycle of a user memory store, and the two do not share a budget. A pressure-off ablation removes budget, eviction, and distractors with everything else frozen.
 
 \section{Results}
-% 2 pages. Tables auto-generated by scripts/paper_tables.py into tables.tex.
-% Main table + failure matrix + supersede attribution + misroute confusion +
-% drift bound + pressure-off + S7 decomposition. Judged naturalness always
-% paired with usage (guideline 4). S5-vs-S4 wording: within run-to-run
-% variance (guideline 1).
+\label{sec:results}
+
+\subsection{Main matrix}
+\label{sec:results-main}
+
+Table~\ref{tab:main} shows the seven arms. The router scores \SfiveComp{} versus oracle \SfourComp{}; the gap \GapOracleRouter{} is inside the rerun drift bound \DriftBound, so we state that the router matches oracle within run-to-run variance, while its margin over the better extreme (\LeadExtremes) is \DriftMultiple$\times$ the drift bound. All-internalize loses reference facts outright---in the failure matrix (Table~\ref{tab:failure}), fact recall in weights spans the low band shown there versus roughly double in the store---and pays on supersession and near-miss locality. All-retrieve fails where pressure bites: evicted items collapse on recall, and stale transients stay assertable long after they expire. Random placement inherits both failure families. Dual-write is worst (Table~\ref{tab:s7}): conflict-flagged and plain QA rows both score far below either single-channel reference---the deficit is global, not localized to conflict events; mechanism analysis is out of scope.
+
+\subsection{Why not retrieval-only?}
+\label{sec:results-s8}
+
+The natural defensive baseline is type-aware retrieval-only (S8): route by type, drop transients, never edit, keep the shared lifecycle. The honest answer is that S8 is \emph{competitive}: under pressure it scores \SeightOnComp{} and without pressure \SeightOffComp{} (Table~\ref{tab:pressure-off}), at or above the router at both states, with freshness at oracle level---store-side record replacement delivers the same supersession freshness that belief-internalization does. Its residual deficits are specific: near-miss locality (\SeightOnLocal{} vs.\ \SfourLocal) because co-located twins compete inside one retrieval ranking, and under pressure its recall inherits eviction exposure for beliefs as well as facts. Two consequences follow. First, the lifecycle value we isolate in Claim~2 lives in \emph{replaceable-record lifecycle} rather than in editing per se; second, at this workload's scale the case for internalizing beliefs rests on design grounds---always-on parametric availability with retrieval disabled, and per-answer attribution---plus the locality separation of heterogeneous stores, not on the composite. We state this plainly: retrieval-only with a proper lifecycle is a strong default, and placement earns its keep at the margins our matrix measures.
+
+\subsection{Pressure-off: the conditional sentence}
+\label{sec:results-pressure}
+
+Removing budget, eviction, and distractors (Table~\ref{tab:pressure-off}) lets all-retrieve's recall recover to \SoneOffRecall, overtaking the router's \SfiveOffRecall: \emph{internalization's recall benefit appears under retrieval pressure}. Over all-retrieve the router's residual edge without pressure is freshness (\SfiveOffFresh{} vs.\ \SoneOffFresh); against type-aware retrieval-only, freshness parity is instead delivered by the store itself (\S\ref{sec:results-s8}). We report the conditional honestly: internalization pays under pressure; lifecycle management pays regardless of which store provides it.
+
+\subsection{Sequential stability and locality}
+\label{sec:results-seq}
+
+On a frozen \SeqPoolN-item unrelated pool, the unedited base scores \SeqBase; all-internalize streams end at \SeqStwoEndMin--\SeqStwoEndMax{} after 47--58 sequential edits (Appendix~A), consistent with HoReN's published sequential stability---the codebook backend leaves base weights untouched. Near-miss probes (18 twin pairs) separate cleanly when twins live in different stores; all-internalize suffers most on separability (locality axis, Table~\ref{tab:main}).
+
+\subsection{Failure anatomy}
+\label{sec:results-anatomy}
+
+\paragraph{Misrouting is one-directional.} All \NMisroutes{} router errors are fact$\to$belief (Table~\ref{tab:misroute}): preference-like entries with concrete referents (\emph{favorite X}) are over-internalized---the surface form overlaps the belief criterion boundary in our workload spec. Misrouted items' QA recall averages \MisrouteRecall.
+
+\paragraph{Supersession is key competition.} On the all-internalize arm, of \SupTotal{} new-value probes, \SupOld{} gate-hit the \emph{old} slot, \SupNew{} the new slot (Table~\ref{tab:supersede}): consecutive same-subject updates compete in the key space---a general key-value-store phenomenon, not an editing-backend defect---which is exactly why reference facts belong in a store whose records are replaceable.
+
+\paragraph{Trigger is not assertion.} Delayed probes of stale transient states fire the corresponding edit at a \TransientTrigger{} rate (own-slot \TransientOwnSlot), yet only \TransientAssert{} of final answers assert the old state; we report both rates without mechanistic interpretation.
+
+\paragraph{Open-task usage is the weakest link.} Scenario probes sit just under the frozen gate: \HistBandSfour/\HistBandSfive{} of \HistProbeN{} probes land in the $[0.85,0.90)$ band with fire rates \FireRateSfour/\FireRateSfive{} (oracle/router arms). This is a read-path diagnostic---the distance between planner-probe wording and stored keys---not an editing-mechanism deficiency; judged naturalness must be read jointly with usage (e.g., random placement's high naturalness is hollow fluency at low usage).
 
 \section{Related Work}
-% 0.5 page. Four lines per proposal 3.4: editing / in-context editing /
-% memory agents / learned memory management (Memory-R1 differentiation) +
-% read-side routing orthogonality (Self-RAG, Adaptive-RAG).
+\label{sec:related}
+
+\textbf{Knowledge editing} spans weight-modifying (ROME, MEMIT) and parameter-preserving (GRACE, HoReN) editors~\citep{meng2022rome,meng2023memit,hartvigsen2023grace,horen2026}, with unstructured extensions (UnKE~\citep{deng2025unke}, AnyEdit~\citep{jiang2025anyedit}) and long-form evaluation (LEME~\citep{rosati2024leme}); none decide whether an item should be edited at all, and probes stay question-style. \textbf{In-context editing} (IKE~\citep{zheng2023ike}, MQuAKE/MeLLo~\citep{zhong2023mquake}, DeepEdit~\citep{wang2024deepedit}) decomposes questions against edited memories as text; our elicitation is parametric and our target is open generation. \textbf{Memory agents} (MemGPT~\citep{packer2023memgpt}, MemoryBank~\citep{zhong2024memorybank}, Mem0~\citep{chhikara2025mem0}) are exactly the all-external pole we compare against. Closest to us, Memory-R1~\citep{yan2025memoryr1} learns ADD/UPDATE/DELETE/NOOP over a \emph{single external} bank; we decide placement \emph{across heterogeneous stores including weights}, whose irreversibility, interference, and compute cost are what make placement a real decision. Read-side routers (Self-RAG~\citep{asai2024selfrag}, Adaptive-RAG~\citep{jeong2024adaptiverag}) decide \emph{whether to retrieve per query}; we decide \emph{where to write per memory}---orthogonal axes.
 
 \section{Limitations and Future Work}
-% 0.5 page. Scenario usage (planner-probe-to-key distance framing, guideline
-% on read-path diagnosis); transient wording per guideline 3 (trigger rate
-% 0.37-0.40 vs 10\% assertion, no mechanism claims); sequence-aware placement
-% learning (negative-result ending, guideline 8).
+\label{sec:limitations}
 
+Scenario usage rates are low and gate-marginal---a read-path limitation we quantify rather than tune away (no read-path prompt changes after test began). The text-injection ablation is underpowered ($n{=}\AblationN$, null at that scale); parametric elicitation is retained on attribution/persistence design grounds. Results are single-backbone (Llama-3.1-8B-Instruct) on a synthetic self-generated workload of \TestUsers{} users at $\sim$50 memories each; hidden labels inherit the workload spec's type boundaries, as the one-directional misrouting shows. The counterfactual utility router's failure indicates per-memory signals miss lifecycle value; sequence-aware placement learning---training on stream-level outcomes including supersession and eviction events---is the indicated next step.
+
+\input{tables}
+\FloatBarrier
+\clearpage
+
+\bibliographystyle{plainnat}
 \bibliography{refs}
 
 \appendix
+\input{appendix_tables}
 \input{appendix}
 
 \end{document}

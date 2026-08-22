@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Anonymized submission export (JQ ruling 2026-08-22; AGENTS.md section 7).
 
-Builds exports/memplace_v1/ with:
+Builds exports/memplace_v2/ with:
   repo/       anonymized code+data copy (no results/, no .env, no internal
               stage reports; scrubbed of codename-breaking strings)
   supplementary/  frozen tables (tex), frozen scorecard, freeze manifests,
@@ -19,8 +19,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(".").resolve()
-OUT = ROOT / "exports" / "memplace_v1"
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "exports" / "memplace_v2"
 CODENAME = "MEMPLACE"
 
 # identity-breaking patterns (case-insensitive) — from AGENTS.md §7 +
@@ -38,9 +38,13 @@ REPO_KEEP = [
     "pyproject.toml", ".env.example", "README.md",
 ]
 SUPP_FILES = [
-    "paper/tables.tex", "paper/appendix_tables.tex",
-    "data/p5/frozen_scorecard_v1.json", "data/p3/freeze_v1.1.json",
-    "data/p3/freeze_v1.json", "docs/workload_spec_v1.0.md",
+    "paper/main.tex", "paper/tables.tex", "paper/appendix.tex",
+    "paper/appendix_tables.tex", "paper/numbers.tex", "paper/refs.bib",
+    "paper/neurips_2026.sty",
+    "data/p5/frozen_scorecard_v1.json", "data/p5/s8_frozen_v1.json",
+    "data/p5/analysis_frozen_v1.json",
+    "data/p3/freeze_v1.1.json", "data/p3/freeze_v1.json",
+    "docs/workload_spec_v1.0.md", "docs/claims_traceability_v1.0.md",
 ]
 PROMPTS = [
     "gen_persona_v1.md", "gen_sessions_v1.md", "gen_memory_v1.md",
@@ -69,17 +73,22 @@ def copy_scrubbed(src: Path, dst: Path, fixes: list[str]) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
     if src.is_dir():
         for f in sorted(src.rglob("*")):
-            if f.is_file():
-                rel = f.relative_to(ROOT)
-                target = dst / f.relative_to(src)
-                target.parent.mkdir(parents=True, exist_ok=True)
-                try:
-                    text = f.read_text()
-                except UnicodeDecodeError:
-                    shutil.copy2(f, target)
-                    continue
-                new = scrub_text(text, str(rel), fixes)
-                target.write_text(new)
+            if not f.is_file():
+                continue
+            if "__pycache__" in f.parts or f.suffix in {".pyc", ".pyo"}:
+                continue
+            if f.name == "anonymize_export.py":
+                continue
+            rel = f.relative_to(ROOT)
+            target = dst / f.relative_to(src)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            try:
+                text = f.read_text()
+            except UnicodeDecodeError:
+                shutil.copy2(f, target)
+                continue
+            new = scrub_text(text, str(rel), fixes)
+            target.write_text(new)
     else:
         text = src.read_text()
         dst.write_text(scrub_text(text, str(src), fixes))
@@ -88,7 +97,7 @@ def copy_scrubbed(src: Path, dst: Path, fixes: list[str]) -> None:
 def audit(base: Path) -> tuple[int, list[str]]:
     hits: list[str] = []
     for f in sorted(base.rglob("*")):
-        if not f.is_file() or f.name == "ANON_CHECK.md":
+        if not f.is_file() or f.name in {"ANON_CHECK.md", "anonymize_export.py"}:
             continue
         try:
             text = f.read_text()
@@ -126,7 +135,7 @@ def main() -> int:
     report = [
         "# Anonymization audit (auto-generated)",
         "",
-        f"Export: exports/memplace_v1 · Codename: {CODENAME} · Date: 2026-08-22",
+        f"Export: exports/memplace_v2 · Codename: {CODENAME} · Date: 2026-08-22",
         "",
         f"**Identity-pattern hits after scrubbing: {n_hits}** "
         "(`PASS` requires 0)",

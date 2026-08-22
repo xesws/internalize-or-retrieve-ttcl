@@ -27,6 +27,14 @@ __pycache__/
 build/
 dist/
 
+# --- latex build crumbs (keep paper/main.pdf for review) ---
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.out
+paper/*.log
+paper/*.toc
+
 # --- os / editor ---
 .DS_Store
 .idea/
