@@ -174,7 +174,7 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
                 "rag_hit_ids": [h["id"] for h in hits], **gen}
         if arm == "S7":
             # conflict log: gate elicited value vs retrieval record, both present
-            conflict = _s7_conflict(probe["text"], mem, hits, gen, item)
+            conflict = _s7_conflict(probe["text"], mem, hits, gen)
             if conflict:
                 item["s7_conflict"] = conflict
         if probe.get("near_miss_of") and probe["near_miss_of"] in mem_by_id:

@@ -14,5 +14,5 @@ ssh "${POD_HOST}" "set -e; cd ${REPO_DIR} && \
   git pull --ff-only && \
   test -z \"\$(git status --porcelain)\" && \
   mkdir -p results/${RUN_ID}/logs && \
-  tmux new -d -s ${RUN_ID} \"bash -lc '${CMD} 2>&1 | tee results/${RUN_ID}/logs/run.log; echo EXIT=\\\$? >> results/${RUN_ID}/logs/run.log'\" && \
+  tmux new -d -s ${RUN_ID} \"bash -lc 'set -o pipefail; ${CMD} 2>&1 | tee results/${RUN_ID}/logs/run.log; echo EXIT=\\\$? >> results/${RUN_ID}/logs/run.log'\" && \
   echo \"started run ${RUN_ID} in tmux\""
