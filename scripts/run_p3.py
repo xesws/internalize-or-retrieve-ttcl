@@ -320,11 +320,15 @@ def main() -> int:
         (_REPO_ROOT / "data" / "p3" / "planner_probes_test_v1.json").read_text())["probes"]
     s3 = json.loads((_REPO_ROOT / "data" / "p3" / "router_s3_v1.json").read_text())["routing"]
     s5 = json.loads((_REPO_ROOT / "data" / "p3" / "router_s5_test_v1.json").read_text())["routing"]
-    s6_doc = json.loads((_REPO_ROOT / "data" / "p4" / "utility_router_v1.json").read_text())
-    routings = {"S3": s3, "S5": s5, "S6": s6_doc["test_routing"],
+    arms_requested = [a.strip() for a in args.arms.split(",")]
+    s6_routing = {}
+    if "S6" in arms_requested:
+        s6_routing = json.loads(
+            (_REPO_ROOT / "data" / "p4" / "utility_router_v1.json").read_text())["test_routing"]
+    routings = {"S3": s3, "S5": s5, "S6": s6_routing,
                 "S1": {}, "S2": {}, "S4": {}, "S7": {}}
 
-    for arm in [a.strip() for a in args.arms.split(",")]:
+    for arm in arms_requested:
         for user in test_doc["users"]:
             t0 = time.time()
             run_stream(arm, user, test_doc, routings[arm], planner, cfg,
