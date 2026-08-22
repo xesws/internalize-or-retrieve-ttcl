@@ -34,7 +34,7 @@ from src.stores import editing, model_host  # noqa: E402
 from src.stores.rag_store import RagStore  # noqa: E402
 
 MAX_NEW_TOKENS = 512  # hard decode budget (handbook §4.2)
-ARMS = ("S1", "S2", "S3", "S4", "S5", "S7")
+ARMS = ("S1", "S2", "S3", "S4", "S5", "S6", "S7")
 DEST = {"belief": "edit", "fact": "rag", "transient": "drop"}
 
 
@@ -110,6 +110,8 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
             return "both"  # dual-write: edit + RAG, every memory incl. transients
         if arm == "S3":
             return routing[mem["id"]]
+        if arm == "S6":
+            return routing[mem["id"]]  # utility router: precomputed edit/rag
         t = mem["type"] if arm == "S4" else routing.get(mem["id"], mem["type"])
         return DEST[t]
 
@@ -318,7 +320,9 @@ def main() -> int:
         (_REPO_ROOT / "data" / "p3" / "planner_probes_test_v1.json").read_text())["probes"]
     s3 = json.loads((_REPO_ROOT / "data" / "p3" / "router_s3_v1.json").read_text())["routing"]
     s5 = json.loads((_REPO_ROOT / "data" / "p3" / "router_s5_test_v1.json").read_text())["routing"]
-    routings = {"S3": s3, "S5": s5, "S1": {}, "S2": {}, "S4": {}, "S7": {}}
+    s6_doc = json.loads((_REPO_ROOT / "data" / "p4" / "utility_router_v1.json").read_text())
+    routings = {"S3": s3, "S5": s5, "S6": s6_doc["test_routing"],
+                "S1": {}, "S2": {}, "S4": {}, "S7": {}}
 
     for arm in [a.strip() for a in args.arms.split(",")]:
         for user in test_doc["users"]:
