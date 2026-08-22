@@ -16,6 +16,8 @@ def test_no_brand_names_in_campaign_code():
         for p in root.rglob("*.py"):
             if p.resolve() == Path(__file__).resolve():  # own pattern line is not leakage
                 continue
+            if p.name == "anonymize_export.py":
+                continue  # the scrubber itself must name the patterns it removes
             for i, line in enumerate(p.read_text().splitlines(), 1):
                 if BANNED.search(line):
                     hits.append(f"{p}:{i}: {line.strip()}")

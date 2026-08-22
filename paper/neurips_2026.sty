@@ -1,0 +1,15 @@
+% Minimal NeurIPS-like style stub for the campaign draft.
+% TODO(JQ): replace with the official neurips_2026.sty when the kit ships;
+% this stub only provides the options used in main.tex (final, nonatbib)
+% and sane margins/spacing so the draft compiles today.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{neurips_2026}[2026/01/01 NeurIPS 2026 stub for the MEMPLACE draft]
+\DeclareOption{final}{}
+\DeclareOption{nonatbib}{}
+\DeclareOption*{}
+\ProcessOptions\relax
+\RequirePackage[letterpaper,margin=1in]{geometry}
+\RequirePackage{times}
+\RequirePackage{natbib}
+\AtEndOfPackage{\@ifpackageloaded{natbib}{}{}}
+\endinput
