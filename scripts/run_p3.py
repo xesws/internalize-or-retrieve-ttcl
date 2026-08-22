@@ -34,8 +34,19 @@ from src.stores import editing, model_host  # noqa: E402
 from src.stores.rag_store import RagStore  # noqa: E402
 
 MAX_NEW_TOKENS = 512  # hard decode budget (handbook §4.2)
-ARMS = ("S1", "S2", "S3", "S4", "S5")
+ARMS = ("S1", "S2", "S3", "S4", "S5", "S7")
 DEST = {"belief": "edit", "fact": "rag", "transient": "drop"}
+
+
+def _word_hit(keyword: str, answer: str) -> bool:
+    import re as _re
+    a = _re.sub(r"\s+", " ", answer.lower())
+    k = _re.sub(r"\s+", " ", keyword.strip().lower())
+    if not k:
+        return False
+    if " " in k:
+        return k in a
+    return _re.search(rf"\b{_re.escape(k)}\b", a) is not None
 
 
 def generate_answer(model, tok, question: str, rag_hits: list[dict],
@@ -95,6 +106,8 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
             return "rag"
         if arm == "S2":
             return "edit"
+        if arm == "S7":
+            return "both"  # dual-write: edit + RAG, every memory incl. transients
         if arm == "S3":
             return routing[mem["id"]]
         t = mem["type"] if arm == "S4" else routing.get(mem["id"], mem["type"])
@@ -103,6 +116,32 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
     mems = sorted(user["memories"], key=lambda m: (m["session_idx"], m["id"]))
     mem_by_id = {m["id"]: m for m in mems}
     routes = {m["id"]: route(m) for m in mems}
+    edits_journal = run_dir / "edits.jsonl" if arm == "S7" else None
+
+    def _s7_conflict(question: str, mem: dict, hits: list, final_gen: dict) -> dict | None:
+        """S7 only: gate-elicited value vs retrieval record when BOTH present;
+        logs the disagreement and what the composed answer actually did."""
+        if not model_host.edit_active():
+            return None
+        hf_now = model_host.current_model()
+        hf_plain = hf_now.model if hasattr(hf_now, "model") and hasattr(hf_now, "edit_log") else hf_now
+        sim, _slot = keying.gate(question, hf_model=hf_plain, tok=tok,
+                                 adapter=model_host.edit_module())
+        if sim < cfg["gate"]["hopfield_key_match_threshold"]:
+            return None
+        retrieved = [h["text"] for h in hits]
+        if not retrieved:
+            return None
+        eli = generate_answer(model, tok, question, [])  # rag_off elicitation
+        kws = [k for p in mem["probes"] for k in p.get("answer_keywords", [])][:3]
+        gate_hit = any(_word_hit(k, eli["answer"]) for k in kws)
+        ret_hit = any(any(_word_hit(k, t) for k in kws) for t in retrieved)
+        final_hit = any(_word_hit(k, final_gen["answer"]) for k in kws)
+        return {"gate_sim": round(sim, 3), "gate_value": eli["answer"].strip()[:160],
+                "retrieved": [t[:120] for t in retrieved[:2]],
+                "gate_answerable": gate_hit, "retrieval_answerable": ret_hit,
+                "consistent": gate_hit == ret_hit, "final_has_keywords": final_hit,
+                "final_head": final_gen["answer"].strip()[:120]}
 
     n_rag = sum(1 for m in mems if routes[m["id"]] == "rag")
     pres = cfg["pressure"]
@@ -122,14 +161,20 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
         key = f"{arm}|{user['user_id']}|{mem['id']}|{probe['kind']}|{probe.get('text', '')[:40]}"
         if key in done:
             return
-        hits = store.query(probe["text"]) if routes[mem["id"]] == "rag" else []
+        dest = routes[mem["id"]]
+        hits = store.query(probe["text"]) if dest in ("rag", "both") else []
         gen = generate_answer(model, tok, probe["text"], hits)
         item = {"arm": arm, "user_id": user["user_id"], "memory_id": mem["id"],
-                "memory_type": mem["type"], "kind": probe["kind"], "route": routes[mem["id"]],
+                "memory_type": mem["type"], "kind": probe["kind"], "route": dest,
                 "question": probe["text"], "answer_keywords": probe["answer_keywords"],
                 "eval_session": eval_session, "write_session": mem["session_idx"],
-                "store_evicted": routes[mem["id"]] == "rag" and mem["id"] not in store.live_ids(),
+                "store_evicted": dest in ("rag", "both") and mem["id"] not in store.live_ids(),
                 "rag_hit_ids": [h["id"] for h in hits], **gen}
+        if arm == "S7":
+            # conflict log: gate elicited value vs retrieval record, both present
+            conflict = _s7_conflict(probe["text"], mem, hits, gen, item)
+            if conflict:
+                item["s7_conflict"] = conflict
         if probe.get("near_miss_of") and probe["near_miss_of"] in mem_by_id:
             twin = mem_by_id[probe["near_miss_of"]]
             item["twin_keywords"] = twin["probes"][0]["answer_keywords"]
@@ -148,12 +193,17 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
     for s in range(max_session + 1):
         for m in by_session.get(s, []):
             dest = routes[m["id"]]
-            if dest == "edit":
-                editing.edit(model_host.current_model(), {
+            if dest in ("edit", "both"):
+                res = editing.edit(model_host.current_model(), {
                     "prompt": m["edit_stem"], "target_new": m["edit_target"],
                     "key_prompts": m["key_prompts"]})
                 model = model_host.current_model()
-            elif dest == "rag":
+                if edits_journal is not None:
+                    with edits_journal.open("a") as f:
+                        f.write(json.dumps({
+                            "memory": m["id"], "edit_seconds": res["edit_seconds"],
+                            "codebook_size": res["codebook_size"]}) + "\n")
+            if dest in ("rag", "both"):
                 if m.get("supersede_of") and m["supersede_of"] in store.live_ids():
                     store.supersede(m["supersede_of"], m["id"], m["canonical"])
                 else:
@@ -187,16 +237,29 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
         probes = planner_probes[sc["id"]]
         notes: list[str] = []
         gate_fires = 0
+        s7_note_conflicts = []
         for probe in probes:
+            gate_head = None
             if model_host.edit_active():
                 sim, slot = keying.gate(probe, hf_model=hf_plain, tok=tok,
                                         adapter=model_host.edit_module())
                 if sim >= cfg["gate"]["hopfield_key_match_threshold"]:
                     gate_fires += 1
                     eli = generate_answer(model, tok, probe, [])
-                    notes.append(f"{probe} — {eli['answer'].strip()}")
-            for h in store.query(probe):
-                notes.append(h["text"])
+                    gate_head = eli["answer"].strip()
+                    notes.append(f"{probe} — {gate_head}")
+            retrieved_texts = [h["text"] for h in store.query(probe)]
+            for t in retrieved_texts:
+                notes.append(t)
+            if arm == "S7" and gate_head is not None and retrieved_texts:
+                # both sources present for the same probe: log agreement
+                import re as _re
+                words = lambda x: {w for w in _re.findall(r"[a-z0-9'-]+", x.lower()) if len(w) > 3}
+                ov = len(words(gate_head) & words(" ".join(retrieved_texts)))
+                s7_note_conflicts.append({
+                    "probe": probe[:80], "gate_head": gate_head[:100],
+                    "retrieved_head": retrieved_texts[0][:100],
+                    "content_overlap": ov})
         comp = generate_answer(model, tok, sc["text"], [], private_notes=notes)
         for mid in selected_mems:
             m = mem_by_id[mid]
@@ -212,7 +275,10 @@ def run_stream(arm: str, user: dict, test_doc: dict, routing: dict,
                     "eval_session": max_session, "write_session": m["session_idx"],
                     "store_evicted": routes[mid] == "rag" and mid not in store.live_ids(),
                     "rag_hit_ids": [], "planner_probes": probes,
-                    "gate_fires": gate_fires, "n_notes": len(notes), **comp}
+                    "gate_fires": gate_fires, "n_notes": len(notes),
+                    **comp}
+            if arm == "S7" and s7_note_conflicts:
+                item["s7_note_conflicts"] = s7_note_conflicts
             emit(key, item)
 
     # --- unrelated pool ----------------------------------------------------------
@@ -252,7 +318,7 @@ def main() -> int:
         (_REPO_ROOT / "data" / "p3" / "planner_probes_test_v1.json").read_text())["probes"]
     s3 = json.loads((_REPO_ROOT / "data" / "p3" / "router_s3_v1.json").read_text())["routing"]
     s5 = json.loads((_REPO_ROOT / "data" / "p3" / "router_s5_test_v1.json").read_text())["routing"]
-    routings = {"S3": s3, "S5": s5, "S1": {}, "S2": {}, "S4": {}}
+    routings = {"S3": s3, "S5": s5, "S1": {}, "S2": {}, "S4": {}, "S7": {}}
 
     for arm in [a.strip() for a in args.arms.split(",")]:
         for user in test_doc["users"]:
