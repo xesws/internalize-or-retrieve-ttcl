@@ -52,7 +52,8 @@ def replay_and_gate(arm: str, user: dict, routing: dict | None) -> dict:
             dest = DEST[t]
         if dest != "edit":
             continue
-        before = int(model_host.edit_module().keys.shape[0])
+        module = model_host.edit_module()
+        before = int(module.keys.shape[0]) if hasattr(module, "keys") else 1
         editing.edit(model_host.current_model(), {
             "prompt": m["edit_stem"], "target_new": m["edit_target"],
             "key_prompts": m["key_prompts"]})
